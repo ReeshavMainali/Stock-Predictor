@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Search Section -->
+    <div class="max-w-2xl mx-auto mb-8">
+        <div class="flex gap-4 items-end">
+            <!-- Company Select -->
+            <div class="flex-1">
+                <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Company</label>
+                <select name="company" id="company" class="mt-1 block w-full pl-3 pr-10 py-3 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg dark:bg-gray-700 dark:text-white">
+                    <option value="">Choose a company</option>
+                    {% for company_item in companies %} {# Ensure 'companies' is passed from your backend view #}
+                    <option value="{{ company_item.symbol }}" {% if symbol == company_item.symbol %}selected{% endif %}>
+                        {{ company_item.name|default(company_item.symbol) }} {# Display name, fallback to symbol #}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Days to Predict -->
+            <div>
+                <label for="predictionDays" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Days</label>
+                <input type="number" 
+                       id="predictionDays" 
+                       placeholder="Days" 
+                       value="{{ request.args.get('days')|default('30') }}"
+                       min="1" 
+                       max="365" 
+                       class="mt-1 w-32 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                       title="Number of days to predict (1-365)">
+            </div>
+
+            <!-- Predict Button -->
+            <button 
+                onclick="searchStock()" 
+                class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700">
+                Predict
+            </button>
+        </div>
+    </div>
+
+    <!-- Prediction Content -->
+    <div id="predictionContent" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+        {% if symbol %}
+            <h1 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Stock Prediction for {{ symbol }}</h1>
+            {% if stock_data %}
+                <!-- Graph Section -->
+                <div class="h-[400px] mb-8">
+                    <canvas id="predictionChart"></canvas>
+                </div>
+                
+                <!-- Data Table -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-100 dark:bg-gray-700">
+                                <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Date</th>
+                                <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Price</th>
+                                <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in stock_data %}
+                            <tr class="{% if data.is_prediction %}text-red-500 dark:text-red-400{% else %}text-gray-800 dark:text-gray-200{% endif %}">
+                                <td class="border dark:border-gray-600 px-4 py-2">{{ data.transaction_date }}</td>
+                                <td class="border dark:border-gray-600 px-4 py-2">Rs. {{ "%.2f"|format(data.rate) }}</td>
+                                <td class="border dark:border-gray-600 px-4 py-2">{{ "Predicted" if data.is_prediction else "Historical" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Chart Initialization Script -->
+                <!-- Add these script tags before your chart initialization -->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+                
+                <!-- Then your existing chart initialization code -->
+                <script>
+                    const ctx = document.getElementById('predictionChart').getContext('2d');
+                    const isDarkMode = document.documentElement.classList.contains('dark');
+                    
+                    // Separate historical and prediction data
+                    const data = {{ stock_data|tojson|safe }};
+                    const labels = data.map(d => d.transaction_date);
+                    const historicalData = data.filter(d => !d.is_prediction).map(d => d.rate);
+                    const predictionData = data.map(d => d.is_prediction ? d.rate : null);
+                    
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Historical Data',
+                                    data: historicalData,
+                                    borderColor: isDarkMode ? '#60A5FA' : '#2563EB',
+                                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                },
+                                {
+                                    label: 'Predicted Data',
+                                    data: predictionData,
+                                    borderColor: '#EF4444',
+                                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            interaction: {
+                                mode: 'nearest',
+                                axis: 'x',
+                                intersect: false
+                            },
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        color: isDarkMode ? '#E5E7EB' : '#1F2937'
+                                    }
+                                },
+                                tooltip: {
+                                    mode: 'index',
+                                    intersect: false
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        color: isDarkMode ? '#E5E7EB' : '#1F2937'
+                                    },
+                                    grid: {
+                                        color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                                    }
+                                },
+                                y: {
+                                    ticks: {
+                                        color: isDarkMode ? '#E5E7EB' : '#1F2937'
+                                    },
+                                    grid: {
+                                        color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                </script>
+            {% else %}
+                <p class="text-gray-600 dark:text-gray-300">No data available for this symbol.</p>
+            {% endif %}
+        {% else %}
+            <div class="text-center">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Search for a Stock</h2>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Enter a stock symbol in the search bar above to view predictions.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Add JavaScript for search functionality -->
+<script>
+    // Function to handle the prediction request
+    function searchStock() {
+        const companySelectEl = document.getElementById('company');
+        const predictionDaysEl = document.getElementById('predictionDays');
+
+        const stockSymbol = companySelectEl.value;
+        const days = predictionDaysEl.value;
+
+        if (!stockSymbol) {
+            alert('Please select a company.');
+            companySelectEl.focus();
+            return;
+        }
+
+        const numDays = parseInt(days, 10);
+        const minDays = parseInt(predictionDaysEl.min, 10);
+        const maxDays = parseInt(predictionDaysEl.max, 10);
+
+        if (isNaN(numDays) || numDays < minDays || numDays > maxDays) {
+            alert(`Please enter a number of days between ${minDays} and ${maxDays}.`);
+            predictionDaysEl.focus();
+            return;
+        }
+
+        window.location.href = `/predict/${stockSymbol}?days=${numDays}`;
+    }
+
+    const predictionDaysInput = document.getElementById('predictionDays');
+
+    // Handle Enter key on prediction days input
+    predictionDaysInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            searchStock();
+        }
+    });
+</script>
+
+{% endblock %}

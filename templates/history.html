@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Search Section -->
+<div class="max-w-2xl mx-auto mt-8 mb-8 px-4">
+    <div class="flex gap-4 items-end">
+        <!-- Company Select -->
+        <div class="flex-1">
+            <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Company</label>
+            <select name="company" id="company" class="mt-1 block w-full pl-3 pr-10 py-3 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg dark:bg-gray-700 dark:text-white">
+                <option value="">Choose a company</option>
+                {% for company_item in companies %} {# Assumes 'companies' is passed from your backend view #}
+                <option value="{{ company_item.symbol }}" {% if symbol == company_item.symbol %}selected{% endif %}>
+                    {{ company_item.name|default(company_item.symbol) }} {# Display name, fallback to symbol #}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- View History Button -->
+        <button
+            onclick="viewCompanyHistory()"
+            class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700">
+            View History
+        </button>
+    </div>
+</div>
+
+<!-- Stock Information Section -->
+<div class="mt-12 px-4">
+    <div class="max-w-7xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="space-y-2">
+                    <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-300">Symbol</h3>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white" id="stockSymbol">{{ symbol }}</p>
+                </div>
+                {% if history_data and history_data|length > 0 %}
+                {% set latest = history_data[-1] %}
+                <div class="space-y-2">
+                    <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-300">Current Rate</h3>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white" id="currentRate">
+                        Rs. {{ latest.rate }}
+                    </p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-300">Average Price</h3>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white" id="avgPrice">
+                        Rs. {{ latest.avg_price|round(2) }}
+                    </p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-lg font-semibold text-gray-600 dark:text-gray-300">Change</h3>
+                    <p class="text-2xl font-bold {% if latest.change > 0 %}text-green-500{% else %}text-red-500{% endif %}" id="change">
+                        {{ latest.change }}%
+                    </p>
+                </div>
+                {% else %}
+                <div class="col-span-3 text-center text-gray-600 dark:text-gray-300">
+                    No data available for this symbol
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Graph Section -->
+<div class="mt-12 px-4 pb-12">
+    <div class="max-w-7xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+        <div class="h-[600px]">
+            <canvas id="stockChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Include Chart.js and Zoom plugin -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+
+<script>
+    // Get system theme
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    
+    // Initialize chart with empty data
+    let stockChart;
+    
+    function initializeChart(labels, prices) {
+        const ctx = document.getElementById('stockChart').getContext('2d');
+        
+        // Destroy existing chart if it exists
+        if (stockChart) {
+            stockChart.destroy();
+        }
+        
+        stockChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Stock Price',
+                    data: prices,
+                    borderColor: isDarkMode ? '#60A5FA' : '#2563EB',
+                    backgroundColor: isDarkMode ? 'rgba(96, 165, 250, 0.1)' : 'rgba(37, 99, 235, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3, // Make points more visible
+                    pointHoverRadius: 8 // Larger hover area for touch
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: isDarkMode ? '#E5E7EB' : '#1F2937',
+                            font: {
+                                size: 16, // Increased font size
+                                weight: 'bold'
+                            },
+                            padding: 20 // More padding for touch
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        mode: 'nearest',
+                        intersect: false,
+                        padding: 12,
+                        titleFont: {
+                            size: 14
+                        },
+                        bodyFont: {
+                            size: 14
+                        }
+                    },
+                    zoom: {
+                        limits: {
+                            y: {min: 'original', max: 'original'}
+                        },
+                        pan: {
+                            enabled: true,
+                            mode: 'x',
+                            modifierKey: 'ctrl'
+                        },
+                        zoom: {
+                            wheel: {
+                                enabled: true,
+                                modifierKey: 'ctrl'
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'x',
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            color: isDarkMode ? '#E5E7EB' : '#1F2937',
+                            font: {
+                                size: 14, // Increased font size
+                                weight: 'bold'
+                            },
+                            maxRotation: 45, // Angled labels for better readability
+                            minRotation: 45,
+                            autoSkip: true, // Skip labels that would overlap
+                            maxTicksLimit: 12 // Limit number of ticks for cleaner look
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            color: isDarkMode ? '#E5E7EB' : '#1F2937',
+                            font: {
+                                size: 14, // Increased font size
+                                weight: 'bold'
+                            },
+                            padding: 10 // More padding for touch
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function resetZoom() {
+        if (stockChart) {
+            stockChart.resetZoom();
+        }
+    }
+    
+    // Initialize chart with data if available
+    {% if history_data %}
+        const labels = {{ history_data|map(attribute='transaction_date')|list|tojson|safe }};
+        const prices = {{ history_data|map(attribute='rate')|list|tojson|safe }};
+        initializeChart(labels, prices);
+    {% endif %}
+    
+    function viewCompanyHistory() {
+        const companySelectEl = document.getElementById('company');
+        const stockSymbol = companySelectEl.value;
+
+        if (!stockSymbol) {
+            alert('Please select a company.');
+            companySelectEl.focus();
+            return;
+        }
+        // Navigate to the history page for the selected symbol
+        window.location.href = `/history/${stockSymbol}`;
+    }
+    
+    // Initialize chart with data if available
+    // Note: The original file had 'stock_history', 'dates', 'prices' which might be from an older version.
+    // Assuming 'history_data' is the correct variable as used above for chart initialization.
+    {% if stock_history %}
+        const labels = {{ dates|tojson|safe }};
+        const prices = {{ prices|tojson|safe }};
+        initializeChart(labels, prices);
+    {% endif %}
+</script>
+{% endblock %}
