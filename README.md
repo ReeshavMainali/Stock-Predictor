@@ -183,19 +183,8 @@ This system will serve as a proof-of-concept demonstrating the integration of da
 
 ## 6. References
 
-References should be listed here in IEEE format. Each reference should be numbered in square brackets, e.g., [1], [2]. Citations in the text would refer to these numbers.
-
-Examples of common IEEE formats:
-
-*   **Basic Book:**
-    [1] J. K. Author, *Title of Book*, xth ed. City of Publisher, State (or Country): Publisher, year, pp. xxx–xxx.
-*   **Journal Article:**
-    [2] J. K. Author, “Name of paper,” *Abbrev. Title of Periodical*, vol. x, no. x, pp. xxx–xxx, Abbrev. Month, year.
-*   **Conference Paper:**
-    [3] J. K. Author, “Title of paper,” in *Abbreviated Name of Conf.*, City of Conf., State (or Country), year, pp. xxx–xxx.
-*   **Online Source (Website):**
-    [4] J. K. Author (if available), “Title of web page,” *Website Name*. [Online]. Available: URL. [Accessed: Date].
-*   **Software Documentation:**
-    [5] The TensorFlow Authors, “TensorFlow Documentation,” *TensorFlow*. [Online]. Available: https://www.tensorflow.org/api_docs. [Accessed: May 8, 2024].
-
----
+*   Relevant documentation for Python libraries: Pandas, NumPy, TensorFlow, Keras, scikit-learn, PyMongo, aiohttp, asyncio.
+*   Academic papers and online resources on LSTM networks for time series forecasting.
+*   Resources on technical indicators (SMA, RSI, Volatility).
+*   Documentation for MongoDB.
+*   Information regarding the specific data source used for scraping.
