@@ -11,7 +11,7 @@
                     <option value="">Choose a company</option>
                     {% for company_item in companies %} {# Ensure 'companies' is passed from your backend view #}
                     <option value="{{ company_item.symbol }}" {% if symbol == company_item.symbol %}selected{% endif %}>
-                        {{ company_item.name|default(company_item.symbol) }} {# Display name, fallback to symbol #}
+                        {{ company_item.symbol|default(company_item.symbol) }} {# Display name, fallback to symbol #}
                     </option>
                     {% endfor %}
                 </select>
