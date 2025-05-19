@@ -237,6 +237,73 @@ def train_models():
         'results': training_results
     })
 
+@app.route('/train/<symbol>')
+def train_single_model(symbol):
+    logger.info(f"Attempting to train model for single symbol: {symbol}")
+    db_manager = DatabaseManager()
+
+    try:
+        # Check if a model already exists for this symbol
+        existing_models = db_manager.get_existing_model_symbols()
+        if symbol in existing_models:
+            logger.info(f"Model for {symbol} already exists. Skipping training.")
+            return jsonify({
+                'symbol': symbol,
+                'status': 'skipped',
+                'reason': 'model already exists'
+            })
+
+        stock_data = db_manager.get_stock_history(symbol)
+        logger.info(f"Retrieved {len(stock_data)} records for training {symbol}")
+
+        if len(stock_data) > 60: # Ensure sufficient data
+            df = pd.DataFrame(stock_data)
+            df = preprocess_transaction_data(df, symbol)
+
+            logger.info(f"Starting training for {symbol}...")
+            # Assuming train_model returns model, scaler
+            model, scaler = train_model(df, seq_length=60, epochs=100) # Use same parameters as batch training
+            logger.info(f"Training completed for {symbol}.")
+
+            save_success = db_manager.save_model_and_scaler(symbol, model, scaler)
+
+            if save_success:
+                logger.info(f"Successfully saved model for {symbol}")
+                return jsonify({
+                    'symbol': symbol,
+                    'status': 'success',
+                    'data_points': len(stock_data)
+                })
+            else:
+                logger.error(f"Failed to save model for {symbol}")
+                return jsonify({
+                    'symbol': symbol,
+                    'status': 'failed_to_save',
+                    'data_points': len(stock_data)
+                }), 500 # Indicate server error if saving fails
+
+        else:
+            logger.warning(f"Insufficient data for {symbol} (needs at least 60 days)")
+            return jsonify({
+                'symbol': symbol,
+                'status': 'skipped',
+                'reason': 'insufficient data',
+                'data_points': len(stock_data)
+            })
+
+    except Exception as e:
+        logger.error(f"Error training model for {symbol}: {str(e)}", exc_info=True)
+        return jsonify({
+            'symbol': symbol,
+            'status': 'failed',
+            'error': str(e)
+        }), 500 # Indicate server error on training failure
+    finally:
+        db_manager.close_connection()
+        logger.debug("Database connection closed")
+
+
+
 @app.route('/api/stocks/search')
 def search_stocks():
     term = request.args.get('term', '').upper()
