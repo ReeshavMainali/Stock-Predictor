@@ -289,3 +289,17 @@ class DatabaseManager:
             logger.error(f"Error fetching existing model symbols: {str(e)}")
             return []
 
+    def get_model_metadata(self) -> List[Dict]:
+        """
+        Get metadata (symbol, format, TF version) for all trained models.
+        Excludes the binary model and scaler data.
+        """
+        try:
+            # Project only the required fields, exclude the binary data and _id
+            projection = {'symbol': 1, 'model_format': 1, 'tensorflow_version': 1, '_id': 0}
+            metadata_list = list(self.models_collection.find({}, projection))
+            logger.debug(f"Retrieved metadata for {len(metadata_list)} models")
+            return metadata_list
+        except Exception as e:
+            logger.error(f"Error fetching model metadata: {e}", exc_info=True)
+            return []

@@ -5,6 +5,7 @@ from functions.db_data_manager import DatabaseManager
 from functions.logger import logger
 from model.model import train_model, predict_future, calculate_rsi, preprocess_transaction_data
 from datetime import datetime, timedelta
+import io,sys
 
 # Set the environment variable to disable TensorFlow OneDNN optimizations
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
@@ -254,6 +255,54 @@ def search_stocks():
         return jsonify([])
     finally:
         db_manager.close_connection()
+
+@app.route('/models')
+def list_models():
+    logger.info("Accessing models list page")
+    db_manager = DatabaseManager()
+    models_metadata = []
+    try:
+        # Use the new method to fetch model metadata
+        models_metadata = db_manager.get_model_metadata()
+        logger.info(f"Found {len(models_metadata)} trained models")
+    except Exception as e:
+        logger.error(f"Error fetching model metadata: {str(e)}", exc_info=True)
+        # models_metadata remains empty list
+    finally:
+        db_manager.close_connection()
+        logger.debug("Database connection closed")
+
+    # Render the new template, passing the list of models
+    return render_template('models.html', models=models_metadata)
+
+@app.route('/api/models/<symbol>/structure')
+def get_model_structure(symbol):
+    logger.info(f"Fetching model structure for symbol: {symbol}")
+    db_manager = DatabaseManager()
+    try:
+        model, _ = db_manager.get_model_and_scaler(symbol)
+
+        if model is None:
+            logger.warning(f"Model not found for symbol {symbol}")
+            return jsonify({'error': 'Model not found'}), 404
+
+        # Capture model summary output
+        stream = io.StringIO()
+        sys.stdout = stream
+        model.summary()
+        sys.stdout = sys.__stdout__ # Restore stdout
+        summary_string = stream.getvalue()
+
+        logger.debug(f"Successfully generated model summary for {symbol}")
+        return jsonify({'symbol': symbol, 'structure': summary_string})
+
+    except Exception as e:
+        logger.error(f"Error getting model structure for {symbol}: {str(e)}", exc_info=True)
+        return jsonify({'error': 'Internal server error', 'message': str(e)}), 500
+    finally:
+        db_manager.close_connection()
+        logger.debug("Database connection closed")
+
 
 if __name__ == '__main__':
     logger.info("Starting Flask application")

@@ -1,0 +1,131 @@
+{# templates/models.html #}
+{% extends "base.html" %}
+
+{% block title %}Available Models{% endblock %}
+
+{% block content %}
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Available Trained Models</h1>
+
+    {% if models %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for model in models %}
+                <div class="model-card bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 flex flex-col transition-transform duration-200 hover:scale-105 hover:shadow-lg" data-symbol="{{ model.symbol }}">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">{{ model.symbol }}</h3>
+                    <p class="text-gray-700 dark:text-gray-300 mb-2">
+                        <strong class="text-gray-900 dark:text-white">Format:</strong> {{ model.model_format | default('N/A') }}
+                    </p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">
+                        <strong class="text-gray-900 dark:text-white">TensorFlow Version:</strong> {{ model.tensorflow_version | default('N/A') }}
+                    </p>
+                    {# Action buttons #}
+                    <div class="flex gap-4 mt-auto">
+                        <a href="{{ url_for('predict', symbol=model.symbol) }}"
+                           class="flex-1 text-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition-colors duration-200">
+                            Predict
+                        </a>
+                        <button class="flex-1 text-center px-4 py-2 bg-gray-600 text-white font-semibold rounded-md hover:bg-gray-700 transition-colors duration-200 view-structure-btn">
+                            View Structure
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-xl text-gray-600 dark:text-gray-400 mt-10">No trained models found in the database.</p>
+    {% endif %}
+
+    {# Modal Structure #}
+    <div id="structure-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-11/12 max-w-3xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3 mb-4 border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Model Structure: <span id="modal-symbol"></span></h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl leading-none">&times;</button>
+            </div>
+            <div id="modal-content" class="text-gray-700 dark:text-gray-300 text-sm">
+                {# Structure will be loaded here #}
+                <p id="loading-indicator" class="text-center">Loading structure...</p>
+                <pre id="model-structure-pre" class="hidden whitespace-pre-wrap break-words overflow-x-auto bg-gray-100 dark:bg-gray-700 p-4 rounded"></pre>
+                <p id="error-message" class="hidden text-red-600 dark:text-red-400 text-center"></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+ <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOMContentLoaded event fired!");
+            const modal = document.getElementById('structure-modal');
+            const closeModalButton = document.getElementById('close-modal');
+            const modalSymbolSpan = document.getElementById('modal-symbol');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const modelStructurePre = document.getElementById('model-structure-pre');
+            const errorMessage = document.getElementById('error-message');
+
+            function showModal() {
+                modal.classList.remove('hidden');
+            }
+
+            function hideModal() {
+                modal.classList.add('hidden');
+                // Reset modal content
+                loadingIndicator.classList.remove('hidden');
+                modelStructurePre.classList.add('hidden');
+                errorMessage.classList.add('hidden');
+                modelStructurePre.textContent = '';
+                errorMessage.textContent = '';
+                modalSymbolSpan.textContent = '';
+            }
+
+            closeModalButton.addEventListener('click', hideModal);
+
+            // Close modal when clicking outside the content box
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    hideModal();
+                }
+            });
+
+            // Add event listeners to all "View Structure" buttons
+            document.querySelectorAll('.view-structure-btn').forEach(button => {
+                button.addEventListener('click', async function() {
+                    const card = this.closest('.model-card');
+                    const symbol = card.dataset.symbol;
+
+                    if (!symbol) {
+                        console.error("Symbol not found on card.");
+                        return;
+                    }
+
+                    // Show modal and loading indicator
+                    modalSymbolSpan.textContent = symbol;
+                    loadingIndicator.classList.remove('hidden');
+                    modelStructurePre.classList.add('hidden');
+                    errorMessage.classList.add('hidden');
+                    showModal();
+
+                    try {
+                        const response = await fetch(`/api/models/${symbol}/structure`);
+                        const data = await response.json();
+
+                        loadingIndicator.classList.add('hidden');
+
+                        if (response.ok) {
+                            modelStructurePre.textContent = data.structure;
+                            modelStructurePre.classList.remove('hidden');
+                        } else {
+                            errorMessage.textContent = data.error || 'Failed to load model structure.';
+                            errorMessage.classList.remove('hidden');
+                            console.error('API Error:', data.error);
+                        }
+
+                    } catch (error) {
+                        loadingIndicator.classList.add('hidden');
+                        errorMessage.textContent = 'An error occurred while fetching structure.';
+                        errorMessage.classList.remove('hidden');
+                        console.error('Fetch Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+    {% endblock %}
