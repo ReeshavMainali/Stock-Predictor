@@ -5,7 +5,8 @@ from datetime import datetime
 from typing import List, Dict, Optional, Union
 from functions.logger import logger
 import pickle
-
+import tensorflow as tf # For tf.keras.models.load_model and tf.__version__
+import tempfile         # For creating temporary files for model saving/loading
 
 
 # Load environment variables
@@ -19,19 +20,35 @@ class DatabaseManager:
         self.db = self.client.admin
         self.collection = self.db.scraped_data
         self.companies_collection = self.db.companies
+        self.models_collection = self.db.models # Add reference to models collection
     
     def get_all_company_details(self) -> List[Dict]:
-        """Get all company symbols and names from the 'companies' collection"""
+        """
+        Get details (symbol and name) for companies that have a trained model.
+        Returns the list sorted alphabetically by name.
+        """
         try:
-            # Fetch only symbol and name, sort by name
-            # Ensure this matches the structure of your 'companies' collection
+            # First, get the list of symbols for which models exist
+            symbols_with_models = self.get_existing_model_symbols()
+            
+            if not symbols_with_models:
+                logger.info("No trained models found, returning empty company list.")
+                return []
+
+            # Now, fetch company details only for those symbols
+            # Use the $in operator to match documents where 'symbol' is in the list
+            query = {
+                'symbol': { '$in': symbols_with_models }
+            }
+
             companies_cursor = self.companies_collection.find(
-                {},
+                query,
                 {'symbol': 1, 'name': 1, '_id': 0}
-            ).sort('name', 1)
+            ).sort('name', 1) # Sort by name alphabetically
+            
             return list(companies_cursor)
         except Exception as e:
-            logger.error(f"Error fetching company details from MongoDB: {e}")
+            logger.error(f"Error fetching company details with models from MongoDB: {e}")
             return [] # Return empty list on error
 
     def get_all_stocks(self) -> List[Dict]:
@@ -177,9 +194,22 @@ class DatabaseManager:
         """
         Save trained model and scaler for a symbol in the database
         """
+        # model_data is the Keras model object
+        # scaler_data is the scikit-learn scaler object
+        temp_model_path = None
         try:
-            # Convert model and scaler to binary format
-            model_binary = pickle.dumps(model_data)
+            # Save Keras model to a temporary .keras file
+            # tempfile.NamedTemporaryFile creates a file that is deleted when closed by default.
+            # We need to save to its path, then read it, then it can be deleted.
+            with tempfile.NamedTemporaryFile(suffix=".keras", delete=False) as tmp_file:
+                temp_model_path = tmp_file.name
+            
+            model_data.save(temp_model_path) # Keras saves in .keras format if path ends with .keras
+            
+            # Read the binary content of the saved model file
+            with open(temp_model_path, 'rb') as f:
+                model_binary = f.read()
+
             scaler_binary = pickle.dumps(scaler_data)
             
             # Prepare document
@@ -187,11 +217,13 @@ class DatabaseManager:
                 'symbol': symbol,
                 'model': model_binary,
                 'scaler': scaler_binary,
-                'updated_at': datetime.now()
+                'model_format': 'keras_file', # Indicate the model storage format
+                'tensorflow_version': tf.__version__, # Store TF version for debugging
+                'updated_at': datetime.now(),
             }
             
             # Update or insert the model
-            self.db['models'].update_one(
+            self.models_collection.update_one( # Use the models_collection attribute
                 {'symbol': symbol},
                 {'$set': model_doc},
                 upsert=True
@@ -203,56 +235,57 @@ class DatabaseManager:
         except Exception as e:
             logger.error(f"Error saving model for {symbol}: {str(e)}")
             return False
+        finally:
+            # Clean up the temporary model file
+            if temp_model_path and os.path.exists(temp_model_path):
+                os.remove(temp_model_path)
 
     def get_model_and_scaler(self, symbol):
         """
         Retrieve trained model and scaler for a symbol from the database
         """
+        temp_model_path = None
         try:
-            model_doc = self.db['models'].find_one({'symbol': symbol})
+            model_doc = self.models_collection.find_one({'symbol': symbol}) # Use the models_collection attribute
             if model_doc:
-                model = pickle.loads(model_doc['model'])
+                # Check the model format
+                if model_doc.get('model_format') == 'keras_file':
+                    # Write the binary model data to a temporary .keras file
+                    with tempfile.NamedTemporaryFile(suffix=".keras", delete=False) as tmp_file:
+                        temp_model_path = tmp_file.name
+                        tmp_file.write(model_doc['model'])
+                    
+                    # Load the model using tf.keras.models.load_model
+                    # You might need to pass custom_objects if your model uses them,
+                    # but your current model in model.py uses standard layers.
+                    model = tf.keras.models.load_model(temp_model_path)
+                    logger.info(f"Successfully loaded Keras model for {symbol} from file format.")
+                else:
+                    # Fallback for old pickled models (consider migrating these)
+                    logger.warning(f"Model for {symbol} is in old pickle format. Attempting to load with pickle. This may fail.")
+                    model = pickle.loads(model_doc['model'])
+                
                 scaler = pickle.loads(model_doc['scaler'])
                 return model, scaler
+            
+            logger.warning(f"No trained model found in database for symbol {symbol}")
             return None, None
             
         except Exception as e:
             logger.error(f"Error retrieving model for {symbol}: {str(e)}")
             return None, None
-
-    def get_existing_model_symbols(self):
+        finally:
+            # Clean up the temporary model file
+            if temp_model_path and os.path.exists(temp_model_path):
+                os.remove(temp_model_path)
+                
+    def get_existing_model_symbols(self) -> List[str]:
         """Get all symbols that already have trained models"""
         try:
-            model_collection = self.db['models']
-            # Only fetch the symbol field for efficiency
-            existing_models = model_collection.distinct('symbol')
+            # Use the models_collection attribute
+            existing_models = self.models_collection.distinct('symbol')
             return existing_models
         except Exception as e:
             logger.error(f"Error fetching existing model symbols: {str(e)}")
             return []
 
-# Usage example:
-"""
-db_manager = DatabaseManager()
-
-# Get all stocks
-stocks = db_manager.get_all_stocks()
-
-# Get specific stock data
-apple_stocks = db_manager.get_stock_by_symbol("AHPC")
-
-# Get date range data
-range_data = db_manager.get_stock_by_date_range("AHPC", "2014-01-01", "2014-12-31")
-
-# Get unique symbols
-symbols = db_manager.get_unique_symbols()
-
-# Get latest stock data
-latest = db_manager.get_latest_stock_data("AHPC")
-
-# Get statistics
-stats = db_manager.get_stock_statistics("AHPC")
-
-# Close connection when done
-db_manager.close_connection()
-"""
