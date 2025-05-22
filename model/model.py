@@ -284,6 +284,21 @@ def predict_future(model, scaler, last_sequence, num_days=30):
         cycle_length = np.random.randint(5, 15)
         cycle_phase = 0
 
+        # Pre-generate noise components for all days
+        base_noise = np.random.normal(0, historical_volatility * volatility_scaling, num_days) * base_volatility_scale
+        trend_noise = historical_mean_change * np.random.uniform(-1.0, 1.0, num_days) * trend_noise_scale  # Increased range
+        trend_directions = np.random.choice([-1, 1], num_days)
+        shock_probabilities = np.random.random(num_days)
+        shock_magnitudes = historical_volatility * np.random.uniform(0.8, 1.5, num_days) * shock_magnitude_scale  # Increased range
+        feature_noise = np.random.normal(0, np.std(current_sequence[:, 1:], axis=0) * feature_noise_scale, size=(num_days, n_features - 1))
+
+        cycle_phase = 0
+        cycle_lengths = np.random.randint(5, 15, num_days)
+        volatility_scalings = np.random.uniform(0.8, 1.2, num_days)  # Fluctuate volatility scaling
+        reversal_probabilities = np.random.random(num_days)
+        trend_direction = np.random.choice([-1, 1])
+
+        predictions = []
         for i in range(num_days):
             # Predict the next step based on the current sequence
             # Reshape for the model: (batch_size, seq_length, n_features)
@@ -291,22 +306,18 @@ def predict_future(model, scaler, last_sequence, num_days=30):
             pred_scaled = model.predict(current_sequence.reshape(1, seq_length, n_features), verbose=0)[0, 0]
 
             # --- Add Fluctuations ---
-            # Base random noise scaled by historical volatility and current volatility scaling
             # Ensure noise is added in the scaled space
-            base_noise = np.random.normal(0, historical_volatility * volatility_scaling) * base_volatility_scale
-
-            # Trend noise scaled by historical mean change and trend noise scale
-            trend_noise = historical_mean_change * np.random.uniform(-1.0, 1.0) * trend_noise_scale  # Increased range
+            market_factor = base_noise[i] + trend_noise[i]
 
             # Cyclical factor
             cycle_phase += 1
-            cyclical_factor = np.sin(2 * np.pi * cycle_phase / cycle_length) * historical_volatility * cyclical_scale
+            cyclical_factor = np.sin(2 * np.pi * cycle_phase / cycle_lengths[i]) * historical_volatility * cyclical_scale
 
             # Combine noise components
-            market_factor = base_noise + trend_noise + cyclical_factor
+            market_factor += cyclical_factor
 
             # Apply trend direction
-            pred_with_noise_scaled = pred_scaled + market_factor * trend_direction
+            pred_with_noise_scaled = pred_scaled + market_factor * trend_directions[i]
 
             # Add momentum and mean reversion based on the *scaled* values
             if predictions:
@@ -323,9 +334,8 @@ def predict_future(model, scaler, last_sequence, num_days=30):
                 pred_with_noise_scaled += momentum + mean_reversion
 
             # Add random shock
-            if np.random.random() < shock_probability:
-                shock_magnitude = historical_volatility * np.random.uniform(0.8, 1.5) * shock_magnitude_scale  # Increased range
-                pred_with_noise_scaled += shock_magnitude * np.random.choice([-1, 1])  # Shock can be up or down
+            if shock_probabilities[i] < shock_probability:
+                pred_with_noise_scaled += shock_magnitudes[i] * np.random.choice([-1, 1])  # Shock can be up or down
 
             # --- Update sequence for next prediction ---
             # The model predicts the *next* value (index 0) based on the sequence
@@ -341,17 +351,7 @@ def predict_future(model, scaler, last_sequence, num_days=30):
             # This is an approximation. We'll add noise to the last known features.
             # Ensure we don't go out of bounds if n_features is only 1 (though unlikely with this model)
             if n_features > 1:
-                 # Add noise to features other than the price
-                 # Use standard deviation of each feature column for scaling noise
-                 feature_stds = np.std(current_sequence[:, 1:], axis=0)
-                 # Add a small epsilon to avoid division by zero if a feature has zero std
-                 feature_stds[feature_stds < 1e-6] = 1e-6
-                 noise_magnitude = feature_stds * feature_noise_scale
-                 new_row_scaled[1:] = current_sequence[-2, 1:] + np.random.normal(0, noise_magnitude)
-
-                 # Optional: Add some basic logic to keep features somewhat related to the price
-                 # This is complex and might require domain knowledge or more sophisticated simulation
-                 # For now, simple noise addition is used.
+                new_row_scaled[1:] = current_sequence[-2, 1:] + feature_noise[i]
 
             # Add the new row to the sequence
             current_sequence[-1] = new_row_scaled
@@ -361,11 +361,11 @@ def predict_future(model, scaler, last_sequence, num_days=30):
 
             # Update volatility scaling and cycle parameters periodically
             if i % 2 == 0:
-                volatility_scaling = np.random.uniform(0.8, 1.2)  # Fluctuate volatility scaling
-            if i % cycle_length == 0:
-                cycle_length = np.random.randint(5, 15)
+                volatility_scaling = volatility_scalings[i]  # Fluctuate volatility scaling
+            if i % cycle_lengths[i] == 0:
+                cycle_lengths[i] = np.random.randint(5, 15)
                 cycle_phase = 0
-            if np.random.random() < reversal_probability:
+            if reversal_probabilities[i] < reversal_probability:
                 trend_direction *= -1  # Randomly reverse trend direction
 
         # --- Inverse transform predictions ---

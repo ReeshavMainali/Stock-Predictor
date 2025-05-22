@@ -1,229 +1,265 @@
+"""
+Flask application for stock market analysis and prediction.
+
+This application provides:
+- Dashboard with top performing stocks
+- Historical stock data visualization
+- Stock price prediction functionality
+- Model training endpoints
+- API endpoints for data access
+"""
+
 from flask import Flask, render_template, request, jsonify
 import os
 import pandas as pd
 from functions.db_data_manager import DatabaseManager
 from functions.logger import logger
 from model.model import train_model, predict_future, calculate_rsi, preprocess_transaction_data
-from datetime import datetime, timedelta
-import io,sys
+from datetime import timedelta
+import io
+import sys
+from typing import List, Dict, Optional
+from functions.helpers import _calculate_percentage_change , _prepare_prediction_data , _prepare_top_stocks_data
 
-# Set the environment variable to disable TensorFlow OneDNN optimizations
+# Disable TensorFlow OneDNN optimizations for compatibility
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 app = Flask(__name__)
 
+# --------------------------
+# Route Handlers
+# --------------------------
+
 @app.route('/')
-def index():
+def index() -> str:
+    """Render dashboard with top performing stocks.
+    
+    Supports cache refresh via ?refresh=1 query parameter.
+    """
     logger.info("Accessing index page")
     db_manager = DatabaseManager()
-
+    
     try:
-        refresh = request.args.get('refresh', '0') == '1'
-
-        if not refresh:
-            logger.debug("Attempting to fetch cached top stocks")
-            top_stocks = db_manager.get_cached_stocks()
-            if top_stocks:
+        # Check for cached data unless refresh requested
+        if request.args.get('refresh', '0') != '1':
+            cached_stocks = db_manager.get_cached_stocks()
+            if cached_stocks:
                 logger.info("Using cached top stocks data")
-                return render_template('index.html', top_stocks=top_stocks)
-
+                return render_template('index.html', top_stocks=cached_stocks)
+        
+        # Calculate fresh data if no cache or refresh requested
         logger.info("Calculating fresh top stocks data")
-        symbols = db_manager.get_unique_symbols()
-        top_stocks = []
-        for symbol in symbols:
-            latest_data = db_manager.get_latest_stock_data(symbol)
-            if latest_data:
-                stats = db_manager.get_stock_statistics(symbol)
-                current_rate = latest_data['rate']
-                avg_price = stats.get('avg_price', current_rate)
-                change = ((current_rate - avg_price) / avg_price) * 100 if avg_price else 0
-                stock_data = {
-                    'symbol': symbol,
-                    'rate': latest_data['rate'],
-                    'quantity': latest_data['quantity'],
-                    'amount': latest_data['amount'],
-                    'change': round(change, 2)
-                }
-                top_stocks.append(stock_data)
-
-        top_stocks.sort(key=lambda x: x['change'], reverse=True)
-        top_stocks = top_stocks[:10]
-        logger.info("Caching new top stocks data")
+        top_stocks = _prepare_top_stocks_data(db_manager)
         db_manager.cache_top_stocks(top_stocks)
-
+        
+        return render_template('index.html', top_stocks=top_stocks)
+        
     except Exception as e:
         logger.error(f"Error fetching stock data: {str(e)}", exc_info=True)
-        top_stocks = []
+        return render_template('index.html', top_stocks=[])
     finally:
         db_manager.close_connection()
         logger.debug("Database connection closed")
-
-    return render_template('index.html', top_stocks=top_stocks)
 
 @app.route('/history/<symbol>')
 @app.route('/history')
-def history(symbol=None):
+def history(symbol: Optional[str] = None) -> str:
+    """Render stock history page for a specific symbol.
+    
+    Args:
+        symbol: Stock symbol to display history for
+        
+    Returns:
+        Rendered template with historical data
+    """
     logger.info("Accessing history page")
     db_manager = DatabaseManager()
-    all_companies = db_manager.get_all_company_details() # Fetch all companies
-
+    
     try:
-        if symbol is None:
-            symbol = request.args.get('symbol')
+        # Get all companies for dropdown
+        all_companies = db_manager.get_all_company_details()
+        
+        # Get symbol from URL or query param
+        symbol = symbol or request.args.get('symbol')
         if not symbol:
             logger.warning("No symbol provided for history")
-            # Pass companies even if no symbol is selected yet
-            return render_template('history.html', companies=all_companies, symbol=None, error="No stock symbol provided")
-
-        logger.info(f"Fetching historical data for symbol: {symbol}")
+            return render_template('history.html', 
+                                companies=all_companies, 
+                                symbol=None, 
+                                error="No stock symbol provided")
+        
+        # Fetch and process history data
+        logger.info(f"Fetching historical data for {symbol}")
         history_data = db_manager.get_stock_history(symbol)
-        logger.info(f"Retrieved {len(history_data)} historical records for {symbol}")
-
-        logger.debug("Calculating change percentages")
+        logger.info(f"Retrieved {len(history_data)} records for {symbol}")
+        
+        # Calculate percentage changes
         for data in history_data:
-            avg_price = data['avg_price']
-            current_rate = data['rate']
-            change = ((current_rate - avg_price) / avg_price) * 100 if avg_price else 0
-            data['change'] = round(change, 2)
-
+            data['change'] = _calculate_percentage_change(
+                data['rate'], 
+                data['avg_price']
+            )
+            
+        return render_template('history.html', 
+                            companies=all_companies, 
+                            symbol=symbol, 
+                            history_data=history_data)
+        
     except Exception as e:
-        logger.error(f"Error fetching stock history data for {symbol}: {str(e)}", exc_info=True)
-        history_data = []
+        logger.error(f"Error fetching history for {symbol}: {str(e)}", exc_info=True)
+        return render_template('history.html', 
+                            companies=all_companies, 
+                            symbol=symbol, 
+                            history_data=[])
     finally:
         db_manager.close_connection()
         logger.debug("Database connection closed")
 
-    return render_template('history.html', companies=all_companies, symbol=symbol, history_data=history_data)
-
 @app.route('/predict/<symbol>')
 @app.route('/predict')
-def predict(symbol=None):
+def predict(symbol: Optional[str] = None) -> str:
+    """Render stock prediction page with forecast data.
+    
+    Args:
+        symbol: Stock symbol to predict
+        days: Number of days to predict (query parameter, default=30)
+        
+    Returns:
+        Rendered template with prediction data
+    """
     logger.info("Accessing prediction page")
     db_manager = DatabaseManager()
-    all_companies = db_manager.get_all_company_details() # Use DatabaseManager
-
+    
     try:
-        if symbol is None:
-            symbol = request.args.get('symbol')
+        # Get all companies for dropdown
+        all_companies = db_manager.get_all_company_details()
+        
+        # Get parameters
+        symbol = symbol or request.args.get('symbol')
         num_days = int(request.args.get('days', 30))
-
-
+        
         if not symbol:
             logger.warning("No symbol provided for prediction")
-            return render_template('predict.html', companies=all_companies, symbol=None, error="No stock symbol provided")
-
-        logger.debug(f"Fetching stock data for prediction: {symbol}")
+            return render_template('predict.html', 
+                                companies=all_companies, 
+                                symbol=None, 
+                                error="No stock symbol provided")
+        
+        # Fetch and validate data
         stock_data = db_manager.get_stock_history(symbol)
-        logger.info(f"Retrieved {len(stock_data)} records for prediction")
-
         if len(stock_data) < 60:
-            logger.warning(f"Insufficient data for {symbol} (needs at least 60 days)")
-            return render_template('predict.html', companies=all_companies, symbol=symbol, error="Insufficient historical data for prediction (minimum 60 days required)")
-
+            logger.warning(f"Insufficient data for {symbol}")
+            return render_template('predict.html', 
+                                companies=all_companies, 
+                                symbol=symbol, 
+                                error="Insufficient historical data (minimum 60 days required)")
+        
+        # Check for existing model
+        model, scaler = db_manager.get_model_and_scaler(symbol)
+        if model is None:
+            logger.warning(f"No trained model for {symbol}")
+            return render_template('predict.html', 
+                                companies=all_companies, 
+                                symbol=symbol, 
+                                error="No trained model available. Please train first.")
+        
+        # Prepare data and make predictions
         df = pd.DataFrame(stock_data)
         df = preprocess_transaction_data(df, symbol)
-
-        model, scaler = db_manager.get_model_and_scaler(symbol)
-        if model is None or scaler is None:
-            logger.warning(f"No trained model found for symbol {symbol}")
-            return render_template('predict.html', companies=all_companies, symbol=symbol, error="No trained model available for this symbol. Please train it first.")
-
         df = df.sort_values('transaction_date')
+        
+        # Calculate technical indicators
         df['SMA_5'] = df['rate'].rolling(window=5).mean()
         df['SMA_20'] = df['rate'].rolling(window=20).mean()
         df['RSI'] = calculate_rsi(df['rate'])
         df['Volatility'] = df['rate'].rolling(window=20).std()
+        
+        # Prepare features and predict
         features = ['rate', 'SMA_5', 'SMA_20', 'RSI', 'Volatility']
         data = df[features].dropna().values
         scaled_data = scaler.transform(data)
-        last_sequence = scaled_data[-60:]
-        predictions = predict_future(model, scaler, last_sequence, num_days=num_days)
-
-        last_date = df['transaction_date'].iloc[-1]
-        future_dates = [(last_date + timedelta(days=i+1)).strftime('%Y-%m-%d') for i in range(num_days)]
-        last_historical_price = df['rate'].iloc[-1]
-
-        if len(predictions) > 0:
-            scaling_factor = last_historical_price / predictions[0][0]
-            predictions = predictions * scaling_factor
-
-        prediction_data = [
-            {
-                'transaction_date': date,
-                'rate': float(price),
-                'is_prediction': True
-            } for date, price in zip(future_dates, predictions.flatten())
-        ]
-
-        for data in stock_data:
-            data['is_prediction'] = False
-        display_historical = stock_data[-30:]
-        display_data = display_historical + prediction_data
-
-        return render_template('predict.html', companies=all_companies, symbol=symbol, stock_data=display_data, days=num_days)
-
+        predictions = predict_future(model, scaler, scaled_data[-60:], num_days=num_days)
+        
+        # Combine historical and prediction data
+        display_data = _prepare_prediction_data(stock_data, predictions, num_days)
+        
+        return render_template('predict.html', 
+                            companies=all_companies, 
+                            symbol=symbol, 
+                            stock_data=display_data, 
+                            days=num_days)
+        
     except Exception as e:
-        logger.error(f"Error in prediction: {str(e)}", exc_info=True)
-        return render_template('predict.html', companies=all_companies, symbol=symbol, error=f"Error in prediction: {str(e)}")
+        logger.error(f"Prediction error for {symbol}: {str(e)}", exc_info=True)
+        return render_template('predict.html', 
+                            companies=all_companies, 
+                            symbol=symbol, 
+                            error=f"Prediction error: {str(e)}")
     finally:
         db_manager.close_connection()
         logger.debug("Database connection closed")
 
 @app.route('/train_models')
-def train_models():
-    logger.info("Starting batch training for all symbols")
+def train_models() -> jsonify:
+    """Batch train models for all symbols with sufficient data.
+    
+    Returns:
+        JSON response with training results
+    """
+    logger.info("Starting batch training")
     db_manager = DatabaseManager()
-
+    
     try:
         symbols = db_manager.get_unique_symbols()
-        logger.info(f"Found {len(symbols)} symbols to train")
         existing_models = set(db_manager.get_existing_model_symbols())
-        logger.info(f"Found {len(existing_models)} existing models")
-
         training_results = []
+        
         for symbol in symbols:
             try:
                 if symbol in existing_models:
-                    logger.info(f"Model for {symbol} already exists. Skipping training.")
                     training_results.append({
                         'symbol': symbol,
                         'status': 'skipped',
-                        'reason': 'model already exists'
+                        'reason': 'model exists'
                     })
                     continue
-
+                    
                 stock_data = db_manager.get_stock_history(symbol)
-
-                if len(stock_data) > 60:
-                    df = pd.DataFrame(stock_data)
-                    df = preprocess_transaction_data(df, symbol)
-                    model, scaler = train_model(df, seq_length=60, epochs=100)
-                    save_success = db_manager.save_model_and_scaler(symbol, model, scaler)
-                    training_results.append({
-                        'symbol': symbol,
-                        'status': 'success' if save_success else 'failed_to_save',
-                        'data_points': len(stock_data)
-                    })
-                    logger.info(f"Successfully trained model for {symbol}")
-                else:
+                if len(stock_data) <= 60:
                     training_results.append({
                         'symbol': symbol,
                         'status': 'skipped',
                         'reason': 'insufficient data',
                         'data_points': len(stock_data)
                     })
-                    logger.warning(f"Skipped {symbol} due to insufficient data")
-
+                    continue
+                    
+                # Train and save model
+                df = pd.DataFrame(stock_data)
+                df = preprocess_transaction_data(df, symbol)
+                model, scaler = train_model(df, seq_length=60, epochs=100)
+                
+                training_results.append({
+                    'symbol': symbol,
+                    'status': 'success' if db_manager.save_model_and_scaler(symbol, model, scaler) else 'failed',
+                    'data_points': len(stock_data)
+                })
+                
             except Exception as e:
                 training_results.append({
                     'symbol': symbol,
                     'status': 'failed',
                     'error': str(e)
                 })
-                logger.error(f"Error training model for {symbol}: {str(e)}")
-
+                logger.error(f"Training failed for {symbol}: {str(e)}")
+                
+        return jsonify({
+            'status': 'completed',
+            'results': training_results
+        })
+        
     except Exception as e:
-        logger.error(f"Error in batch training: {str(e)}", exc_info=True)
+        logger.error(f"Batch training error: {str(e)}", exc_info=True)
         return jsonify({
             'status': 'error',
             'message': str(e)
@@ -232,144 +268,140 @@ def train_models():
         db_manager.close_connection()
         logger.debug("Database connection closed")
 
-    return jsonify({
-        'status': 'completed',
-        'results': training_results
-    })
-
 @app.route('/train/<symbol>')
-def train_single_model(symbol):
-    logger.info(f"Attempting to train model for single symbol: {symbol}")
+def train_single_model(symbol: str) -> jsonify:
+    """Train model for a single stock symbol.
+    
+    Args:
+        symbol: Stock symbol to train model for
+        
+    Returns:
+        JSON response with training status
+    """
+    logger.info(f"Training model for {symbol}")
     db_manager = DatabaseManager()
-
+    
     try:
-        # Check if a model already exists for this symbol
-        existing_models = db_manager.get_existing_model_symbols()
-        if symbol in existing_models:
-            logger.info(f"Model for {symbol} already exists. Skipping training.")
+        # Check for existing model
+        if symbol in db_manager.get_existing_model_symbols():
             return jsonify({
                 'symbol': symbol,
                 'status': 'skipped',
-                'reason': 'model already exists'
+                'reason': 'model exists'
             })
-
+            
+        # Check data requirements
         stock_data = db_manager.get_stock_history(symbol)
-        logger.info(f"Retrieved {len(stock_data)} records for training {symbol}")
-
-        if len(stock_data) > 60: # Ensure sufficient data
-            df = pd.DataFrame(stock_data)
-            df = preprocess_transaction_data(df, symbol)
-
-            logger.info(f"Starting training for {symbol}...")
-            # Assuming train_model returns model, scaler
-            model, scaler = train_model(df, seq_length=60, epochs=100) # Use same parameters as batch training
-            logger.info(f"Training completed for {symbol}.")
-
-            save_success = db_manager.save_model_and_scaler(symbol, model, scaler)
-
-            if save_success:
-                logger.info(f"Successfully saved model for {symbol}")
-                return jsonify({
-                    'symbol': symbol,
-                    'status': 'success',
-                    'data_points': len(stock_data)
-                })
-            else:
-                logger.error(f"Failed to save model for {symbol}")
-                return jsonify({
-                    'symbol': symbol,
-                    'status': 'failed_to_save',
-                    'data_points': len(stock_data)
-                }), 500 # Indicate server error if saving fails
-
-        else:
-            logger.warning(f"Insufficient data for {symbol} (needs at least 60 days)")
+        if len(stock_data) <= 60:
             return jsonify({
                 'symbol': symbol,
                 'status': 'skipped',
                 'reason': 'insufficient data',
                 'data_points': len(stock_data)
             })
-
+            
+        # Train and save model
+        df = pd.DataFrame(stock_data)
+        df = preprocess_transaction_data(df, symbol)
+        model, scaler = train_model(df, seq_length=60, epochs=100)
+        
+        if not db_manager.save_model_and_scaler(symbol, model, scaler):
+            return jsonify({
+                'symbol': symbol,
+                'status': 'failed',
+                'error': 'Failed to save model'
+            }), 500
+            
+        return jsonify({
+            'symbol': symbol,
+            'status': 'success',
+            'data_points': len(stock_data)
+        })
+        
     except Exception as e:
-        logger.error(f"Error training model for {symbol}: {str(e)}", exc_info=True)
+        logger.error(f"Training failed for {symbol}: {str(e)}", exc_info=True)
         return jsonify({
             'symbol': symbol,
             'status': 'failed',
             'error': str(e)
-        }), 500 # Indicate server error on training failure
+        }), 500
     finally:
         db_manager.close_connection()
         logger.debug("Database connection closed")
 
-
-
 @app.route('/api/stocks/search')
-def search_stocks():
+def search_stocks() -> jsonify:
+    """Search stocks by symbol or name.
+    
+    Returns:
+        JSON response with matching stocks (max 10)
+    """
     term = request.args.get('term', '').upper()
     db_manager = DatabaseManager()
+    
     try:
-        # Fetch company details (symbol and name)
-        all_company_details = db_manager.get_all_company_details()
+        all_companies = db_manager.get_all_company_details()
         matches = [
-            {'symbol': company['symbol'], 'name': company.get('name', company['symbol'])}
-            for company in all_company_details
-            if term in company['symbol'] or (company.get('name') and term in company.get('name', '').upper())
+            {'symbol': c['symbol'], 'name': c.get('name', c['symbol'])}
+            for c in all_companies
+            if term in c['symbol'] or term in c.get('name', '').upper()
         ]
         return jsonify(matches[:10])
     except Exception as e:
-        logger.error(f"Error searching stocks: {str(e)}")
+        logger.error(f"Search error: {str(e)}")
         return jsonify([])
     finally:
         db_manager.close_connection()
 
 @app.route('/models')
-def list_models():
-    logger.info("Accessing models list page")
+def list_models() -> str:
+    """Render page listing all trained models."""
+    logger.info("Accessing models page")
     db_manager = DatabaseManager()
-    models_metadata = []
+    
     try:
-        # Use the new method to fetch model metadata
         models_metadata = db_manager.get_model_metadata()
-        logger.info(f"Found {len(models_metadata)} trained models")
+        logger.info(f"Found {len(models_metadata)} models")
+        return render_template('models.html', models=models_metadata)
     except Exception as e:
-        logger.error(f"Error fetching model metadata: {str(e)}", exc_info=True)
-        # models_metadata remains empty list
+        logger.error(f"Error fetching models: {str(e)}", exc_info=True)
+        return render_template('models.html', models=[])
     finally:
         db_manager.close_connection()
-        logger.debug("Database connection closed")
-
-    # Render the new template, passing the list of models
-    return render_template('models.html', models=models_metadata)
 
 @app.route('/api/models/<symbol>/structure')
-def get_model_structure(symbol):
-    logger.info(f"Fetching model structure for symbol: {symbol}")
+def get_model_structure(symbol: str) -> jsonify:
+    """Get model structure summary for a stock symbol.
+    
+    Args:
+        symbol: Stock symbol to get model for
+        
+    Returns:
+        JSON response with model summary or error
+    """
+    logger.info(f"Fetching model structure for {symbol}")
     db_manager = DatabaseManager()
+    
     try:
         model, _ = db_manager.get_model_and_scaler(symbol)
-
-        if model is None:
-            logger.warning(f"Model not found for symbol {symbol}")
+        if not model:
             return jsonify({'error': 'Model not found'}), 404
-
-        # Capture model summary output
+            
+        # Capture model summary
         stream = io.StringIO()
         sys.stdout = stream
         model.summary()
-        sys.stdout = sys.__stdout__ # Restore stdout
-        summary_string = stream.getvalue()
-
-        logger.debug(f"Successfully generated model summary for {symbol}")
-        return jsonify({'symbol': symbol, 'structure': summary_string})
-
+        sys.stdout = sys.__stdout__
+        
+        return jsonify({
+            'symbol': symbol,
+            'structure': stream.getvalue()
+        })
     except Exception as e:
-        logger.error(f"Error getting model structure for {symbol}: {str(e)}", exc_info=True)
-        return jsonify({'error': 'Internal server error', 'message': str(e)}), 500
+        logger.error(f"Model structure error for {symbol}: {str(e)}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
     finally:
         db_manager.close_connection()
-        logger.debug("Database connection closed")
-
 
 if __name__ == '__main__':
     logger.info("Starting Flask application")
