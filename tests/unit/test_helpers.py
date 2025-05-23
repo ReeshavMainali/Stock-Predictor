@@ -101,7 +101,7 @@ def test_prepare_top_stocks_data_max_10_stocks():
 
 # Tests for _prepare_prediction_data
 def test_prepare_prediction_data_empty_inputs():
-    result = _prepare_prediction_data([], [])
+    result = _prepare_prediction_data([], [], num_days=0)
     assert result["dates"] == []
     assert result["prices"] == []
     assert result["is_prediction"] == []
@@ -117,7 +117,7 @@ def test_prepare_prediction_data_with_history_no_predictions():
         {"date": "2023-01-01", "close": 100, "symbol": "AAPL"},
         {"date": "2023-01-02", "close": 102, "symbol": "AAPL"},
     ]
-    result = _prepare_prediction_data(historical_data, [])
+    result = _prepare_prediction_data(historical_data, [], num_days=0)
     
     assert len(result["dates"]) == 2
     assert len(result["prices"]) == 2
@@ -149,7 +149,7 @@ def test_prepare_prediction_data_with_history_and_predictions():
     # Predictions should start from the day after the last historical date
     predictions = [135, 136, 137, 138, 139, 140, 141] # 7 predictions
     
-    result = _prepare_prediction_data(historical_data, predictions)
+    result = _prepare_prediction_data(historical_data, predictions, num_days=len(predictions))
     
     # Expected: 30 days of history + 7 days of prediction = 37 data points
     assert len(result["dates"]) == 37
@@ -191,7 +191,7 @@ def test_prepare_prediction_data_with_history_and_predictions():
 def test_prepare_prediction_data_only_predictions_no_history():
     predictions = [200, 205, 202]
     # If no historical data, symbol name is unknown, current price etc. are None or 0
-    result = _prepare_prediction_data([], predictions)
+    result = _prepare_prediction_data([], predictions, num_days=len(predictions))
     
     assert len(result["dates"]) == 3 # 3 predictions
     assert len(result["prices"]) == 3
@@ -219,7 +219,7 @@ def test_prepare_prediction_data_scaling_factor_logic():
     ]
     predictions = [3, 1, 4]
     
-    result = _prepare_prediction_data(historical_data, predictions)
+    result = _prepare_prediction_data(historical_data, predictions, num_days=len(predictions))
     
     all_expected_prices = [1, 2, 3, 1, 4]
     assert result["min_price"] == 1
@@ -234,7 +234,7 @@ def test_prepare_prediction_data_history_less_than_30_days():
     ] # 2 days of history
     predictions = [60, 65]
     
-    result = _prepare_prediction_data(historical_data, predictions)
+    result = _prepare_prediction_data(historical_data, predictions, num_days=len(predictions))
     
     assert len(result["dates"]) == 4 # 2 history + 2 prediction
     assert result["prices"] == [50, 55, 60, 65]
