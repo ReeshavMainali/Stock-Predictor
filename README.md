@@ -188,3 +188,25 @@ This system will serve as a proof-of-concept demonstrating the integration of da
 *   Resources on technical indicators (SMA, RSI, Volatility).
 *   Documentation for MongoDB.
 *   Information regarding the specific data source used for scraping.
+
+## 7. Running Tests
+
+To run the automated tests for this project, follow these steps:
+
+1.  **Install Dependencies**:
+    Ensure you have all the necessary dependencies, including testing tools, installed by running:
+    ```bash
+    pip install -r requirements.txt
+    ```
+    This file includes `pytest`, `pytest-flask`, and `mongomock` which are required for running the tests.
+
+2.  **Execute Tests**:
+    Navigate to the root directory of the project in your terminal and run:
+    ```bash
+    pytest
+    ```
+    For more detailed output, you can use:
+    ```bash
+    pytest -v
+    ```
+    This command will discover and execute all tests located in the `tests/` directory.
