@@ -1,5 +1,8 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import pytest
-from app import app as flask_app # Your Flask app instance
+import app as flask_app # Your Flask app instance
 from unittest.mock import MagicMock, patch
 import pandas as pd # For mock_model_functions
 

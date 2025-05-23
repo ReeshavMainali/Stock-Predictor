@@ -19,6 +19,7 @@ import tempfile          # For temporary model file handling
 # Load environment variables once at module level
 load_dotenv()
 MONGODB_URI = os.getenv("MONGODB_URI")
+DB_NAME = "admin"
 
 
 class DatabaseManager:

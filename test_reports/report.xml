@@ -1,0 +1,1952 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="45" failures="18" skipped="0" tests="75" time="3.138" timestamp="2025-05-23T12:07:54.436458+05:45" hostname="Zenbook"><testcase classname="tests.integration.test_app" name="test_index_route" time="0.001"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_index_route_with_cache" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_history_route_with_symbol" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_history_route_no_symbol" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_history_route_symbol_not_found" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_predict_route_with_symbol" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_predict_route_insufficient_data" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_predict_route_no_model" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_train_single_model_route_success" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_train_single_model_route_already_exists" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_train_single_model_route_insufficient_data_for_training" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_train_models_route" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_models_route" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_api_stock_search_route" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_api_model_structure_route_success" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_api_model_structure_route_no_model" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.integration.test_app" name="test_404_error_handler" time="0.000"><error message="failed on setup with &quot;AttributeError: module 'app' has no attribute 'config'&quot;">@pytest.fixture(scope='session') # Scope app to session for efficiency
+    def app():
+        # Flask app configuration for testing
+&gt;       flask_app.config.update({
+            "TESTING": True,
+            "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
+            # "LOGIN_DISABLED": True, # If you have login forms
+        })
+E       AttributeError: module 'app' has no attribute 'config'
+
+tests/conftest.py:12: AttributeError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_all_company_details_no_companies" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_all_company_details_with_data" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_all_stocks_no_data" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_all_stocks_with_data" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_stock_by_symbol" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_stock_by_date_range" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_unique_symbols" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_latest_stock_data" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_stock_statistics" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_stock_history" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_cache_top_stocks_and_get_cached_stocks" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_save_model_and_scaler" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_model_and_scaler_found" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_model_and_scaler_not_found" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_existing_model_symbols" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_model_metadata" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_add_stock_data" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_add_company_details" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_ensure_indexes" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_save_prediction" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_predictions" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_stock_statistics_no_data_for_symbol" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_stock_history_with_limit" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_all_company_details_sorting" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_save_model_and_scaler_tempfile_error" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_save_model_and_scaler_model_save_error" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_model_and_scaler_load_model_error" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_db_data_manager" name="test_get_model_and_scaler_pickle_error" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package&quot;">mock_mongo_client = mongomock.MongoClient('localhost', 27017)
+
+    @pytest.fixture
+    def db_manager(mock_mongo_client):
+        """
+        Provides a DatabaseManager instance with a mocked MongoDB client.
+        Patches MONGODB_URI and DB_NAME used by DatabaseManager.
+        Clears relevant collections before each test.
+        """
+&gt;       with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+             patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
+             patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
+
+tests/unit/test_db_data_manager.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+/usr/lib/python3.10/unittest/mock.py:1431: in __enter__
+    self.target = self.getter()
+/usr/lib/python3.10/unittest/mock.py:1618: in &lt;lambda&gt;
+    getter = lambda: _importer(target)
+/usr/lib/python3.10/unittest/mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+thing = &lt;module 'functions.db_data_manager' from '/home/reeves/7th Sem Project/Stock Predictor/functions/db_data_manager.py'&gt;
+comp = 'pymongo', import_path = 'functions.db_data_manager.pymongo'
+
+    def _dot_lookup(thing, comp, import_path):
+        try:
+            return getattr(thing, comp)
+        except AttributeError:
+&gt;           __import__(import_path)
+E           ModuleNotFoundError: No module named 'functions.db_data_manager.pymongo'; 'functions.db_data_manager' is not a package
+
+/usr/lib/python3.10/unittest/mock.py:1250: ModuleNotFoundError</error></testcase><testcase classname="tests.unit.test_helpers" name="test_calculate_percentage_change_positive" time="0.001" /><testcase classname="tests.unit.test_helpers" name="test_calculate_percentage_change_negative" time="0.001" /><testcase classname="tests.unit.test_helpers" name="test_calculate_percentage_change_no_change" time="0.000" /><testcase classname="tests.unit.test_helpers" name="test_calculate_percentage_change_average_zero" time="0.000" /><testcase classname="tests.unit.test_helpers" name="test_calculate_percentage_change_current_zero" time="0.000" /><testcase classname="tests.unit.test_helpers" name="test_calculate_percentage_change_both_zero" time="0.000" /><testcase classname="tests.unit.test_helpers" name="test_prepare_top_stocks_data_no_symbols" time="0.001" /><testcase classname="tests.unit.test_helpers" name="test_prepare_top_stocks_data_no_latest_data" time="0.002" /><testcase classname="tests.unit.test_helpers" name="test_prepare_top_stocks_data_success_and_sorting" time="0.002"><failure message="KeyError: 'rate'">def test_prepare_top_stocks_data_success_and_sorting():
+        mock_db_manager = MagicMock(spec=DatabaseManager)
+        mock_db_manager.get_unique_symbols.return_value = ["AAPL", "GOOG", "MSFT"]
+    
+        # Simulate data for AAPL
+        mock_db_manager.get_latest_stock_data.side_effect = lambda symbol: {
+            "AAPL": {"close": 150.0, "symbol": "AAPL", "date": "2023-10-01"},
+            "GOOG": {"close": 2500.0, "symbol": "GOOG", "date": "2023-10-01"},
+            "MSFT": {"close": 300.0, "symbol": "MSFT", "date": "2023-10-01"},
+        }[symbol]
+    
+        mock_db_manager.get_stock_statistics.side_effect = lambda symbol: {
+            "AAPL": {"avg_close": 140.0},
+            "GOOG": {"avg_close": 2600.0}, # Negative change
+            "MSFT": {"avg_close": 290.0}, # Positive change, less than AAPL
+        }[symbol]
+    
+&gt;       result = _prepare_top_stocks_data(mock_db_manager)
+
+tests/unit/test_helpers.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+db_manager = &lt;MagicMock spec='DatabaseManager' id='123172765111952'&gt;
+
+    def _prepare_top_stocks_data(db_manager: DatabaseManager) -&gt; List[Dict]:
+        """Prepare top performing stocks data for dashboard.
+    
+        Args:
+            db_manager: DatabaseManager instance
+    
+        Returns:
+            List of top performing stocks sorted by percentage change
+        """
+        symbols = db_manager.get_unique_symbols()
+        top_stocks = []
+    
+        for symbol in symbols:
+            latest_data = db_manager.get_latest_stock_data(symbol)
+            if not latest_data:
+                continue
+    
+            stats = db_manager.get_stock_statistics(symbol)
+&gt;           current_rate = latest_data['rate']
+E           KeyError: 'rate'
+
+functions/helpers.py:40: KeyError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_top_stocks_data_max_10_stocks" time="0.002"><failure message="KeyError: 'rate'">def test_prepare_top_stocks_data_max_10_stocks():
+        mock_db_manager = MagicMock(spec=DatabaseManager)
+        symbols = [f"SYM{i}" for i in range(15)]
+        mock_db_manager.get_unique_symbols.return_value = symbols
+    
+        mock_db_manager.get_latest_stock_data.side_effect = lambda symbol: \
+            {"close": 100.0 + symbols.index(symbol), "symbol": symbol, "date": "2023-10-01"}
+    
+        mock_db_manager.get_stock_statistics.side_effect = lambda symbol: \
+            {"avg_close": 90.0 + symbols.index(symbol)} # All will have positive change
+    
+&gt;       result = _prepare_top_stocks_data(mock_db_manager)
+
+tests/unit/test_helpers.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+db_manager = &lt;MagicMock spec='DatabaseManager' id='123172765531488'&gt;
+
+    def _prepare_top_stocks_data(db_manager: DatabaseManager) -&gt; List[Dict]:
+        """Prepare top performing stocks data for dashboard.
+    
+        Args:
+            db_manager: DatabaseManager instance
+    
+        Returns:
+            List of top performing stocks sorted by percentage change
+        """
+        symbols = db_manager.get_unique_symbols()
+        top_stocks = []
+    
+        for symbol in symbols:
+            latest_data = db_manager.get_latest_stock_data(symbol)
+            if not latest_data:
+                continue
+    
+            stats = db_manager.get_stock_statistics(symbol)
+&gt;           current_rate = latest_data['rate']
+E           KeyError: 'rate'
+
+functions/helpers.py:40: KeyError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_prediction_data_empty_inputs" time="0.001"><failure message="TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'">def test_prepare_prediction_data_empty_inputs():
+&gt;       result = _prepare_prediction_data([], [])
+E       TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'
+
+tests/unit/test_helpers.py:104: TypeError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_prediction_data_with_history_no_predictions" time="0.001"><failure message="TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'">def test_prepare_prediction_data_with_history_no_predictions():
+        historical_data = [
+            {"date": "2023-01-01", "close": 100, "symbol": "AAPL"},
+            {"date": "2023-01-02", "close": 102, "symbol": "AAPL"},
+        ]
+&gt;       result = _prepare_prediction_data(historical_data, [])
+E       TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'
+
+tests/unit/test_helpers.py:120: TypeError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_prediction_data_with_history_and_predictions" time="0.001"><failure message="TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'">def test_prepare_prediction_data_with_history_and_predictions():
+        # Prepare 35 days of historical data to test the 30-day slicing
+        base_date = datetime(2023, 1, 1)
+        historical_data = []
+        for i in range(35):
+            historical_data.append({
+                "date": (base_date + timedelta(days=i)).strftime("%Y-%m-%d"),
+                "close": 100 + i,
+                "symbol": "TEST"
+            })
+    
+        # Last historical price is 100 + 34 = 134
+        # Predictions should start from the day after the last historical date
+        predictions = [135, 136, 137, 138, 139, 140, 141] # 7 predictions
+    
+&gt;       result = _prepare_prediction_data(historical_data, predictions)
+E       TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'
+
+tests/unit/test_helpers.py:152: TypeError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_prediction_data_only_predictions_no_history" time="0.001"><failure message="TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'">def test_prepare_prediction_data_only_predictions_no_history():
+        predictions = [200, 205, 202]
+        # If no historical data, symbol name is unknown, current price etc. are None or 0
+&gt;       result = _prepare_prediction_data([], predictions)
+E       TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'
+
+tests/unit/test_helpers.py:194: TypeError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_prediction_data_scaling_factor_logic" time="0.001"><failure message="TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'">def test_prepare_prediction_data_scaling_factor_logic():
+        # Test with a small range to make scaling factor more obvious if it were fixed
+        historical_data = [
+            {"date": "2023-01-01", "close": 1, "symbol": "TINY"},
+            {"date": "2023-01-02", "close": 2, "symbol": "TINY"},
+        ]
+        predictions = [3, 1, 4]
+    
+&gt;       result = _prepare_prediction_data(historical_data, predictions)
+E       TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'
+
+tests/unit/test_helpers.py:222: TypeError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_prediction_data_history_less_than_30_days" time="0.001"><failure message="TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'">def test_prepare_prediction_data_history_less_than_30_days():
+        historical_data = [
+            {"date": "2023-01-01", "close": 50, "symbol": "LESS"},
+            {"date": "2023-01-02", "close": 55, "symbol": "LESS"},
+        ] # 2 days of history
+        predictions = [60, 65]
+    
+&gt;       result = _prepare_prediction_data(historical_data, predictions)
+E       TypeError: _prepare_prediction_data() missing 1 required positional argument: 'num_days'
+
+tests/unit/test_helpers.py:237: TypeError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_top_stocks_data_with_explicit_patch" time="0.002"><failure message="KeyError: 'rate'">MockDbManager = &lt;MagicMock name='DatabaseManager' id='123172765238272'&gt;
+
+    @patch('functions.helpers.DatabaseManager') # Patch where it's USED
+    def test_prepare_top_stocks_data_with_explicit_patch(MockDbManager):
+        # This test is more about verifying the patching mechanism if you had trouble
+        # with direct MagicMock(spec=...) or if DatabaseManager is complex to instantiate.
+    
+        mock_instance = MockDbManager.return_value # Get the instance created by helpers
+        mock_instance.get_unique_symbols.return_value = ["TESTSYM"]
+        mock_instance.get_latest_stock_data.return_value = {"close": 110, "symbol": "TESTSYM", "date": "2023-01-01"}
+        mock_instance.get_stock_statistics.return_value = {"avg_close": 100}
+    
+&gt;       result = _prepare_top_stocks_data(mock_instance) # Pass the already mocked instance
+
+tests/unit/test_helpers.py:274: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+db_manager = &lt;MagicMock name='DatabaseManager()' id='123172765237648'&gt;
+
+    def _prepare_top_stocks_data(db_manager: DatabaseManager) -&gt; List[Dict]:
+        """Prepare top performing stocks data for dashboard.
+    
+        Args:
+            db_manager: DatabaseManager instance
+    
+        Returns:
+            List of top performing stocks sorted by percentage change
+        """
+        symbols = db_manager.get_unique_symbols()
+        top_stocks = []
+    
+        for symbol in symbols:
+            latest_data = db_manager.get_latest_stock_data(symbol)
+            if not latest_data:
+                continue
+    
+            stats = db_manager.get_stock_statistics(symbol)
+&gt;           current_rate = latest_data['rate']
+E           KeyError: 'rate'
+
+functions/helpers.py:40: KeyError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_top_stocks_data_no_stats" time="0.002"><failure message="KeyError: 'rate'">def test_prepare_top_stocks_data_no_stats():
+        mock_db_manager = MagicMock(spec=DatabaseManager)
+        mock_db_manager.get_unique_symbols.return_value = ["NOSYMBOL"]
+        mock_db_manager.get_latest_stock_data.return_value = {"close": 100.0, "symbol": "NOSYMBOL", "date": "2023-10-01"}
+        mock_db_manager.get_stock_statistics.return_value = None # Simulate no stats data
+    
+&gt;       result = _prepare_top_stocks_data(mock_db_manager)
+
+tests/unit/test_helpers.py:309: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+db_manager = &lt;MagicMock spec='DatabaseManager' id='123172765411184'&gt;
+
+    def _prepare_top_stocks_data(db_manager: DatabaseManager) -&gt; List[Dict]:
+        """Prepare top performing stocks data for dashboard.
+    
+        Args:
+            db_manager: DatabaseManager instance
+    
+        Returns:
+            List of top performing stocks sorted by percentage change
+        """
+        symbols = db_manager.get_unique_symbols()
+        top_stocks = []
+    
+        for symbol in symbols:
+            latest_data = db_manager.get_latest_stock_data(symbol)
+            if not latest_data:
+                continue
+    
+            stats = db_manager.get_stock_statistics(symbol)
+&gt;           current_rate = latest_data['rate']
+E           KeyError: 'rate'
+
+functions/helpers.py:40: KeyError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_top_stocks_data_stats_missing_avg_close" time="0.001"><failure message="KeyError: 'rate'">def test_prepare_top_stocks_data_stats_missing_avg_close():
+        mock_db_manager = MagicMock(spec=DatabaseManager)
+        mock_db_manager.get_unique_symbols.return_value = ["NOSYMBOL"]
+        mock_db_manager.get_latest_stock_data.return_value = {"close": 100.0, "symbol": "NOSYMBOL", "date": "2023-10-01"}
+        # Simulate stats data missing the 'avg_close' key
+        mock_db_manager.get_stock_statistics.return_value = {"some_other_stat": 50}
+    
+&gt;       result = _prepare_top_stocks_data(mock_db_manager)
+
+tests/unit/test_helpers.py:322: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+db_manager = &lt;MagicMock spec='DatabaseManager' id='123172765225728'&gt;
+
+    def _prepare_top_stocks_data(db_manager: DatabaseManager) -&gt; List[Dict]:
+        """Prepare top performing stocks data for dashboard.
+    
+        Args:
+            db_manager: DatabaseManager instance
+    
+        Returns:
+            List of top performing stocks sorted by percentage change
+        """
+        symbols = db_manager.get_unique_symbols()
+        top_stocks = []
+    
+        for symbol in symbols:
+            latest_data = db_manager.get_latest_stock_data(symbol)
+            if not latest_data:
+                continue
+    
+            stats = db_manager.get_stock_statistics(symbol)
+&gt;           current_rate = latest_data['rate']
+E           KeyError: 'rate'
+
+functions/helpers.py:40: KeyError</failure></testcase><testcase classname="tests.unit.test_helpers" name="test_prepare_top_stocks_data_latest_data_missing_close" time="0.001"><failure message="KeyError: 'rate'">def test_prepare_top_stocks_data_latest_data_missing_close():
+        mock_db_manager = MagicMock(spec=DatabaseManager)
+        mock_db_manager.get_unique_symbols.return_value = ["NOSYMBOL"]
+        # Simulate latest stock data missing the 'close' key
+        mock_db_manager.get_latest_stock_data.return_value = {"symbol": "NOSYMBOL", "date": "2023-10-01"}
+        mock_db_manager.get_stock_statistics.return_value = {"avg_close": 100.0}
+    
+&gt;       result = _prepare_top_stocks_data(mock_db_manager)
+
+tests/unit/test_helpers.py:339: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+db_manager = &lt;MagicMock spec='DatabaseManager' id='123172765306112'&gt;
+
+    def _prepare_top_stocks_data(db_manager: DatabaseManager) -&gt; List[Dict]:
+        """Prepare top performing stocks data for dashboard.
+    
+        Args:
+            db_manager: DatabaseManager instance
+    
+        Returns:
+            List of top performing stocks sorted by percentage change
+        """
+        symbols = db_manager.get_unique_symbols()
+        top_stocks = []
+    
+        for symbol in symbols:
+            latest_data = db_manager.get_latest_stock_data(symbol)
+            if not latest_data:
+                continue
+    
+            stats = db_manager.get_stock_statistics(symbol)
+&gt;           current_rate = latest_data['rate']
+E           KeyError: 'rate'
+
+functions/helpers.py:40: KeyError</failure></testcase><testcase classname="tests.unit.test_model" name="test_preprocess_transaction_data_empty" time="0.042" /><testcase classname="tests.unit.test_model" name="test_preprocess_transaction_data_sample" time="0.015"><failure message="assert 3 == 2&#10; +  where 3 = len(     transaction_date   rate  volume  trades\n0 2023-01-01 10:00:00  150.0      10       1\n1 2023-01-01 10:05:00  152.0       5       1\n2 2023-01-02 11:00:00  155.0      12       1)">def test_preprocess_transaction_data_sample():
+        data = {
+            'transaction_date': pd.to_datetime(['2023-01-01 10:00:00', '2023-01-01 10:05:00', '2023-01-02 11:00:00', '2023-01-01 10:10:00']),
+            'symbol': ['AAPL', 'AAPL', 'AAPL', 'MSFT'],
+            'rate': [150.0, 152.0, 155.0, 200.0],
+            'quantity': [10, 5, 12, 7],
+            'transaction': [1, 2, 3, 1] # Will be renamed to 'trades'
+        }
+        df = pd.DataFrame(data)
+    
+        # Test with symbol filter
+        processed_aapl = preprocess_transaction_data(df.copy(), symbol='AAPL')
+&gt;       assert len(processed_aapl) == 2 # Two unique dates for AAPL
+E       assert 3 == 2
+E        +  where 3 = len(     transaction_date   rate  volume  trades\n0 2023-01-01 10:00:00  150.0      10       1\n1 2023-01-01 10:05:00  152.0       5       1\n2 2023-01-02 11:00:00  155.0      12       1)
+
+tests/unit/test_model.py:37: AssertionError</failure></testcase><testcase classname="tests.unit.test_model" name="test_preprocess_transaction_data_date_conversion" time="0.007"><failure message="assert 3 == 2&#10; +  where 3 = len(     transaction_date  rate  volume\n0 2023-01-01 10:00:00  10.0       1\n1 2023-01-01 12:00:00  12.0       1\n2 2023-01-02 14:00:00  15.0       1)">def test_preprocess_transaction_data_date_conversion():
+        data = {
+            'transaction_date': ['2023-01-01 10:00:00', '2023-01-01 12:00:00', '2023-01-02 14:00:00'],
+            'symbol': ['ANY', 'ANY', 'ANY'],
+            'rate': [10, 12, 15],
+            'quantity': [1, 1, 1]
+        }
+        df = pd.DataFrame(data)
+        # Convert to datetime if not already, but ensure the function handles string dates by converting to pd.datetime then .dt.date
+        df['transaction_date'] = pd.to_datetime(df['transaction_date'])
+    
+        processed = preprocess_transaction_data(df.copy())
+&gt;       assert len(processed) == 2
+E       assert 3 == 2
+E        +  where 3 = len(     transaction_date  rate  volume\n0 2023-01-01 10:00:00  10.0       1\n1 2023-01-01 12:00:00  12.0       1\n2 2023-01-02 14:00:00  15.0       1)
+
+tests/unit/test_model.py:85: AssertionError</failure></testcase><testcase classname="tests.unit.test_model" name="test_calculate_rsi_known_values" time="0.006"><failure message="assert False&#10; +  where False = all()&#10; +    where all = 0      True\n1      True\n2      True\n3      True\n4      True\n5      True\n6      True\n7      True\n8      True\n9      True\n10     True\n11     True\n12     True\n13    False\ndtype: bool.all&#10; +      where 0      True\n1      True\n2      True\n3      True\n4      True\n5      True\n6      True\n7      True\n8      True\n9      True\n10     True\n11     True\n12     True\n13    False\ndtype: bool = isna()&#10; +        where isna = 0           NaN\n1           NaN\n2           NaN\n3           NaN\n4           NaN\n5           NaN\n6           NaN\n7           NaN\n8           NaN\n9           NaN\n10          NaN\n11          NaN\n12          NaN\n13    70.464135\ndtype: float64.isna">def test_calculate_rsi_known_values():
+        # Example from https://www.macroption.com/rsi-calculation/ (slightly different results due to Wilder's vs simple SMA for first avg gain/loss)
+        # The model.py uses simple SMA for the first average gain/loss.
+        prices = pd.Series([
+            44.34, 44.09, 44.15, 43.61, 44.33, 44.83, 45.10, 45.42, 45.84, 46.08,
+            45.89, 46.03, 45.61, 46.28, 46.28, 46.00, 46.03, 46.41, 46.22, 45.64
+        ]) # 20 points
+        period = 14
+    
+        rsi = calculate_rsi(prices, period=period)
+        assert len(rsi) == len(prices)
+        assert rsi.iloc[:period-1].isna().all() # First period-1 values are NaN
+    
+        # Manual calculation for a few points (using simple SMA for first avg, then Wilder's)
+        # For index 13 (14th data point, first RSI value):
+        delta = prices.diff()
+        gain = delta.where(delta &gt; 0, 0.0).iloc[1:period] # First 13 diffs (for period 14)
+        loss = -delta.where(delta &lt; 0, 0.0).iloc[1:period]
+    
+        avg_gain1 = gain.mean()
+        avg_loss1 = loss.mean()
+        rs1 = avg_gain1 / avg_loss1 if avg_loss1 &gt; 0 else 100 # if avg_loss1 is 0, RSI is 100
+        rsi1 = 100 - (100 / (1 + rs1))
+        assert rsi.iloc[period-1] == pytest.approx(rsi1, abs=0.1) # model.py rsi starts at index 'period'
+    
+        # The implementation in model.py starts outputting RSI from index `period` (0-indexed)
+        # So, rsi.iloc[period-1] is the first non-NaN value.
+        # Let's check the implementation detail:
+        # delta = data['rate'].diff() - this is correct
+        # up = delta.clip(lower=0)
+        # down = -1*delta.clip(upper=0)
+        # ema_up = up.ewm(com=period-1, adjust=False).mean() -&gt; Wilder's smoothing from the start
+        # ema_down = down.ewm(com=period-1, adjust=False).mean()
+        # rs = ema_up/ema_down
+        # data[f'RSI'] = 100 - (100/(1+rs))
+        # This uses EWM directly. For Wilder's, alpha = 1/period, so com = period - 1.
+    
+        # Using values from a known Wilder's RSI calculator for the given series:
+        # Period 14, for price at index 13 (14th price 46.28): RSI ~ 70.59
+        # For price at index 14 (15th price 46.28): RSI ~ 70.59
+        # For price at index 15 (16th price 46.00): RSI ~ 63.78
+        # For price at index 19 (20th price 45.64): RSI ~ 47.79
+        # The implementation returns NaN for the first `period` entries.
+        # So, rsi.iloc[period] would be the first calculated RSI.
+        # Let's re-evaluate the indexing.
+        # If `data` has length N, `data['rate'].diff()` has N elements, first is NaN.
+        # `up.ewm` also has N elements. `rs` has N elements. `data['RSI']` has N elements.
+        # The `calculate_rsi` function takes a Series, adds 'rate' column, calculates RSI.
+        # It should return a series of same length as input `prices`.
+        # The line `data[f'RSI'].iloc[:period] = np.nan` makes the first `period` values NaN.
+    
+&gt;       assert rsi.iloc[:period].isna().all() # First `period` values (0 to period-1) are NaN
+E       assert False
+E        +  where False = all()
+E        +    where all = 0      True\n1      True\n2      True\n3      True\n4      True\n5      True\n6      True\n7      True\n8      True\n9      True\n10     True\n11     True\n12     True\n13    False\ndtype: bool.all
+E        +      where 0      True\n1      True\n2      True\n3      True\n4      True\n5      True\n6      True\n7      True\n8      True\n9      True\n10     True\n11     True\n12     True\n13    False\ndtype: bool = isna()
+E        +        where isna = 0           NaN\n1           NaN\n2           NaN\n3           NaN\n4           NaN\n5           NaN\n6           NaN\n7           NaN\n8           NaN\n9           NaN\n10          NaN\n11          NaN\n12          NaN\n13    70.464135\ndtype: float64.isna
+
+tests/unit/test_model.py:143: AssertionError</failure></testcase><testcase classname="tests.unit.test_model" name="test_calculate_rsi_edge_cases" time="0.005"><failure message="assert False&#10; +  where False = all()&#10; +    where all = 0      True\n1      True\n2      True\n3      True\n4      True\n5      True\n6      True\n7      True\n8      True\n9      True\n10     True\n11     True\n12     True\n13    False\ndtype: bool.all&#10; +      where 0      True\n1      True\n2      True\n3      True\n4      True\n5      True\n6      True\n7      True\n8      True\n9      True\n10     True\n11     True\n12     True\n13    False\ndtype: bool = isna()&#10; +        where isna = 0       NaN\n1       NaN\n2       NaN\n3       NaN\n4       NaN\n5       NaN\n6       NaN\n7       NaN\n8       NaN\n9       NaN\n10      NaN\n11      NaN\n12      NaN\n13    100.0\ndtype: float64.isna">def test_calculate_rsi_edge_cases():
+        # Series with all same prices
+        same_prices = pd.Series([10.0] * 30)
+        rsi_same = calculate_rsi(same_prices.copy(), period=14)
+        # If all changes are 0, up and down are 0. ema_up and ema_down are 0.
+        # rs = ema_up / ema_down -&gt; 0/0 = NaN or some implementations handle it.
+        # If rs is NaN, rsi is NaN. If rs is 0 (if ema_down is non-zero, ema_up is 0), RSI is 0.
+        # If ema_up is non-zero and ema_down is 0, rs is inf, RSI is 100.
+        # In this code, if ema_down is 0, rs can be inf or nan.
+        # If ema_down is 0, and ema_up is also 0, rs is nan. 100/(1+nan) is nan.
+        # The implementation in model.py: if ema_down is zero, it can lead to division by zero for rs.
+        # `rs = ema_up / ema_down`
+        # `np.seterr(divide='ignore', invalid='ignore')` is NOT used in model.py's calculate_rsi
+        # However, pandas EWM handles internal zeros. If all diffs are 0, ema_up and ema_down are 0.
+        # 0/0 results in NaN for rs. Then 100/(1+NaN) is NaN.
+        assert rsi_same.iloc[14:].isna().all() # Expect NaN if all prices are the same
+    
+        # Series shorter than RSI period + 1 (need at least period+1 prices for 1 RSI value if diff is used)
+        # The function expects `period` initial NaNs for RSI.
+        # So, if len(prices) &lt;= period, all RSI values should be NaN.
+        short_prices = pd.Series([10.0, 11.0, 12.0] * (14//3)) # Length 12, period 14
+        rsi_short = calculate_rsi(short_prices.copy(), period=14)
+        assert rsi_short.isna().all()
+    
+        short_prices_equal_period = pd.Series(np.arange(1,15, dtype=float)) # Length 14
+        rsi_short_eq = calculate_rsi(short_prices_equal_period.copy(), period=14)
+&gt;       assert rsi_short_eq.isna().all() # All should be NaN as first calc is at index 14
+E       assert False
+E        +  where False = all()
+E        +    where all = 0      True\n1      True\n2      True\n3      True\n4      True\n5      True\n6      True\n7      True\n8      True\n9      True\n10     True\n11     True\n12     True\n13    False\ndtype: bool.all
+E        +      where 0      True\n1      True\n2      True\n3      True\n4      True\n5      True\n6      True\n7      True\n8      True\n9      True\n10     True\n11     True\n12     True\n13    False\ndtype: bool = isna()
+E        +        where isna = 0       NaN\n1       NaN\n2       NaN\n3       NaN\n4       NaN\n5       NaN\n6       NaN\n7       NaN\n8       NaN\n9       NaN\n10      NaN\n11      NaN\n12      NaN\n13    100.0\ndtype: float64.isna
+
+tests/unit/test_model.py:227: AssertionError</failure></testcase><testcase classname="tests.unit.test_model" name="test_prepare_data_basic_flow_and_shapes" time="0.009" /><testcase classname="tests.unit.test_model" name="test_prepare_data_scaling" time="0.005" /><testcase classname="tests.unit.test_model" name="test_prepare_data_insufficient_data" time="0.004"><failure message="ValueError: Found array with 0 sample(s) (shape=(0, 5)) while a minimum of 1 is required by MinMaxScaler.">def test_prepare_data_insufficient_data():
+        seq_length = 10
+        # Case 1: Total records less than max window (e.g., SMA20 needs 20 records for 1 value)
+        df_too_short_for_features = pd.DataFrame({'rate': np.arange(1, 15)}) # 14 records
+&gt;       X, y, scaler = prepare_data(df_too_short_for_features.copy(), seq_length=seq_length)
+
+tests/unit/test_model.py:335: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+model/model.py:119: in prepare_data
+    scaled_data = scaler.fit_transform(data)
+.venv/lib/python3.10/site-packages/sklearn/utils/_set_output.py:319: in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+.venv/lib/python3.10/site-packages/sklearn/base.py:918: in fit_transform
+    return self.fit(X, **fit_params).transform(X)
+.venv/lib/python3.10/site-packages/sklearn/preprocessing/_data.py:447: in fit
+    return self.partial_fit(X, y)
+.venv/lib/python3.10/site-packages/sklearn/base.py:1389: in wrapper
+    return fit_method(estimator, *args, **kwargs)
+.venv/lib/python3.10/site-packages/sklearn/preprocessing/_data.py:487: in partial_fit
+    X = validate_data(
+.venv/lib/python3.10/site-packages/sklearn/utils/validation.py:2944: in validate_data
+    out = check_array(X, input_name="X", **check_params)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+array = array([], shape=(0, 5), dtype=float64), accept_sparse = False
+
+    def check_array(
+        array,
+        accept_sparse=False,
+        *,
+        accept_large_sparse=True,
+        dtype="numeric",
+        order=None,
+        copy=False,
+        force_writeable=False,
+        force_all_finite="deprecated",
+        ensure_all_finite=None,
+        ensure_non_negative=False,
+        ensure_2d=True,
+        allow_nd=False,
+        ensure_min_samples=1,
+        ensure_min_features=1,
+        estimator=None,
+        input_name="",
+    ):
+        """Input validation on an array, list, sparse matrix or similar.
+    
+        By default, the input is checked to be a non-empty 2D array containing
+        only finite values. If the dtype of the array is object, attempt
+        converting to float, raising on failure.
+    
+        Parameters
+        ----------
+        array : object
+            Input object to check / convert.
+    
+        accept_sparse : str, bool or list/tuple of str, default=False
+            String[s] representing allowed sparse matrix formats, such as 'csc',
+            'csr', etc. If the input is sparse but not in the allowed format,
+            it will be converted to the first listed format. True allows the input
+            to be any format. False means that a sparse matrix input will
+            raise an error.
+    
+        accept_large_sparse : bool, default=True
+            If a CSR, CSC, COO or BSR sparse matrix is supplied and accepted by
+            accept_sparse, accept_large_sparse=False will cause it to be accepted
+            only if its indices are stored with a 32-bit dtype.
+    
+            .. versionadded:: 0.20
+    
+        dtype : 'numeric', type, list of type or None, default='numeric'
+            Data type of result. If None, the dtype of the input is preserved.
+            If "numeric", dtype is preserved unless array.dtype is object.
+            If dtype is a list of types, conversion on the first type is only
+            performed if the dtype of the input is not in the list.
+    
+        order : {'F', 'C'} or None, default=None
+            Whether an array will be forced to be fortran or c-style.
+            When order is None (default), then if copy=False, nothing is ensured
+            about the memory layout of the output array; otherwise (copy=True)
+            the memory layout of the returned array is kept as close as possible
+            to the original array.
+    
+        copy : bool, default=False
+            Whether a forced copy will be triggered. If copy=False, a copy might
+            be triggered by a conversion.
+    
+        force_writeable : bool, default=False
+            Whether to force the output array to be writeable. If True, the returned array
+            is guaranteed to be writeable, which may require a copy. Otherwise the
+            writeability of the input array is preserved.
+    
+            .. versionadded:: 1.6
+    
+        force_all_finite : bool or 'allow-nan', default=True
+            Whether to raise an error on np.inf, np.nan, pd.NA in array. The
+            possibilities are:
+    
+            - True: Force all values of array to be finite.
+            - False: accepts np.inf, np.nan, pd.NA in array.
+            - 'allow-nan': accepts only np.nan and pd.NA values in array. Values
+              cannot be infinite.
+    
+            .. versionadded:: 0.20
+               ``force_all_finite`` accepts the string ``'allow-nan'``.
+    
+            .. versionchanged:: 0.23
+               Accepts `pd.NA` and converts it into `np.nan`
+    
+            .. deprecated:: 1.6
+               `force_all_finite` was renamed to `ensure_all_finite` and will be removed
+               in 1.8.
+    
+        ensure_all_finite : bool or 'allow-nan', default=True
+            Whether to raise an error on np.inf, np.nan, pd.NA in array. The
+            possibilities are:
+    
+            - True: Force all values of array to be finite.
+            - False: accepts np.inf, np.nan, pd.NA in array.
+            - 'allow-nan': accepts only np.nan and pd.NA values in array. Values
+              cannot be infinite.
+    
+            .. versionadded:: 1.6
+               `force_all_finite` was renamed to `ensure_all_finite`.
+    
+        ensure_non_negative : bool, default=False
+            Make sure the array has only non-negative values. If True, an array that
+            contains negative values will raise a ValueError.
+    
+            .. versionadded:: 1.6
+    
+        ensure_2d : bool, default=True
+            Whether to raise a value error if array is not 2D.
+    
+        allow_nd : bool, default=False
+            Whether to allow array.ndim &gt; 2.
+    
+        ensure_min_samples : int, default=1
+            Make sure that the array has a minimum number of samples in its first
+            axis (rows for a 2D array). Setting to 0 disables this check.
+    
+        ensure_min_features : int, default=1
+            Make sure that the 2D array has some minimum number of features
+            (columns). The default value of 1 rejects empty datasets.
+            This check is only enforced when the input data has effectively 2
+            dimensions or is originally 1D and ``ensure_2d`` is True. Setting to 0
+            disables this check.
+    
+        estimator : str or estimator instance, default=None
+            If passed, include the name of the estimator in warning messages.
+    
+        input_name : str, default=""
+            The data name used to construct the error message. In particular
+            if `input_name` is "X" and the data has NaN values and
+            allow_nan is False, the error message will link to the imputer
+            documentation.
+    
+            .. versionadded:: 1.1.0
+    
+        Returns
+        -------
+        array_converted : object
+            The converted and validated array.
+    
+        Examples
+        --------
+        &gt;&gt;&gt; from sklearn.utils.validation import check_array
+        &gt;&gt;&gt; X = [[1, 2, 3], [4, 5, 6]]
+        &gt;&gt;&gt; X_checked = check_array(X)
+        &gt;&gt;&gt; X_checked
+        array([[1, 2, 3], [4, 5, 6]])
+        """
+        ensure_all_finite = _deprecate_force_all_finite(force_all_finite, ensure_all_finite)
+    
+        if isinstance(array, np.matrix):
+            raise TypeError(
+                "np.matrix is not supported. Please convert to a numpy array with "
+                "np.asarray. For more information see: "
+                "https://numpy.org/doc/stable/reference/generated/numpy.matrix.html"
+            )
+    
+        xp, is_array_api_compliant = get_namespace(array)
+    
+        # store reference to original array to check if copy is needed when
+        # function returns
+        array_orig = array
+    
+        # store whether originally we wanted numeric dtype
+        dtype_numeric = isinstance(dtype, str) and dtype == "numeric"
+    
+        dtype_orig = getattr(array, "dtype", None)
+        if not is_array_api_compliant and not hasattr(dtype_orig, "kind"):
+            # not a data type (e.g. a column named dtype in a pandas DataFrame)
+            dtype_orig = None
+    
+        # check if the object contains several dtypes (typically a pandas
+        # DataFrame), and store them. If not, store None.
+        dtypes_orig = None
+        pandas_requires_conversion = False
+        # track if we have a Series-like object to raise a better error message
+        type_if_series = None
+        if hasattr(array, "dtypes") and hasattr(array.dtypes, "__array__"):
+            # throw warning if columns are sparse. If all columns are sparse, then
+            # array.sparse exists and sparsity will be preserved (later).
+            with suppress(ImportError):
+                from pandas import SparseDtype
+    
+                def is_sparse(dtype):
+                    return isinstance(dtype, SparseDtype)
+    
+                if not hasattr(array, "sparse") and array.dtypes.apply(is_sparse).any():
+                    warnings.warn(
+                        "pandas.DataFrame with sparse columns found."
+                        "It will be converted to a dense numpy array."
+                    )
+    
+            dtypes_orig = list(array.dtypes)
+            pandas_requires_conversion = any(
+                _pandas_dtype_needs_early_conversion(i) for i in dtypes_orig
+            )
+            if all(isinstance(dtype_iter, np.dtype) for dtype_iter in dtypes_orig):
+                dtype_orig = np.result_type(*dtypes_orig)
+            elif pandas_requires_conversion and any(d == object for d in dtypes_orig):
+                # Force object if any of the dtypes is an object
+                dtype_orig = object
+    
+        elif (_is_extension_array_dtype(array) or hasattr(array, "iloc")) and hasattr(
+            array, "dtype"
+        ):
+            # array is a pandas series
+            type_if_series = type(array)
+            pandas_requires_conversion = _pandas_dtype_needs_early_conversion(array.dtype)
+            if isinstance(array.dtype, np.dtype):
+                dtype_orig = array.dtype
+            else:
+                # Set to None to let array.astype work out the best dtype
+                dtype_orig = None
+    
+        if dtype_numeric:
+            if (
+                dtype_orig is not None
+                and hasattr(dtype_orig, "kind")
+                and dtype_orig.kind == "O"
+            ):
+                # if input is object, convert to float.
+                dtype = xp.float64
+            else:
+                dtype = None
+    
+        if isinstance(dtype, (list, tuple)):
+            if dtype_orig is not None and dtype_orig in dtype:
+                # no dtype conversion required
+                dtype = None
+            else:
+                # dtype conversion required. Let's select the first element of the
+                # list of accepted types.
+                dtype = dtype[0]
+    
+        if pandas_requires_conversion:
+            # pandas dataframe requires conversion earlier to handle extension dtypes with
+            # nans
+            # Use the original dtype for conversion if dtype is None
+            new_dtype = dtype_orig if dtype is None else dtype
+            array = array.astype(new_dtype)
+            # Since we converted here, we do not need to convert again later
+            dtype = None
+    
+        if ensure_all_finite not in (True, False, "allow-nan"):
+            raise ValueError(
+                "ensure_all_finite should be a bool or 'allow-nan'. Got "
+                f"{ensure_all_finite!r} instead."
+            )
+    
+        if dtype is not None and _is_numpy_namespace(xp):
+            # convert to dtype object to conform to Array API to be use `xp.isdtype` later
+            dtype = np.dtype(dtype)
+    
+        estimator_name = _check_estimator_name(estimator)
+        context = " by %s" % estimator_name if estimator is not None else ""
+    
+        # When all dataframe columns are sparse, convert to a sparse array
+        if hasattr(array, "sparse") and array.ndim &gt; 1:
+            with suppress(ImportError):
+                from pandas import SparseDtype  # noqa: F811
+    
+                def is_sparse(dtype):
+                    return isinstance(dtype, SparseDtype)
+    
+                if array.dtypes.apply(is_sparse).all():
+                    # DataFrame.sparse only supports `to_coo`
+                    array = array.sparse.to_coo()
+                    if array.dtype == np.dtype("object"):
+                        unique_dtypes = set([dt.subtype.name for dt in array_orig.dtypes])
+                        if len(unique_dtypes) &gt; 1:
+                            raise ValueError(
+                                "Pandas DataFrame with mixed sparse extension arrays "
+                                "generated a sparse matrix with object dtype which "
+                                "can not be converted to a scipy sparse matrix."
+                                "Sparse extension arrays should all have the same "
+                                "numeric type."
+                            )
+    
+        if sp.issparse(array):
+            _ensure_no_complex_data(array)
+            array = _ensure_sparse_format(
+                array,
+                accept_sparse=accept_sparse,
+                dtype=dtype,
+                copy=copy,
+                ensure_all_finite=ensure_all_finite,
+                accept_large_sparse=accept_large_sparse,
+                estimator_name=estimator_name,
+                input_name=input_name,
+            )
+            if ensure_2d and array.ndim &lt; 2:
+                raise ValueError(
+                    f"Expected 2D input, got input with shape {array.shape}.\n"
+                    "Reshape your data either using array.reshape(-1, 1) if "
+                    "your data has a single feature or array.reshape(1, -1) "
+                    "if it contains a single sample."
+                )
+        else:
+            # If np.array(..) gives ComplexWarning, then we convert the warning
+            # to an error. This is needed because specifying a non complex
+            # dtype to the function converts complex to real dtype,
+            # thereby passing the test made in the lines following the scope
+            # of warnings context manager.
+            with warnings.catch_warnings():
+                try:
+                    warnings.simplefilter("error", ComplexWarning)
+                    if dtype is not None and xp.isdtype(dtype, "integral"):
+                        # Conversion float -&gt; int should not contain NaN or
+                        # inf (numpy#14412). We cannot use casting='safe' because
+                        # then conversion float -&gt; int would be disallowed.
+                        array = _asarray_with_order(array, order=order, xp=xp)
+                        if xp.isdtype(array.dtype, ("real floating", "complex floating")):
+                            _assert_all_finite(
+                                array,
+                                allow_nan=False,
+                                msg_dtype=dtype,
+                                estimator_name=estimator_name,
+                                input_name=input_name,
+                            )
+                        array = xp.astype(array, dtype, copy=False)
+                    else:
+                        array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+                except ComplexWarning as complex_warning:
+                    raise ValueError(
+                        "Complex data not supported\n{}\n".format(array)
+                    ) from complex_warning
+    
+            # It is possible that the np.array(..) gave no warning. This happens
+            # when no dtype conversion happened, for example dtype = None. The
+            # result is that np.array(..) produces an array of complex dtype
+            # and we need to catch and raise exception for such cases.
+            _ensure_no_complex_data(array)
+    
+            if ensure_2d:
+                # If input is scalar raise error
+                if array.ndim == 0:
+                    raise ValueError(
+                        "Expected 2D array, got scalar array instead:\narray={}.\n"
+                        "Reshape your data either using array.reshape(-1, 1) if "
+                        "your data has a single feature or array.reshape(1, -1) "
+                        "if it contains a single sample.".format(array)
+                    )
+                # If input is 1D raise error
+                if array.ndim == 1:
+                    # If input is a Series-like object (eg. pandas Series or polars Series)
+                    if type_if_series is not None:
+                        msg = (
+                            f"Expected a 2-dimensional container but got {type_if_series} "
+                            "instead. Pass a DataFrame containing a single row (i.e. "
+                            "single sample) or a single column (i.e. single feature) "
+                            "instead."
+                        )
+                    else:
+                        msg = (
+                            f"Expected 2D array, got 1D array instead:\narray={array}.\n"
+                            "Reshape your data either using array.reshape(-1, 1) if "
+                            "your data has a single feature or array.reshape(1, -1) "
+                            "if it contains a single sample."
+                        )
+                    raise ValueError(msg)
+    
+            if dtype_numeric and hasattr(array.dtype, "kind") and array.dtype.kind in "USV":
+                raise ValueError(
+                    "dtype='numeric' is not compatible with arrays of bytes/strings."
+                    "Convert your data to numeric values explicitly instead."
+                )
+            if not allow_nd and array.ndim &gt;= 3:
+                raise ValueError(
+                    "Found array with dim %d. %s expected &lt;= 2."
+                    % (array.ndim, estimator_name)
+                )
+    
+            if ensure_all_finite:
+                _assert_all_finite(
+                    array,
+                    input_name=input_name,
+                    estimator_name=estimator_name,
+                    allow_nan=ensure_all_finite == "allow-nan",
+                )
+    
+            if copy:
+                if _is_numpy_namespace(xp):
+                    # only make a copy if `array` and `array_orig` may share memory`
+                    if np.may_share_memory(array, array_orig):
+                        array = _asarray_with_order(
+                            array, dtype=dtype, order=order, copy=True, xp=xp
+                        )
+                else:
+                    # always make a copy for non-numpy arrays
+                    array = _asarray_with_order(
+                        array, dtype=dtype, order=order, copy=True, xp=xp
+                    )
+    
+        if ensure_min_samples &gt; 0:
+            n_samples = _num_samples(array)
+            if n_samples &lt; ensure_min_samples:
+&gt;               raise ValueError(
+                    "Found array with %d sample(s) (shape=%s) while a"
+                    " minimum of %d is required%s."
+                    % (n_samples, array.shape, ensure_min_samples, context)
+                )
+E               ValueError: Found array with 0 sample(s) (shape=(0, 5)) while a minimum of 1 is required by MinMaxScaler.
+
+.venv/lib/python3.10/site-packages/sklearn/utils/validation.py:1130: ValueError</failure></testcase><testcase classname="tests.unit.test_model" name="test_prepare_data_feature_presence" time="0.006" /><testcase classname="tests.unit.test_model" name="test_prepare_data_missing_input_columns" time="0.009"><failure message="Failed: DID NOT RAISE &lt;class 'KeyError'&gt;">def test_prepare_data_missing_input_columns():
+        num_records = 30
+        seq_length = 5
+        df_base = pd.DataFrame({
+            'rate': np.arange(1, num_records + 1, dtype=float),
+            'volume': np.random.rand(num_records) * 100,
+            'trades': np.random.randint(1, 5, num_records)
+        })
+        df_base.index = pd.date_range(start='2023-01-01', periods=num_records, freq='D')
+    
+        with pytest.raises(KeyError, match="'rate'"): # Or whatever error it raises
+            prepare_data(df_base.drop(columns=['rate']), seq_length=seq_length)
+    
+        # Volatility uses 'volume', if it's missing, it might lead to issues or use of 'trades'
+        # The current model.py calculate_volatility uses df['volume'] if present, else df['trades']
+        # So, if 'volume' is missing but 'trades' is present, it should still run.
+        X_no_vol, _, _ = prepare_data(df_base.drop(columns=['volume']), seq_length=seq_length)
+        assert X_no_vol.shape[2] == 5 # Should still work, using 'trades' for volatility
+    
+&gt;       with pytest.raises(KeyError): # If both 'volume' and 'trades' are missing for volatility
+E       Failed: DID NOT RAISE &lt;class 'KeyError'&gt;
+
+tests/unit/test_model.py:418: Failed</failure></testcase></testsuite></testsuites>

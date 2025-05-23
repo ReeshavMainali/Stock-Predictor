@@ -308,4 +308,4 @@ def test_404_error_handler(client):
 # - Session variables if they are modified by routes.
 # - Specific HTML elements or attributes if critical.
 # - Response headers.
-```
+

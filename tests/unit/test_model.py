@@ -425,4 +425,3 @@ def test_prepare_data_missing_input_columns():
     with pytest.raises(KeyError): # calculate_volatility will fail
         prepare_data(df_only_rate, seq_length=seq_length)
 
-```
