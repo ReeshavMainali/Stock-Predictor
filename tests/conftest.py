@@ -5,6 +5,7 @@ import pytest
 import app as flask_app # Your Flask app instance
 from unittest.mock import MagicMock, patch
 import pandas as pd # For mock_model_functions
+import numpy as np
 
 @pytest.fixture(scope='session') # Scope app to session for efficiency
 def app():
