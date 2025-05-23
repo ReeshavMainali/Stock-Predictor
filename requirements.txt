@@ -76,3 +76,5 @@ yarl==1.20.0
 pytest
 pytest-flask
 mongomock
+pytest-html
+matplotlib
