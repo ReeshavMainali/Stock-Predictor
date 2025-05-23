@@ -8,19 +8,18 @@ import pandas as pd # For mock_model_functions
 import numpy as np
 
 @pytest.fixture(scope='session') # Scope app to session for efficiency
-def app():
+def flask_test_app():
     # Flask app configuration for testing
-    flask_app.config.update({
+    flask_app.config.update({  # flask_app here refers to the globally imported app instance
         "TESTING": True,
-        "WTF_CSRF_ENABLED": False, # Disable CSRF for easier testing of POST requests if any
-        # "LOGIN_DISABLED": True, # If you have login forms
+        "WTF_CSRF_ENABLED": False, 
+        # "LOGIN_DISABLED": True, 
     })
-    # os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0' # Already in app.py
     yield flask_app
 
 @pytest.fixture() # Default scope is function
-def client(app):
-    return app.test_client()
+def client(flask_test_app): # Use the renamed fixture
+    return flask_test_app.test_client()
 
 @pytest.fixture
 def mock_db_manager(mocker): # Use mocker fixture for easier patching

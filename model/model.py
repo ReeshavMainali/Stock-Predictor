@@ -54,20 +54,25 @@ def preprocess_transaction_data(df, symbol=None):
         'quantity': 'sum'
     }
 
-    # Only include transaction count if it exists
+    # Check if 'transaction' column exists in the input df for aggregation
     if 'transaction' in df.columns:
-        aggregation['transaction'] = 'count'
+        aggregation['transaction'] = 'count' # This will be the key in the agg result
 
-    daily_df = df.groupby(['transaction_date']).agg(aggregation).reset_index()
+    daily_df = df.groupby(df['transaction_date'].dt.date).agg(aggregation).reset_index()
 
-    # Ensure consistent column naming
-    daily_df.rename(columns={
-        'rate': 'rate',
-        'quantity': 'volume'
-    }, inplace=True)
-
-    if 'transaction' in daily_df.columns:
-        daily_df.rename(columns={'transaction': 'trades'}, inplace=True)
+    # Convert the 'transaction_date' (which is now the index name after reset_index, or a column)
+    # back to datetime objects. If it became the index, reset_index makes it a column.
+    daily_df['transaction_date'] = pd.to_datetime(daily_df['transaction_date'])
+    
+    # Rename columns
+    rename_map = {'quantity': 'volume'}
+    if 'transaction' in aggregation: # If 'transaction' was aggregated (as 'count')
+        rename_map['transaction'] = 'trades'
+    
+    daily_df.rename(columns=rename_map, inplace=True)
+    
+    # 'rate' is already named 'rate' from aggregation, no need to rename if key is 'rate'.
+    # If original rate column was different, adjust agg key. Current agg key is 'rate'.
 
     return daily_df
 
@@ -116,6 +121,9 @@ def prepare_data(df, seq_length=60):
     data = df[features].dropna().values
 
     scaler = MinMaxScaler()
+    if data.shape[0] == 0:
+        print("Warning: No data available after feature calculation and dropna. Cannot prepare data.")
+        return np.array([]), np.array([]), scaler
     scaled_data = scaler.fit_transform(data)
 
     X, y = [], []

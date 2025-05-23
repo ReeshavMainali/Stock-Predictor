@@ -36,7 +36,7 @@ def db_manager(mock_mongo_client):
     Patches MONGODB_URI and DB_NAME used by DatabaseManager.
     Clears relevant collections before each test.
     """
-    with patch('functions.db_data_manager.pymongo.MongoClient', return_value=mock_mongo_client), \
+    with patch('functions.db_data_manager.MongoClient', return_value=mock_mongo_client), \
          patch('functions.db_data_manager.MONGODB_URI', TEST_MONGO_URI), \
          patch('functions.db_data_manager.DB_NAME', TEST_DB_NAME):
         
