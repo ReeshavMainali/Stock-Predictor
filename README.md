@@ -188,3 +188,60 @@ This system will serve as a proof-of-concept demonstrating the integration of da
 *   Resources on technical indicators (SMA, RSI, Volatility).
 *   Documentation for MongoDB.
 *   Information regarding the specific data source used for scraping.
+
+## 7. Running Tests
+
+To run the automated tests for this project, follow these steps:
+
+1.  **Install Dependencies**:
+    Ensure you have all the necessary dependencies, including testing tools, installed by running:
+    ```bash
+    pip install -r requirements.txt
+    ```
+    This file includes `pytest`, `pytest-flask`, and `mongomock` which are required for running the tests.
+
+2.  **Execute Tests**:
+    Navigate to the root directory of the project in your terminal and run:
+    ```bash
+    pytest
+    ```
+    For more detailed output, you can use:
+    ```bash
+    pytest -v
+    ```
+    This command will discover and execute all tests located in the `tests/` directory.
+
+### HTML Reports
+
+To generate an HTML report of the test results, run the following command:
+
+```bash
+pytest --html=test_reports/report.html --self-contained-html
+```
+
+This will create an `report.html` file in the `test_reports/` directory in your project root. If the directory doesn't exist, `pytest-html` will attempt to create it, but it's good practice to ensure it exists or create it beforehand. This report provides a detailed and user-friendly view of the test outcomes.
+
+### JUnit XML Report
+
+For integration with CI systems or custom reporting scripts, you can generate a JUnit XML report:
+
+```bash
+pytest --junitxml=test_reports/report.xml
+```
+
+This command will create a `report.xml` file in the `test_reports/` directory. This XML file is machine-readable and will be used by the custom script (described below) to generate graphical summary charts.
+
+### Graphical Summary Charts
+
+To generate graphical summary charts (e.g., a pie chart of overall results and a bar chart of tests per suite):
+
+1.  First, ensure you have an up-to-date JUnit XML report:
+    ```bash
+    pytest --junitxml=test_reports/report.xml
+    ```
+
+2.  Then, run the chart generation script:
+    ```bash
+    python generate_summary_charts.py
+    ```
+    This script will parse `test_reports/report.xml` and save `test_summary_pie_chart.png` and `tests_per_suite_bar_chart.png` in the `test_reports/` directory. Make sure the `test_reports/` directory exists, or create it if the script doesn't handle it automatically (though the provided script does).
