@@ -32,8 +32,8 @@ except Exception as e:
 
 name = "scrap2023"
 #do this for upto 2021 dec 30  
-start_full_date = "01/01/2020"
-end_full_date = "12/30/2020"
+start_full_date = "05/01/2025"
+end_full_date = "05/22/2025"
 
 # db = client[name]
 db = client["admin"]
@@ -336,6 +336,9 @@ async def main_async(start_date, end_date, year, shutdown_event):
     
     current_date = start_date_obj
     while current_date <= end_date_obj:
+        if shutdown_event.is_set() or os.path.exists("KILL_SCRAPER"):
+            logger.info("Shutdown requested or kill switch detected. Stopping processing...")
+            break
         if shutdown_event.is_set():
             logger.info("Shutdown requested, stopping processing...")
             break
@@ -488,4 +491,6 @@ if __name__ == "__main__":
     finally:
         end_time = time.time()
         logger.info(f"Time taken: {end_time - start_time:.2f} seconds")
-        logger.info("Scraping tasks completed or interrupted.") 
+        logger.info("Scraping tasks completed or interrupted.")
+        if os.path.exists("KILL_SCRAPER"):
+            os.remove("KILL_SCRAPER") 

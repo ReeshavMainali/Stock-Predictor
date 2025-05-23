@@ -1,0 +1,30 @@
+2025-05-22 20:30:31 | INFO | stock_predictor | Starting Flask application
+2025-05-22 20:30:32 | INFO | stock_predictor | Starting Flask application
+2025-05-22 20:30:42 | INFO | stock_predictor | Accessing index page
+2025-05-22 20:30:42 | INFO | stock_predictor | Using cached top stocks data
+2025-05-22 20:30:45 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:30:51 | INFO | stock_predictor | Loaded Keras model for RADHI
+2025-05-22 20:31:46 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:31:50 | INFO | stock_predictor | Loaded Keras model for PMLI
+2025-05-22 20:33:04 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:33:09 | INFO | stock_predictor | Loaded Keras model for NIMB
+2025-05-22 20:33:42 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:33:46 | INFO | stock_predictor | Loaded Keras model for RIDI
+2025-05-22 20:33:57 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:33:59 | INFO | stock_predictor | Loaded Keras model for RHPL
+2025-05-22 20:35:38 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:35:39 | INFO | stock_predictor | Loaded Keras model for API
+2025-05-22 20:35:47 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:35:49 | INFO | stock_predictor | Loaded Keras model for ANLB
+2025-05-22 20:57:32 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:57:33 | INFO | stock_predictor | Loaded Keras model for RBBD83
+2025-05-22 20:57:55 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:57:56 | INFO | stock_predictor | Loaded Keras model for SCBD
+2025-05-22 20:58:11 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:58:12 | INFO | stock_predictor | Loaded Keras model for SBIBD86
+2025-05-22 20:58:21 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:58:22 | INFO | stock_predictor | Loaded Keras model for CIZBD90
+2025-05-22 20:58:35 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:58:36 | INFO | stock_predictor | Loaded Keras model for BNHC
+2025-05-22 20:58:53 | INFO | stock_predictor | Accessing prediction page
+2025-05-22 20:58:54 | INFO | stock_predictor | Loaded Keras model for BBC
