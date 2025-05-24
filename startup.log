@@ -1,0 +1,33 @@
+2025-05-24 10:13:09.744176: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-05-24 10:13:09.796514: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2025-05-24 10:13:10.096977: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-05-24 10:13:10.097097: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-05-24 10:13:10.154220: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-05-24 10:13:10.271765: I external/local_tsl/tsl/cuda/cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+2025-05-24 10:13:10.272703: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-05-24 10:13:11.506686: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+10:13:16 | INFO | Accessing index page
+10:13:16 | INFO | Using cached top stocks data
+127.0.0.1 - - [24/May/2025 10:13:16] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [24/May/2025 10:13:16] "GET /static/images/stock_banner.jpg HTTP/1.1" 304 -
+127.0.0.1 - - [24/May/2025 10:13:16] "GET /favicon.ico HTTP/1.1" 404 -
+10:13:55 | INFO | Accessing prediction page
+10:14:02 | INFO | Loaded Keras model for CORBL
+127.0.0.1 - - [24/May/2025 10:14:05] "GET /predict/CORBL HTTP/1.1" 200 -
+10:14:12 | INFO | Accessing prediction page
+10:14:15 | INFO | Loaded Keras model for CORBL
+127.0.0.1 - - [24/May/2025 10:14:18] "GET /predict/CORBL?days=30 HTTP/1.1" 200 -
+10:14:27 | INFO | Accessing index page
+10:14:27 | INFO | Using cached top stocks data
+127.0.0.1 - - [24/May/2025 10:14:27] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [24/May/2025 10:14:27] "GET /static/images/stock_banner.jpg HTTP/1.1" 304 -
+10:14:31 | INFO | Accessing prediction page
+10:14:31 | WARNING | Insufficient data for EDBLPO
+127.0.0.1 - - [24/May/2025 10:14:31] "GET /predict/EDBLPO HTTP/1.1" 200 -
+10:14:38 | INFO | Accessing prediction page
+10:14:45 | INFO | Loaded Keras model for RADHI
+127.0.0.1 - - [24/May/2025 10:14:48] "GET /predict/RADHI HTTP/1.1" 200 -
