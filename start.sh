@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#activating the virtual enviroment
+source .venv/bin/activate
+
 # Set project directory
 PROJECT_DIR="/home/reeves/7th Sem Project/Stock Predictor"
 ERROR_LOG="$PROJECT_DIR/startup.log"
