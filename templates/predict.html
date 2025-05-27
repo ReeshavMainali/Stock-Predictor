@@ -73,8 +73,8 @@
                 
                 <!-- Chart Initialization Script -->
                 <!-- Add these script tags before your chart initialization -->
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+                <script src="{{ url_for('static', filename='JS/chart.js') }}"></script>
+                <script src="{{ url_for('static', filename='JS/chartjs-plugin-zoom.js') }}"></script>
                 
                 <!-- Then your existing chart initialization code -->
                 <script>

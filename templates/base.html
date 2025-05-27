@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Stock Predictor{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{{ url_for('static', filename='JS/tailwind.js') }}"></script>
     <script>
         // Dark mode functionality based on system preference
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {

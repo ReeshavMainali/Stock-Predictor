@@ -17,7 +17,7 @@
 2025-05-22 20:35:47 | INFO | stock_predictor | Accessing prediction page
 2025-05-22 20:35:49 | INFO | stock_predictor | Loaded Keras model for ANLB
 2025-05-22 20:57:32 | INFO | stock_predictor | Accessing prediction page
-2025-05-22 20:57:33 | INFO | stock_predictor | Loaded Keras model for RBBD83
+2025-05-22 20:57:33 | INFO |GETTING stock_predictor | Loaded Keras model for RBBD83
 2025-05-22 20:57:55 | INFO | stock_predictor | Accessing prediction page
 2025-05-22 20:57:56 | INFO | stock_predictor | Loaded Keras model for SCBD
 2025-05-22 20:58:11 | INFO | stock_predictor | Accessing prediction page
