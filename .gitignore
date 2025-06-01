@@ -1,3 +1,8 @@
 /.env
 /.venv
 /logs
+__pycache__
+/functions/__pycache__
+/models/__pycache__
+/scraper/__pycache__
+/model_files

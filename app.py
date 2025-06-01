@@ -18,8 +18,11 @@ from model.model import train_model, predict_future, calculate_rsi, preprocess_t
 from datetime import timedelta
 import io
 import sys
+import os
 from typing import List, Dict, Optional
+from flask import Response, make_response
 from functions.helpers import _calculate_percentage_change , _prepare_prediction_data , _prepare_top_stocks_data
+import tensorflow as tf
 
 # Disable TensorFlow OneDNN optimizations for compatibility
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
@@ -400,6 +403,39 @@ def get_model_structure(symbol: str) -> jsonify:
     except Exception as e:
         logger.error(f"Model structure error for {symbol}: {str(e)}", exc_info=True)
         return jsonify({'error': str(e)}), 500
+    finally:
+        db_manager.close_connection()
+        
+@app.route('/save-as-file/<symbol>')
+def save_model_as_file(symbol: str) -> Response:
+    """Save model as H5 file.
+    Args:
+        symbol: Stock symbol to save model for
+    Returns:
+        Response with success message or error
+    """
+    db_manager = DatabaseManager()
+    model_dir = 'model_files'
+    try:
+        # Create directory if it doesn't exist
+        if not os.path.exists(model_dir):
+            os.makedirs(model_dir)
+
+        # Get model and scaler
+        model, _ = db_manager.get_model_and_scaler(symbol)
+        if not model:
+            return make_response(jsonify({'error': 'Model not found'}), 404)
+
+        # Save model
+        model_path = os.path.join(model_dir, f'{symbol}.h5')
+        model.save(model_path)
+
+        logger.info(f"Model saved to {model_path}")
+        return make_response(jsonify({'message': f'Model saved to {model_path}'}), 200)
+
+    except Exception as e:
+        logger.error(f"Error saving model: {str(e)}", exc_info=True)
+        return make_response(jsonify({'error': str(e)}), 500)
     finally:
         db_manager.close_connection()
 
