@@ -441,4 +441,4 @@ def save_model_as_file(symbol: str) -> Response:
 
 if __name__ == '__main__':
     logger.info("Starting Flask application")
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5000, host='0.0.0.0')
