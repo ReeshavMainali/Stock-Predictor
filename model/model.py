@@ -1,24 +1,37 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
+from tensorflow.keras.layers import LSTM, Dense, Dropout, BatchNormalization, Bidirectional
 from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
+import warnings
+warnings.filterwarnings('ignore')
 
 # --------------------
 # Device Setup
 # --------------------
 def setup_device():
     """
-    Sets up the device (GPU, NPU, or CPU) for training.
-
+    Sets up the device (GPU, NPU, or CPU) for training with improved GPU configuration.
+    
     Returns:
         str: Device identifier string ('/GPU:0', '/NPU:0', or '/CPU:0').
     """
-    if tf.config.list_physical_devices('GPU'):
-        print("GPU is available. Using GPU for training.")
-        return '/GPU:0'
+    # Configure GPU memory growth to prevent memory allocation issues
+    gpus = tf.config.experimental.list_physical_devices('GPU')
+    if gpus:
+        try:
+            for gpu in gpus:
+                tf.config.experimental.set_memory_growth(gpu, True)
+            print(f"GPU is available. Using GPU for training. Found {len(gpus)} GPU(s).")
+            return '/GPU:0'
+        except RuntimeError as e:
+            print(f"GPU configuration error: {e}")
+    
+    # Check for NPU
     try:
         devices = tf.config.list_physical_devices()
         for device in devices:
@@ -27,359 +40,508 @@ def setup_device():
                 return '/NPU:0'
     except:
         pass
+    
     print("No GPU/NPU found. Using CPU for training.")
     return '/CPU:0'
 
-
 # --------------------
-# Data Aggregation
+# Enhanced Data Preprocessing
 # --------------------
 def preprocess_transaction_data(df, symbol=None):
     """
-    Aggregates raw transaction-level stock data into daily summaries.
-
+    Enhanced aggregation of raw transaction-level stock data into daily summaries
+    with additional market microstructure features.
+    
     Args:
         df (pd.DataFrame): DataFrame containing transaction data.
         symbol (str, optional): Stock symbol to filter data. Defaults to None.
-
+        
     Returns:
-        pd.DataFrame: DataFrame with daily summaries of stock data.
+        pd.DataFrame: DataFrame with enhanced daily summaries including OHLCV data.
     """
     df['transaction_date'] = pd.to_datetime(df['transaction_date'])
+    
     if symbol:
         df = df[df['symbol'] == symbol]
-
-    aggregation = {
-        'rate': 'mean',
-        'quantity': 'sum'
-    }
-
-    # Only include transaction count if it exists
-    if 'transaction' in df.columns:
-        aggregation['transaction'] = 'count'
-
-    daily_df = df.groupby(['transaction_date']).agg(aggregation).reset_index()
-
-    # Ensure consistent column naming
-    daily_df.rename(columns={
-        'rate': 'rate',
-        'quantity': 'volume'
-    }, inplace=True)
-
-    if 'transaction' in daily_df.columns:
-        daily_df.rename(columns={'transaction': 'trades'}, inplace=True)
-
-    return daily_df
-
+    
+    if df.empty:
+        return pd.DataFrame()
+    
+    # Enhanced aggregation with OHLCV data
+    daily_agg = df.groupby(['transaction_date']).agg({
+        'rate': ['first', 'max', 'min', 'last', 'mean', 'std'],
+        'quantity': ['sum', 'mean', 'std', 'count'],
+        'amount': ['sum', 'mean'],
+        'transaction': 'count'
+    }).reset_index()
+    
+    # Flatten column names
+    daily_agg.columns = ['transaction_date', 'open', 'high', 'low', 'close', 'avg_price', 'price_std',
+                        'volume', 'avg_volume', 'volume_std', 'trade_count', 'total_amount', 'avg_amount', 'transaction_count']
+    
+    # Handle missing values
+    daily_agg['price_std'] = daily_agg['price_std'].fillna(0)
+    daily_agg['volume_std'] = daily_agg['volume_std'].fillna(0)
+    
+    # Calculate additional market microstructure features
+    daily_agg['price_range'] = daily_agg['high'] - daily_agg['low']
+    daily_agg['price_range_pct'] = (daily_agg['price_range'] / daily_agg['close']) * 100
+    daily_agg['avg_trade_size'] = daily_agg['volume'] / daily_agg['trade_count']
+    daily_agg['vwap'] = daily_agg['total_amount'] / daily_agg['volume']  # Volume Weighted Average Price
+    daily_agg['price_efficiency'] = abs(daily_agg['close'] - daily_agg['vwap']) / daily_agg['close']
+    
+    # Sort by date
+    daily_agg = daily_agg.sort_values('transaction_date').reset_index(drop=True)
+    
+    return daily_agg
 
 # --------------------
-# RSI Calculation
+# Enhanced Technical Indicators
 # --------------------
-def calculate_rsi(prices, period=14):
+def calculate_technical_indicators(df):
     """
-    Calculates the Relative Strength Index (RSI) for a given price series.
-
+    Calculate comprehensive technical indicators for stock analysis.
+    
     Args:
-        prices (pd.Series): Price series.
-        period (int, optional): Period for RSI calculation. Defaults to 14.
-
+        df (pd.DataFrame): DataFrame with OHLCV data.
+        
     Returns:
-        pd.Series: RSI values.
+        pd.DataFrame: DataFrame with added technical indicators.
     """
+    df = df.copy()
+    
+    # Price-based indicators
+    df['returns'] = df['close'].pct_change()
+    df['log_returns'] = np.log(df['close'] / df['close'].shift(1))
+    
+    # Moving averages
+    for period in [5, 10, 20, 50]:
+        df[f'sma_{period}'] = df['close'].rolling(window=period).mean()
+        df[f'ema_{period}'] = df['close'].ewm(span=period).mean()
+    
+    # Bollinger Bands
+    df['bb_middle'] = df['close'].rolling(window=20).mean()
+    bb_std = df['close'].rolling(window=20).std()
+    df['bb_upper'] = df['bb_middle'] + (bb_std * 2)
+    df['bb_lower'] = df['bb_middle'] - (bb_std * 2)
+    df['bb_width'] = df['bb_upper'] - df['bb_lower']
+    df['bb_position'] = (df['close'] - df['bb_lower']) / (df['bb_upper'] - df['bb_lower'])
+    
+    # RSI
+    df['rsi'] = calculate_rsi(df['close'])
+    
+    # MACD
+    ema_12 = df['close'].ewm(span=12).mean()
+    ema_26 = df['close'].ewm(span=26).mean()
+    df['macd'] = ema_12 - ema_26
+    df['macd_signal'] = df['macd'].ewm(span=9).mean()
+    df['macd_histogram'] = df['macd'] - df['macd_signal']
+    
+    # Stochastic Oscillator
+    low_14 = df['low'].rolling(window=14).min()
+    high_14 = df['high'].rolling(window=14).max()
+    df['stoch_k'] = 100 * (df['close'] - low_14) / (high_14 - low_14)
+    df['stoch_d'] = df['stoch_k'].rolling(window=3).mean()
+    
+    # Volume indicators
+    df['volume_sma'] = df['volume'].rolling(window=20).mean()
+    df['volume_ratio'] = df['volume'] / df['volume_sma']
+    
+    # On-Balance Volume (OBV)
+    df['obv'] = (df['volume'] * np.sign(df['returns'])).cumsum()
+    
+    # Average True Range (ATR)
+    df['tr'] = np.maximum(df['high'] - df['low'], 
+                         np.maximum(abs(df['high'] - df['close'].shift(1)), 
+                                   abs(df['low'] - df['close'].shift(1))))
+    df['atr'] = df['tr'].rolling(window=14).mean()
+    
+    # Volatility
+    df['volatility'] = df['returns'].rolling(window=20).std() * np.sqrt(252)  # Annualized
+    
+    # Price momentum
+    df['momentum'] = df['close'] / df['close'].shift(10) - 1
+    
+    # Williams %R
+    df['williams_r'] = -100 * (high_14 - df['close']) / (high_14 - low_14)
+    
+    return df
+
+def calculate_rsi(prices, period=14):
+    """Enhanced RSI calculation with improved handling of edge cases."""
+    if len(prices) < period + 1:
+        return pd.Series(index=prices.index, dtype=float)
+    
     delta = prices.diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
-    rs = gain / loss
-    return 100 - (100 / (1 + rs))
-
+    
+    # Handle division by zero
+    rs = gain / loss.replace(0, np.nan)
+    rsi = 100 - (100 / (1 + rs))
+    
+    return rsi
 
 # --------------------
-# Data Preparation
+# Enhanced Data Preparation
 # --------------------
-def prepare_data(df, seq_length=60):
+def prepare_data(df, seq_length=60, prediction_horizon=1, validation_split=0.2):
     """
-    Prepares data for LSTM model training.
-
+    Enhanced data preparation with multiple features and proper validation split.
+    
     Args:
-        df (pd.DataFrame): DataFrame containing stock data.
-        seq_length (int, optional): Sequence length for LSTM model. Defaults to 60.
-
+        df (pd.DataFrame): DataFrame containing stock data with technical indicators.
+        seq_length (int): Sequence length for LSTM model.
+        prediction_horizon (int): Days ahead to predict.
+        validation_split (float): Fraction of data for validation.
+        
     Returns:
-        tuple: X (input sequences), y (target values), and scaler (MinMaxScaler).
+        tuple: (X_train, X_val, X_test, y_train, y_val, y_test, scaler, feature_names)
     """
-    df['SMA_5'] = df['rate'].rolling(window=5).mean()
-    df['SMA_20'] = df['rate'].rolling(window=20).mean()
-    df['RSI'] = calculate_rsi(df['rate'])
-    df['Volatility'] = df['rate'].rolling(window=20).std()
-
-    features = ['rate', 'SMA_5', 'SMA_20', 'RSI', 'Volatility']
-    data = df[features].dropna().values
-
-    scaler = MinMaxScaler()
+    # Calculate technical indicators
+    df = calculate_technical_indicators(df)
+    
+    # Select features for model
+    feature_columns = [
+        'close', 'volume', 'high', 'low', 'open', 'vwap',
+        'sma_5', 'sma_10', 'sma_20', 'ema_5', 'ema_10', 'ema_20',
+        'rsi', 'macd', 'macd_signal', 'bb_position', 'bb_width',
+        'stoch_k', 'stoch_d', 'volume_ratio', 'atr', 'volatility',
+        'momentum', 'williams_r', 'price_range_pct', 'price_efficiency'
+    ]
+    
+    # Filter existing columns
+    available_features = [col for col in feature_columns if col in df.columns]
+    
+    if not available_features:
+        print("No suitable features found in dataframe")
+        return None, None, None, None, None, None, None, None
+    
+    # Prepare data
+    data = df[available_features].dropna()
+    
+    if len(data) < seq_length + prediction_horizon:
+        print(f"Insufficient data: {len(data)} rows, need at least {seq_length + prediction_horizon}")
+        return None, None, None, None, None, None, None, None
+    
+    # Scale features
+    scaler = StandardScaler()  # Often works better than MinMaxScaler for financial data
     scaled_data = scaler.fit_transform(data)
-
+    
+    # Create sequences
     X, y = [], []
-
-    # Ensure enough data exists after dropping NaNs for the sequence length
-    if len(scaled_data) < seq_length + 1:
-        print(f"Warning: Not enough data ({len(scaled_data)}) for sequence length ({seq_length}). Cannot prepare data.")
-        return np.array([]), np.array([]), scaler  # Return empty arrays
-
-    for i in range(len(scaled_data) - seq_length):
+    for i in range(len(scaled_data) - seq_length - prediction_horizon + 1):
         X.append(scaled_data[i:(i + seq_length)])
-        y.append(scaled_data[i + seq_length, 0])
-
-    return np.array(X), np.array(y), scaler
-
+        y.append(scaled_data[i + seq_length + prediction_horizon - 1, 0])  # Predict close price
+    
+    X, y = np.array(X), np.array(y)
+    
+    # Split data
+    train_size = int(len(X) * (1 - validation_split - 0.2))  # 60% train, 20% val, 20% test
+    val_size = int(len(X) * validation_split)
+    
+    X_train = X[:train_size]
+    X_val = X[train_size:train_size + val_size]
+    X_test = X[train_size + val_size:]
+    
+    y_train = y[:train_size]
+    y_val = y[train_size:train_size + val_size]
+    y_test = y[train_size + val_size:]
+    
+    return X_train, X_val, X_test, y_train, y_val, y_test, scaler, available_features
 
 # --------------------
-# Model Creation
+# Enhanced Model Architecture
 # --------------------
-def create_model(seq_length, n_features):
+def create_model(seq_length, n_features, dropout_rate=0.3):
     """
-    Creates an LSTM model for stock price prediction.
-
+    Create an enhanced LSTM model with improved architecture.
+    
     Args:
         seq_length (int): Sequence length for LSTM model.
-        n_features (int): Number of features in the input data.
-
+        n_features (int): Number of features in input data.
+        dropout_rate (float): Dropout rate for regularization.
+        
     Returns:
-        tf.keras.models.Sequential: Compiled LSTM model.
+        tf.keras.models.Sequential: Enhanced LSTM model.
     """
     model = Sequential([
-        LSTM(256, activation='tanh', return_sequences=True, input_shape=(seq_length, n_features)),
-        Dropout(0.4),
-        LSTM(128, activation='tanh', return_sequences=True),
-        Dropout(0.4),
-        LSTM(64, activation='tanh'),
-        Dropout(0.4),
-        Dense(64, activation='relu'),
-        Dense(32, activation='relu'),
+        # First LSTM layer with return sequences
+        Bidirectional(LSTM(128, return_sequences=True, 
+                          kernel_regularizer=tf.keras.regularizers.l2(0.001)),
+                     input_shape=(seq_length, n_features)),
+        BatchNormalization(),
+        Dropout(dropout_rate),
+        
+        # Second LSTM layer
+        Bidirectional(LSTM(64, return_sequences=True,
+                          kernel_regularizer=tf.keras.regularizers.l2(0.001))),
+        BatchNormalization(),
+        Dropout(dropout_rate),
+        
+        # Third LSTM layer
+        LSTM(32, kernel_regularizer=tf.keras.regularizers.l2(0.001)),
+        BatchNormalization(),
+        Dropout(dropout_rate),
+        
+        # Dense layers
+        Dense(64, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)),
+        BatchNormalization(),
+        Dropout(dropout_rate),
+        
+        Dense(32, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)),
+        Dropout(dropout_rate),
+        
+        Dense(16, activation='relu'),
         Dense(1)
     ])
-
-    model.compile(optimizer=Adam(learning_rate=0.0005), loss=tf.keras.losses.Huber())
+    
+    # Use adaptive learning rate
+    optimizer = Adam(learning_rate=0.001, clipnorm=1.0)
+    model.compile(optimizer=optimizer, 
+                 loss='huber',  # More robust to outliers
+                 metrics=['mse', 'mae'])
+    
     return model
 
 # --------------------
-# Model Training
+# Enhanced Training Function
 # --------------------
-def train_model(df, seq_length=60, epochs=100, batch_size=32):
+def train_model(df, seq_length=60, epochs=100, batch_size=32, patience=20):
     """
-    Trains the LSTM model.
-
+    Enhanced model training with proper validation and callbacks.
+    
     Args:
         df (pd.DataFrame): DataFrame containing stock data.
-        seq_length (int, optional): Sequence length for LSTM model. Defaults to 60.
-        epochs (int, optional): Number of training epochs. Defaults to 100.
-        batch_size (int, optional): Batch size for training. Defaults to 32.
-
+        seq_length (int): Sequence length for LSTM model.
+        epochs (int): Maximum number of training epochs.
+        batch_size (int): Batch size for training.
+        patience (int): Early stopping patience.
+        
     Returns:
-        tuple: Trained LSTM model and scaler (MinMaxScaler).
+        tuple: (model, scaler, history, evaluation_metrics)
     """
     device = setup_device()
+    
     with tf.device(device):
-        X, y, scaler = prepare_data(df, seq_length)
-
-        if len(X) == 0:
-            print("Not enough data to train the model.")
-            return None, None # Return None if data preparation failed
-
-        train_size = int(len(X) * 0.8)
-        # Ensure train_size is at least 1
-        if train_size == 0 and len(X) > 0:
-             train_size = 1
-        # Ensure there's data for both train and test sets
-        if len(X) - train_size < 1:
-             print("Not enough data for both training and testing sets.")
-             return None, None
-
-        X_train, X_test = X[:train_size], X[train_size:]
-        y_train, y_test = y[:train_size], y[train_size:]
-
-        n_features = X.shape[2]
-        model = create_model(seq_length, n_features)
-
+        # Prepare data
+        X_train, X_val, X_test, y_train, y_val, y_test, scaler, features = prepare_data(
+            df, seq_length
+        )
+        
+        if X_train is None:
+            print("Data preparation failed")
+            return None, None, None, None
+        
+        print(f"Training data shape: {X_train.shape}")
+        print(f"Validation data shape: {X_val.shape}")
+        print(f"Test data shape: {X_test.shape}")
+        print(f"Features used: {features}")
+        
+        # Create model
+        model = create_enhanced_model(seq_length, X_train.shape[2])
+        
+        # Callbacks
         callbacks = [
-            tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=15, restore_best_weights=True),
-            tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=0.0001)
+            EarlyStopping(
+                monitor='val_loss',
+                patience=patience,
+                restore_best_weights=True,
+                verbose=1
+            ),
+            ReduceLROnPlateau(
+                monitor='val_loss',
+                factor=0.5,
+                patience=patience//2,
+                min_lr=1e-6,
+                verbose=1
+            ),
+            ModelCheckpoint(
+                'best_model.keras',
+                monitor='val_loss',
+                save_best_only=True,
+                verbose=1
+            )
         ]
-
-        # Adjust batch size for non-CPU devices, but ensure it's not larger than train_size
-        current_batch_size = batch_size
+        
+        # Adjust batch size for GPU
         if device != '/CPU:0':
-            current_batch_size *= 2
-        current_batch_size = min(current_batch_size, train_size)
-        if current_batch_size == 0:
-            current_batch_size = 1  # Ensure batch size is at least 1
-
+            batch_size = min(batch_size * 2, len(X_train))
+        
+        # Train model
         history = model.fit(
             X_train, y_train,
+            validation_data=(X_val, y_val),
             epochs=epochs,
-            batch_size=current_batch_size,
-            validation_data=(X_test, y_test),
+            batch_size=batch_size,
             callbacks=callbacks,
             verbose=1
         )
-
-    return model, scaler
+        
+        # Evaluate model
+        evaluation_metrics = evaluate_model(model, X_test, y_test, scaler)
+        
+        return model, scaler, history, evaluation_metrics
 
 # --------------------
-# Future Prediction
+# Model Evaluation
 # --------------------
-def predict_future(model, scaler, last_sequence, num_days=30):
+def evaluate_model(model, X_test, y_test, scaler):
     """
-    Predicts future stock prices using the trained LSTM model.
-
+    Evaluate model performance with multiple metrics.
+    
     Args:
-        model (tf.keras.models.Sequential): Trained LSTM model.
-        scaler (MinMaxScaler): MinMaxScaler used for scaling data.
-        last_sequence (np.array): Last sequence of data used for prediction.
-        num_days (int, optional): Number of days to predict. Defaults to 30.
-
+        model: Trained model
+        X_test: Test features
+        y_test: Test targets
+        scaler: Fitted scaler
+        
     Returns:
-        np.array: Predicted stock prices for the next num_days.
+        dict: Dictionary containing evaluation metrics
+    """
+    # Make predictions
+    y_pred = model.predict(X_test, verbose=0)
+    
+    # Create dummy arrays for inverse scaling
+    y_test_scaled = np.zeros((len(y_test), scaler.n_features_in_))
+    y_pred_scaled = np.zeros((len(y_pred), scaler.n_features_in_))
+    
+    y_test_scaled[:, 0] = y_test
+    y_pred_scaled[:, 0] = y_pred.flatten()
+    
+    # Inverse transform
+    y_test_actual = scaler.inverse_transform(y_test_scaled)[:, 0]
+    y_pred_actual = scaler.inverse_transform(y_pred_scaled)[:, 0]
+    
+    # Calculate metrics
+    mse = mean_squared_error(y_test_actual, y_pred_actual)
+    mae = mean_absolute_error(y_test_actual, y_pred_actual)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_test_actual, y_pred_actual)
+    
+    # Calculate percentage errors
+    mape = np.mean(np.abs((y_test_actual - y_pred_actual) / y_test_actual)) * 100
+    
+    # Direction accuracy
+    actual_direction = np.sign(np.diff(y_test_actual))
+    pred_direction = np.sign(np.diff(y_pred_actual))
+    direction_accuracy = np.mean(actual_direction == pred_direction) * 100
+    
+    metrics = {
+        'mse': mse,
+        'mae': mae,
+        'rmse': rmse,
+        'r2': r2,
+        'mape': mape,
+        'direction_accuracy': direction_accuracy
+    }
+    
+    print("\nModel Evaluation Results:")
+    print(f"MSE: {mse:.6f}")
+    print(f"MAE: {mae:.6f}")
+    print(f"RMSE: {rmse:.6f}")
+    print(f"R²: {r2:.6f}")
+    print(f"MAPE: {mape:.2f}%")
+    print(f"Direction Accuracy: {direction_accuracy:.2f}%")
+    
+    return metrics
+
+# --------------------
+# Enhanced Prediction Function
+# --------------------
+def predict_future(model, scaler, last_sequence, num_days=30, confidence_intervals=True):
+    """
+    Enhanced future prediction with confidence intervals and better uncertainty modeling.
+    
+    Args:
+        model: Trained model
+        scaler: Fitted scaler
+        last_sequence: Last sequence of data
+        num_days: Number of days to predict
+        confidence_intervals: Whether to calculate confidence intervals
+        
+    Returns:
+        dict: Dictionary containing predictions and confidence intervals
     """
     device = setup_device()
+    
     with tf.device(device):
         predictions = []
         current_sequence = last_sequence.copy()
-        seq_length = current_sequence.shape[0]  # Get sequence length from input
-        n_features = current_sequence.shape[1]  # Get number of features from input
-
-        # --- Parameters for adding fluctuations (Adjust these!) ---
-        # Base volatility scaling - how much historical volatility influences noise
-        base_volatility_scale = 0.2  # Was 0.2
-        # Trend noise scaling - how much random trend influences noise
-        trend_noise_scale = 0.2  # Was 0.5
-        # Cyclical factor scaling
-        cyclical_scale = 0.3  # Was 0.3
-        # Momentum/Mean Reversion scaling
-        momentum_mr_scale = 0.3  # Was 0.2
-        # Shock probability and magnitude scaling
-        shock_probability = 0.1  # Was 0.05
-        shock_magnitude_scale = 1.0  # Was 0.5-1.5 range, now fixed scale
-        # Feature noise scaling - how much noise to add when simulating future features
-        feature_noise_scale = 0.02  # New parameter
-
-        # --- Calculate initial historical metrics ---
-        # Ensure historical_volatility is not zero
-        historical_volatility = np.std(current_sequence[:, 0])
-        if historical_volatility < 1e-6:  # Add a small value if volatility is near zero
-            historical_volatility = np.mean(current_sequence[:, 0]) * 0.01  # Use a percentage of the price as base volatility
-            if historical_volatility < 1e-6:
-                historical_volatility = 0.01  # Fallback minimum
-
-        historical_mean_change = np.mean(np.abs(np.diff(current_sequence[:, 0])))
-        if historical_mean_change < 1e-6:  # Add a small value if mean change is near zero
-            historical_mean_change = historical_volatility * 0.1  # Use a percentage of volatility
-            if historical_mean_change < 1e-6:
-                historical_mean_change = 0.001  # Fallback minimum
-
-        trend_strength = 0.3  # Keep trend strength parameter
-        reversal_probability = 0.15  # Keep reversal probability
-        volatility_scaling = np.random.uniform(0.8, 1.2)  # Make volatility scaling fluctuate more
-        last_actual_scaled = current_sequence[-1, 0]  # Use scaled value for calculations
-        trend_direction = np.random.choice([-1, 1])
-        cycle_length = np.random.randint(5, 15)
-        cycle_phase = 0
-
-        # Pre-generate noise components for all days
-        base_noise = np.random.normal(0, historical_volatility * volatility_scaling, num_days) * base_volatility_scale
-        trend_noise = historical_mean_change * np.random.uniform(-1.0, 1.0, num_days) * trend_noise_scale  # Increased range
-        trend_directions = np.random.choice([-1, 1], num_days)
-        shock_probabilities = np.random.random(num_days)
-        shock_magnitudes = historical_volatility * np.random.uniform(0.8, 1.5, num_days) * shock_magnitude_scale  # Increased range
-        feature_noise = np.random.normal(0, np.std(current_sequence[:, 1:], axis=0) * feature_noise_scale, size=(num_days, n_features - 1))
-
-        cycle_phase = 0
-        cycle_lengths = np.random.randint(5, 15, num_days)
-        volatility_scalings = np.random.uniform(0.8, 1.2, num_days)  # Fluctuate volatility scaling
-        reversal_probabilities = np.random.random(num_days)
-        trend_direction = np.random.choice([-1, 1])
-
-        predictions = []
-        for i in range(num_days):
-            # Predict the next step based on the current sequence
-            # Reshape for the model: (batch_size, seq_length, n_features)
-            # Ensure the input shape matches the model's expected input shape
-            pred_scaled = model.predict(current_sequence.reshape(1, seq_length, n_features), verbose=0)[0, 0]
-
-            # --- Add Fluctuations ---
-            # Ensure noise is added in the scaled space
-            market_factor = base_noise[i] + trend_noise[i]
-
-            # Cyclical factor
-            cycle_phase += 1
-            cyclical_factor = np.sin(2 * np.pi * cycle_phase / cycle_lengths[i]) * historical_volatility * cyclical_scale
-
-            # Combine noise components
-            market_factor += cyclical_factor
-
-            # Apply trend direction
-            pred_with_noise_scaled = pred_scaled + market_factor * trend_directions[i]
-
-            # Add momentum and mean reversion based on the *scaled* values
-            if predictions:
-                # Use the last predicted scaled value for momentum/MR
-                last_pred_scaled = predictions[-1]
-                momentum = (last_pred_scaled - last_actual_scaled) * trend_strength * momentum_mr_scale
-                mean_reversion = (last_actual_scaled - last_pred_scaled) * (1 - trend_strength) * momentum_mr_scale
-                pred_with_noise_scaled += momentum + mean_reversion
-            else:
-                # If it's the first prediction, base momentum/MR on the last historical change
-                last_historical_change_scaled = current_sequence[-1, 0] - current_sequence[-2, 0] if len(current_sequence) > 1 else 0
-                momentum = last_historical_change_scaled * trend_strength * momentum_mr_scale
-                mean_reversion = (last_actual_scaled - (last_actual_scaled + last_historical_change_scaled)) * (1 - trend_strength) * momentum_mr_scale  # MR towards last actual
-                pred_with_noise_scaled += momentum + mean_reversion
-
-            # Add random shock
-            if shock_probabilities[i] < shock_probability:
-                pred_with_noise_scaled += shock_magnitudes[i] * np.random.choice([-1, 1])  # Shock can be up or down
-
-            # --- Update sequence for next prediction ---
-            # The model predicts the *next* value (index 0) based on the sequence
-            # We need to create the *full* feature vector for the next step
-            # Roll the sequence back one step
-            current_sequence = np.roll(current_sequence, -1, axis=0)
-
-            # Create a new row for the predicted day
-            new_row_scaled = np.zeros(n_features)
-            new_row_scaled[0] = pred_with_noise_scaled  # The predicted price is the first feature
-
-            # Simulate other features (SMA, RSI, Volatility) for the new day
-            # This is an approximation. We'll add noise to the last known features.
-            # Ensure we don't go out of bounds if n_features is only 1 (though unlikely with this model)
-            if n_features > 1:
-                new_row_scaled[1:] = current_sequence[-2, 1:] + feature_noise[i]
-
-            # Add the new row to the sequence
-            current_sequence[-1] = new_row_scaled
-
-            # Store the predicted *scaled* price
-            predictions.append(pred_with_noise_scaled)
-
-            # Update volatility scaling and cycle parameters periodically
-            if i % 2 == 0:
-                volatility_scaling = volatility_scalings[i]  # Fluctuate volatility scaling
-            if i % cycle_lengths[i] == 0:
-                cycle_lengths[i] = np.random.randint(5, 15)
-                cycle_phase = 0
-            if reversal_probabilities[i] < reversal_probability:
-                trend_direction *= -1  # Randomly reverse trend direction
-
-        # --- Inverse transform predictions ---
-        # Create a dummy array with the predicted prices and placeholder features
-        # The scaler expects an array with the same number of features it was trained on (n_features)
-        # We need to create an array of shape (num_days, n_features)
-        # Fill the first column with the predicted scaled prices
-        # Fill the other columns with dummy values (e.g., zeros or the mean of the scaled features)
-        # Using zeros is standard practice for inverse transforming a single feature prediction
-        dummy_features = np.zeros((num_days, n_features))
-        dummy_features[:, 0] = np.array(predictions)  # Place the scaled predictions in the first column
-
-        # Inverse transform the dummy array
-        predictions_transformed = scaler.inverse_transform(dummy_features)
-
-        # Return only the first column, which contains the inverse-transformed prices
-        return predictions_transformed[:, 0].reshape(-1, 1)
+        seq_length = current_sequence.shape[0]
+        n_features = current_sequence.shape[1]
+        
+        # For confidence intervals, we'll use Monte Carlo dropout
+        if confidence_intervals:
+            n_samples = 100
+            all_predictions = []
+            
+            for _ in range(n_samples):
+                sample_predictions = []
+                temp_sequence = current_sequence.copy()
+                
+                for day in range(num_days):
+                    # Predict with dropout enabled (training=True)
+                    pred = model(temp_sequence.reshape(1, seq_length, n_features), training=True)
+                    pred_value = pred.numpy()[0, 0]
+                    sample_predictions.append(pred_value)
+                    
+                    # Update sequence
+                    new_row = np.zeros(n_features)
+                    new_row[0] = pred_value
+                    
+                    # Estimate other features (simplified)
+                    if n_features > 1:
+                        new_row[1:] = temp_sequence[-1, 1:] * (1 + np.random.normal(0, 0.001, n_features-1))
+                    
+                    temp_sequence = np.roll(temp_sequence, -1, axis=0)
+                    temp_sequence[-1] = new_row
+                
+                all_predictions.append(sample_predictions)
+            
+            # Calculate statistics
+            all_predictions = np.array(all_predictions)
+            predictions = np.mean(all_predictions, axis=0)
+            prediction_std = np.std(all_predictions, axis=0)
+            
+            # Calculate confidence intervals (95%)
+            lower_bound = predictions - 1.96 * prediction_std
+            upper_bound = predictions + 1.96 * prediction_std
+            
+        else:
+            # Simple prediction without confidence intervals
+            for day in range(num_days):
+                pred = model.predict(current_sequence.reshape(1, seq_length, n_features), verbose=0)
+                pred_value = pred[0, 0]
+                predictions.append(pred_value)
+                
+                # Update sequence
+                new_row = np.zeros(n_features)
+                new_row[0] = pred_value
+                
+                if n_features > 1:
+                    new_row[1:] = current_sequence[-1, 1:]
+                
+                current_sequence = np.roll(current_sequence, -1, axis=0)
+                current_sequence[-1] = new_row
+        
+        # Inverse transform predictions
+        dummy_array = np.zeros((len(predictions), scaler.n_features_in_))
+        dummy_array[:, 0] = predictions
+        predictions_actual = scaler.inverse_transform(dummy_array)[:, 0]
+        
+        result = {
+            'predictions': predictions_actual,
+            'dates': pd.date_range(start=pd.Timestamp.now(), periods=num_days, freq='D')
+        }
+        
+        if confidence_intervals:
+            dummy_lower = np.zeros((len(lower_bound), scaler.n_features_in_))
+            dummy_upper = np.zeros((len(upper_bound), scaler.n_features_in_))
+            dummy_lower[:, 0] = lower_bound
+            dummy_upper[:, 0] = upper_bound
+            
+            result['lower_bound'] = scaler.inverse_transform(dummy_lower)[:, 0]
+            result['upper_bound'] = scaler.inverse_transform(dummy_upper)[:, 0]
+        
+        return result
