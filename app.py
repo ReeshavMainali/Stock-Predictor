@@ -166,26 +166,35 @@ def predict(symbol: Optional[str] = None) -> str:
                                 symbol=symbol, 
                                 error="No trained model available. Please train first.")
         
-        # Prepare data and make predictions
+        # Prepare data and make predictions using new technical indicators and feature selection
         df = pd.DataFrame(stock_data)
         df = preprocess_transaction_data(df, symbol)
         df = df.sort_values('transaction_date')
-        
-        # Calculate technical indicators
-        df['SMA_5'] = df['rate'].rolling(window=5).mean()
-        df['SMA_20'] = df['rate'].rolling(window=20).mean()
-        df['RSI'] = calculate_rsi(df['rate'])
-        df['Volatility'] = df['rate'].rolling(window=20).std()
-        
-        # Prepare features and predict
-        features = ['rate', 'SMA_5', 'SMA_20', 'RSI', 'Volatility']
-        data = df[features].dropna().values
+        df = __import__('model.model').model.calculate_technical_indicators(df)
+        # Use feature selection from model.py
+        feature_columns = [
+            'close', 'volume', 'high', 'low', 'open', 'vwap',
+            'sma_5', 'sma_10', 'sma_20', 'ema_5', 'ema_10', 'ema_20',
+            'rsi', 'macd', 'macd_signal', 'bb_position', 'bb_width',
+            'stoch_k', 'stoch_d', 'volume_ratio', 'atr', 'volatility',
+            'momentum', 'williams_r', 'price_range_pct', 'price_efficiency'
+        ]
+        available_features = [col for col in feature_columns if col in df.columns]
+        data = df[available_features].dropna().values
+        if len(data) < 60:
+            logger.warning(f"Insufficient feature data for prediction for {symbol}")
+            return render_template('predict.html', 
+                                companies=all_companies, 
+                                symbol=symbol, 
+                                error="Insufficient feature data for prediction (minimum 60 rows required)")
         scaled_data = scaler.transform(data)
-        predictions = predict_future(model, scaler, scaled_data[-60:], num_days=num_days)
-        
+        prediction_result = predict_future(model, scaler, scaled_data[-60:], num_days=num_days)
+        predictions = prediction_result.get('predictions', [])
+        lower_bound = prediction_result.get('lower_bound', None)
+        upper_bound = prediction_result.get('upper_bound', None)
+        dates = prediction_result.get('dates', None)
         # Combine historical and prediction data
-        display_data = _prepare_prediction_data(stock_data, predictions, num_days)
-        
+        display_data = _prepare_prediction_data(stock_data, predictions, num_days, lower_bound=lower_bound, upper_bound=upper_bound, dates=dates)
         return render_template('predict.html', 
                             companies=all_companies, 
                             symbol=symbol, 
@@ -240,12 +249,12 @@ def train_models() -> jsonify:
                 # Train and save model
                 df = pd.DataFrame(stock_data)
                 df = preprocess_transaction_data(df, symbol)
-                model, scaler = train_model(df, seq_length=60, epochs=100)
-                
+                model, scaler, history, evaluation_metrics = train_model(df, seq_length=60, epochs=100)
                 training_results.append({
                     'symbol': symbol,
                     'status': 'success' if db_manager.save_model_and_scaler(symbol, model, scaler) else 'failed',
-                    'data_points': len(stock_data)
+                    'data_points': len(stock_data),
+                    'metrics': evaluation_metrics if evaluation_metrics else {}
                 })
                 
             except Exception as e:
@@ -306,19 +315,18 @@ def train_single_model(symbol: str) -> jsonify:
         # Train and save model
         df = pd.DataFrame(stock_data)
         df = preprocess_transaction_data(df, symbol)
-        model, scaler = train_model(df, seq_length=60, epochs=100)
-        
+        model, scaler, history, evaluation_metrics = train_model(df, seq_length=60, epochs=100)
         if not db_manager.save_model_and_scaler(symbol, model, scaler):
             return jsonify({
                 'symbol': symbol,
                 'status': 'failed',
                 'error': 'Failed to save model'
             }), 500
-            
         return jsonify({
             'symbol': symbol,
             'status': 'success',
-            'data_points': len(stock_data)
+            'data_points': len(stock_data),
+            'metrics': evaluation_metrics if evaluation_metrics else {}
         })
         
     except Exception as e:

@@ -56,6 +56,10 @@
                             <tr class="bg-gray-100 dark:bg-gray-700">
                                 <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Date</th>
                                 <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Price</th>
+                                {% if stock_data[0] and stock_data[0].lower_bound is defined %}
+                                <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Lower Bound</th>
+                                <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Upper Bound</th>
+                                {% endif %}
                                 <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Type</th>
                             </tr>
                         </thead>
@@ -64,6 +68,10 @@
                             <tr class="{% if data.is_prediction %}text-red-500 dark:text-red-400{% else %}text-gray-800 dark:text-gray-200{% endif %}">
                                 <td class="border dark:border-gray-600 px-4 py-2">{{ data.transaction_date }}</td>
                                 <td class="border dark:border-gray-600 px-4 py-2">Rs. {{ "%.2f"|format(data.rate) }}</td>
+                                {% if data.lower_bound is defined %}
+                                <td class="border dark:border-gray-600 px-4 py-2">Rs. {{ "%.2f"|format(data.lower_bound) }}</td>
+                                <td class="border dark:border-gray-600 px-4 py-2">Rs. {{ "%.2f"|format(data.upper_bound) }}</td>
+                                {% endif %}
                                 <td class="border dark:border-gray-600 px-4 py-2">{{ "Predicted" if data.is_prediction else "Historical" }}</td>
                             </tr>
                             {% endfor %}
@@ -86,29 +94,55 @@
                     const labels = data.map(d => d.transaction_date);
                     const historicalData = data.filter(d => !d.is_prediction).map(d => d.rate);
                     const predictionData = data.map(d => d.is_prediction ? d.rate : null);
-                    
+                    // Confidence intervals
+                    const lowerBoundData = data.map(d => d.is_prediction && d.lower_bound !== undefined ? d.lower_bound : null);
+                    const upperBoundData = data.map(d => d.is_prediction && d.upper_bound !== undefined ? d.upper_bound : null);
+                    let datasets = [
+                        {
+                            label: 'Historical Data',
+                            data: historicalData,
+                            borderColor: isDarkMode ? '#60A5FA' : '#2563EB',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Predicted Data',
+                            data: predictionData,
+                            borderColor: '#EF4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ];
+                    // Add confidence interval as shaded area if available
+                    if (lowerBoundData.some(v => v !== null) && upperBoundData.some(v => v !== null)) {
+                        datasets.push({
+                            label: 'Confidence Interval',
+                            data: upperBoundData,
+                            type: 'line',
+                            borderColor: 'rgba(34,197,94,0.3)',
+                            backgroundColor: 'rgba(34,197,94,0.1)',
+                            fill: '-1',
+                            pointRadius: 0,
+                            borderWidth: 0
+                        });
+                        datasets.push({
+                            label: '',
+                            data: lowerBoundData,
+                            type: 'line',
+                            borderColor: 'rgba(34,197,94,0.3)',
+                            backgroundColor: 'rgba(34,197,94,0.1)',
+                            fill: '-1',
+                            pointRadius: 0,
+                            borderWidth: 0
+                        });
+                    }
                     new Chart(ctx, {
                         type: 'line',
                         data: {
                             labels: labels,
-                            datasets: [
-                                {
-                                    label: 'Historical Data',
-                                    data: historicalData,
-                                    borderColor: isDarkMode ? '#60A5FA' : '#2563EB',
-                                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                                    fill: true,
-                                    tension: 0.4
-                                },
-                                {
-                                    label: 'Predicted Data',
-                                    data: predictionData,
-                                    borderColor: '#EF4444',
-                                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                                    fill: true,
-                                    tension: 0.4
-                                }
-                            ]
+                            datasets: datasets
                         },
                         options: {
                             responsive: true,
