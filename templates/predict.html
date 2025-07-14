@@ -56,10 +56,8 @@
                             <tr class="bg-gray-100 dark:bg-gray-700">
                                 <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Date</th>
                                 <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Price</th>
-                                {% if stock_data[0] and stock_data[0].lower_bound is defined %}
                                 <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Lower Bound</th>
                                 <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Upper Bound</th>
-                                {% endif %}
                                 <th class="px-4 py-2 text-gray-800 dark:text-gray-200">Type</th>
                             </tr>
                         </thead>
@@ -68,10 +66,8 @@
                             <tr class="{% if data.is_prediction %}text-red-500 dark:text-red-400{% else %}text-gray-800 dark:text-gray-200{% endif %}">
                                 <td class="border dark:border-gray-600 px-4 py-2">{{ data.transaction_date }}</td>
                                 <td class="border dark:border-gray-600 px-4 py-2">Rs. {{ "%.2f"|format(data.rate) }}</td>
-                                {% if data.lower_bound is defined %}
-                                <td class="border dark:border-gray-600 px-4 py-2">Rs. {{ "%.2f"|format(data.lower_bound) }}</td>
-                                <td class="border dark:border-gray-600 px-4 py-2">Rs. {{ "%.2f"|format(data.upper_bound) }}</td>
-                                {% endif %}
+                                <td class="border dark:border-gray-600 px-4 py-2">{% if data.lower_bound is defined %}Rs. {{ "%.2f"|format(data.lower_bound) }}{% endif %}</td>
+                                <td class="border dark:border-gray-600 px-4 py-2">{% if data.upper_bound is defined %}Rs. {{ "%.2f"|format(data.upper_bound) }}{% endif %}</td>
                                 <td class="border dark:border-gray-600 px-4 py-2">{{ "Predicted" if data.is_prediction else "Historical" }}</td>
                             </tr>
                             {% endfor %}

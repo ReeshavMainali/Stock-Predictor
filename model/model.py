@@ -72,8 +72,10 @@ def preprocess_transaction_data(df, symbol=None):
         'rate': ['first', 'max', 'min', 'last', 'mean', 'std'],
         'quantity': ['sum', 'mean', 'std', 'count'],
         'amount': ['sum', 'mean'],
-        'transaction': 'count'
-    }).reset_index()
+        # 'transaction': 'count'  # Removed
+    })
+    daily_agg['transaction_count'] = df.groupby('transaction_date').size().values
+    daily_agg = daily_agg.reset_index()
     
     # Flatten column names
     daily_agg.columns = ['transaction_date', 'open', 'high', 'low', 'close', 'avg_price', 'price_std',
@@ -339,7 +341,7 @@ def train_model(df, seq_length=60, epochs=100, batch_size=32, patience=20):
         print(f"Features used: {features}")
         
         # Create model
-        model = create_enhanced_model(seq_length, X_train.shape[2])
+        model = create_model(seq_length, X_train.shape[2])
         
         # Callbacks
         callbacks = [
@@ -449,7 +451,7 @@ def evaluate_model(model, X_test, y_test, scaler):
 # --------------------
 # Enhanced Prediction Function
 # --------------------
-def predict_future(model, scaler, last_sequence, num_days=30, confidence_intervals=True):
+def predict_future(model, scaler, last_sequence, num_days=30, confidence_intervals=False):
     """
     Enhanced future prediction with confidence intervals and better uncertainty modeling.
     
@@ -472,56 +474,77 @@ def predict_future(model, scaler, last_sequence, num_days=30, confidence_interva
         n_features = current_sequence.shape[1]
         
         # For confidence intervals, we'll use Monte Carlo dropout
+        def recalc_features(seq, pred_value):
+            # seq: (seq_length, n_features), pred_value: float
+            # Create a DataFrame for the sequence
+            import numpy as np
+            feature_columns = [
+                'close', 'volume', 'high', 'low', 'open', 'vwap',
+                'sma_5', 'sma_10', 'sma_20', 'ema_5', 'ema_10', 'ema_20',
+                'rsi', 'macd', 'macd_signal', 'bb_position', 'bb_width',
+                'stoch_k', 'stoch_d', 'volume_ratio', 'atr', 'volatility',
+                'momentum', 'williams_r', 'price_range_pct', 'price_efficiency'
+            ]
+            available_features = feature_columns[:seq.shape[1]]
+            df_seq = pd.DataFrame(seq, columns=available_features)
+            # Set the last row's close to the predicted value
+            df_seq.iloc[-1, 0] = pred_value
+
+            # AR(1) projection + noise for key features
+            alpha = 1.0  # AR(1) coefficient (momentum/random walk)
+            noise_scale = 0.03  # 3% noise
+            rng = np.random.default_rng()
+            for feat in ['volume', 'high', 'low', 'open', 'vwap']:
+                if feat in available_features:
+                    col_idx = df_seq.columns.get_loc(feat)
+                    if len(df_seq) > 1:
+                        last = df_seq.iloc[-2, col_idx]
+                        prev = df_seq.iloc[-3, col_idx] if len(df_seq) > 2 else last
+                        # 20% chance: sample from last 10 values (bootstrapping)
+                        if len(df_seq) > 10 and rng.uniform() < 0.2:
+                            sample_val = rng.choice(df_seq.iloc[-11:-1, col_idx])
+                            df_seq.iloc[-1, col_idx] = max(0, sample_val)
+                        else:
+                            ar1_val = last + alpha * (last - prev)
+                            noise = rng.normal(0, abs(last) * noise_scale)
+                            df_seq.iloc[-1, col_idx] = max(0, ar1_val + noise)
+                    else:
+                        df_seq.iloc[-1, col_idx] = df_seq.iloc[-1, col_idx]
+
+            # Recalculate technical indicators for the last row
+            from model.model import calculate_technical_indicators
+            df_seq = calculate_technical_indicators(df_seq)
+            # Only keep columns matching available_features (model input)
+            df_seq = df_seq[available_features]
+            # Return the last row as the new feature vector
+            return df_seq.iloc[-1].values
+
         if confidence_intervals:
-            n_samples = 100
+            n_samples = 20
             all_predictions = []
-            
             for _ in range(n_samples):
                 sample_predictions = []
                 temp_sequence = current_sequence.copy()
-                
                 for day in range(num_days):
-                    # Predict with dropout enabled (training=True)
                     pred = model(temp_sequence.reshape(1, seq_length, n_features), training=True)
                     pred_value = pred.numpy()[0, 0]
                     sample_predictions.append(pred_value)
-                    
-                    # Update sequence
-                    new_row = np.zeros(n_features)
-                    new_row[0] = pred_value
-                    
-                    # Estimate other features (simplified)
-                    if n_features > 1:
-                        new_row[1:] = temp_sequence[-1, 1:] * (1 + np.random.normal(0, 0.001, n_features-1))
-                    
+                    # Update sequence with advanced feature recalculation
+                    new_row = recalc_features(temp_sequence, pred_value)
                     temp_sequence = np.roll(temp_sequence, -1, axis=0)
                     temp_sequence[-1] = new_row
-                
                 all_predictions.append(sample_predictions)
-            
-            # Calculate statistics
             all_predictions = np.array(all_predictions)
             predictions = np.mean(all_predictions, axis=0)
             prediction_std = np.std(all_predictions, axis=0)
-            
-            # Calculate confidence intervals (95%)
             lower_bound = predictions - 1.96 * prediction_std
             upper_bound = predictions + 1.96 * prediction_std
-            
         else:
-            # Simple prediction without confidence intervals
             for day in range(num_days):
                 pred = model.predict(current_sequence.reshape(1, seq_length, n_features), verbose=0)
                 pred_value = pred[0, 0]
                 predictions.append(pred_value)
-                
-                # Update sequence
-                new_row = np.zeros(n_features)
-                new_row[0] = pred_value
-                
-                if n_features > 1:
-                    new_row[1:] = current_sequence[-1, 1:]
-                
+                new_row = recalc_features(current_sequence, pred_value)
                 current_sequence = np.roll(current_sequence, -1, axis=0)
                 current_sequence[-1] = new_row
         

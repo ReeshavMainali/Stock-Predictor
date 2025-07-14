@@ -52,9 +52,12 @@ def _prepare_top_stocks_data(db_manager: DatabaseManager) -> List[Dict]:
     return sorted(top_stocks, key=lambda x: x['change'], reverse=True)[:10]
 
 def _prepare_prediction_data(
-    historical_data: List[Dict], 
-    predictions: List[float], 
-    num_days: int
+historical_data: List[Dict], 
+predictions: List[float], 
+num_days: int,
+lower_bound=None,
+upper_bound=None,
+dates=None
 ) -> List[Dict]:
     """Prepare combined historical and prediction data for display.
     
@@ -66,26 +69,38 @@ def _prepare_prediction_data(
     Returns:
         Combined list of historical and prediction data
     """
-    last_date = pd.to_datetime(historical_data[-1]['transaction_date'])
-    future_dates = [(last_date + timedelta(days=i+1)).strftime('%Y-%m-%d') 
-                   for i in range(num_days)]
-    
-    # Apply scaling factor to predictions
-    last_historical_price = historical_data[-1]['rate']
-    if predictions.size > 0:
-        scaling_factor = last_historical_price / predictions[0][0]
-        predictions = predictions * scaling_factor
-    
+    # Determine prediction dates
+    if dates is not None:
+        future_dates = [str(d.date()) if hasattr(d, 'date') else str(d) for d in dates]
+    else:
+        last_date = pd.to_datetime(historical_data[-1]['transaction_date'])
+        future_dates = [(last_date + timedelta(days=i+1)).strftime('%Y-%m-%d') 
+                       for i in range(num_days)]
+
+    # No scaling factor is applied to predictions. Model output is assumed to be on correct scale.
+
+    # Prepare lower/upper bounds if provided
+    lower_vals = lower_bound if lower_bound is not None else [None]*num_days
+    upper_vals = upper_bound if upper_bound is not None else [None]*num_days
+
     # Create prediction records
-    prediction_data = [{
-        'transaction_date': date,
-        'rate': float(price),
-        'is_prediction': True
-    } for date, price in zip(future_dates, predictions.flatten())]
-    
+    prediction_data = []
+    preds = predictions
+    for i, (date, price) in enumerate(zip(future_dates, preds)):
+        rec = {
+            'transaction_date': date,
+            'rate': float(price),
+            'is_prediction': True
+        }
+        if lower_vals[i] is not None:
+            rec['lower_bound'] = float(lower_vals[i])
+        if upper_vals[i] is not None:
+            rec['upper_bound'] = float(upper_vals[i])
+        prediction_data.append(rec)
+
     # Mark historical data
     for data in historical_data:
         data['is_prediction'] = False
-    
+
     # Combine last 30 days of history with predictions
     return historical_data[-30:] + prediction_data
