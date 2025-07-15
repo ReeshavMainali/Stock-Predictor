@@ -10,6 +10,11 @@ This application provides:
 """
 
 from flask import Flask, render_template, request, jsonify
+import numpy as np
+def is_flat(predictions, threshold=1e-3):
+    """Detect if predictions are flat (no significant change)."""
+    predictions = np.array(predictions)
+    return np.all(np.abs(np.diff(predictions)) < threshold)
 import os
 import pandas as pd
 from functions.db_data_manager import DatabaseManager
@@ -180,21 +185,58 @@ def predict(symbol: Optional[str] = None) -> str:
             'momentum', 'williams_r', 'price_range_pct', 'price_efficiency'
         ]
         available_features = [col for col in feature_columns if col in df.columns]
-        data = df[available_features].dropna().values
-        if len(data) < 60:
+        # Use only the last 60 rows after feature engineering for both chart and prediction
+        processed_df = df[available_features].dropna()
+        if len(processed_df) < 60:
             logger.warning(f"Insufficient feature data for prediction for {symbol}")
             return render_template('predict.html', 
                                 companies=all_companies, 
                                 symbol=symbol, 
                                 error="Insufficient feature data for prediction (minimum 60 rows required)")
-        scaled_data = scaler.transform(data)
+        # For chart: use last 30 rows of processed_df as history
+        chart_history = processed_df.tail(30).copy()
+        # For prediction: use last 60 rows for LSTM input
+        scaled_data = scaler.transform(processed_df.values)
+
+        # First, predict with default noise
         prediction_result = predict_future(model, scaler, scaled_data[-60:], num_days=num_days)
         predictions = prediction_result.get('predictions', [])
         lower_bound = prediction_result.get('lower_bound', None)
         upper_bound = prediction_result.get('upper_bound', None)
         dates = prediction_result.get('dates', None)
-        # Combine historical and prediction data
-        display_data = _prepare_prediction_data(stock_data, predictions, num_days, lower_bound=lower_bound, upper_bound=upper_bound, dates=dates)
+
+        # If predictions are flat, re-run with higher noise/dynamics (if supported)
+        if is_flat(predictions):
+            logger.info(f"Flat prediction detected for {symbol}, increasing noise/dynamics.")
+            try:
+                prediction_result = predict_future(model, scaler, scaled_data[-60:], num_days=num_days, increase_noise=True)
+                predictions = prediction_result.get('predictions', [])
+                lower_bound = prediction_result.get('lower_bound', None)
+                upper_bound = prediction_result.get('upper_bound', None)
+                dates = prediction_result.get('dates', None)
+            except TypeError:
+                logger.warning("predict_future does not support 'increase_noise'. Please update model/model.py if you want dynamic noise.")
+
+        # Build historical data for display (match processed_df, not raw stock_data)
+        historical_data = []
+        for idx, row in chart_history.iterrows():
+            historical_data.append({
+                'transaction_date': str(df.iloc[idx]['transaction_date']),
+                'rate': float(row['close']),
+                'is_prediction': False
+            })
+        # Force the first predicted value to match the last historical value for a smooth transition
+        if len(historical_data) > 0 and len(predictions) > 0:
+            predictions = list(predictions)
+            predictions[0] = historical_data[-1]['rate']
+            if lower_bound is not None and len(lower_bound) > 0:
+                lower_bound = list(lower_bound)
+                lower_bound[0] = historical_data[-1]['rate']
+            if upper_bound is not None and len(upper_bound) > 0:
+                upper_bound = list(upper_bound)
+                upper_bound[0] = historical_data[-1]['rate']
+        # Combine with predictions
+        display_data = _prepare_prediction_data(historical_data, predictions, num_days, lower_bound=lower_bound, upper_bound=upper_bound, dates=dates)
         return render_template('predict.html', 
                             companies=all_companies, 
                             symbol=symbol, 
