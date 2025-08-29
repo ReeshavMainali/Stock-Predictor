@@ -338,9 +338,6 @@ def predict_future(model, scaler, last_sequence, num_days=30):
                 pred_with_noise_scaled += shock_magnitudes[i] * np.random.choice([-1, 1])  # Shock can be up or down
 
             # --- Update sequence for next prediction ---
-            # The model predicts the *next* value (index 0) based on the sequence
-            # We need to create the *full* feature vector for the next step
-            # Roll the sequence back one step
             current_sequence = np.roll(current_sequence, -1, axis=0)
 
             # Create a new row for the predicted day
@@ -348,8 +345,6 @@ def predict_future(model, scaler, last_sequence, num_days=30):
             new_row_scaled[0] = pred_with_noise_scaled  # The predicted price is the first feature
 
             # Simulate other features (SMA, RSI, Volatility) for the new day
-            # This is an approximation. We'll add noise to the last known features.
-            # Ensure we don't go out of bounds if n_features is only 1 (though unlikely with this model)
             if n_features > 1:
                 new_row_scaled[1:] = current_sequence[-2, 1:] + feature_noise[i]
 
