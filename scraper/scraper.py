@@ -32,8 +32,8 @@ except Exception as e:
 
 name = "scrap2023"
 #do this for upto 2021 dec 30  
-start_full_date = "05/01/2025"
-end_full_date = "05/22/2025"
+start_full_date = "07/01/2025"
+end_full_date = "07/31/2025"
 
 # db = client[name]
 db = client["admin"]

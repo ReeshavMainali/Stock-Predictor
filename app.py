@@ -15,14 +15,15 @@ import pandas as pd
 from functions.db_data_manager import DatabaseManager
 from functions.logger import logger
 from model.model import train_model, predict_future, calculate_rsi, preprocess_transaction_data
-from datetime import timedelta
+import shap
 import io
 import sys
 import os
-from typing import List, Dict, Optional
+from typing import Optional
 from flask import Response, make_response
 from functions.helpers import _calculate_percentage_change , _prepare_prediction_data , _prepare_top_stocks_data
-import tensorflow as tf
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, mean_absolute_percentage_error
+import numpy as np
 
 # Disable TensorFlow OneDNN optimizations for compatibility
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
@@ -182,10 +183,35 @@ def predict(symbol: Optional[str] = None) -> str:
         data = df[features].dropna().values
         scaled_data = scaler.transform(data)
         predictions = predict_future(model, scaler, scaled_data[-60:], num_days=num_days)
-        
-        # Combine historical and prediction data
+
+
+
+        # Fallback: Attach feature change direction (increased/decreased/no change) for each predicted point
         display_data = _prepare_prediction_data(stock_data, predictions, num_days)
-        
+        pred_start = len(display_data) - num_days
+        last_seq = scaled_data[-60:]
+        inv_features = scaler.inverse_transform(last_seq)
+        prev_vals = inv_features[0]
+        for i, d in enumerate(display_data):
+            if d.get('is_prediction'):
+                idx = i - pred_start
+                if idx < inv_features.shape[0]:
+                    feat_vals = inv_features[idx]
+                else:
+                    feat_vals = inv_features[-1]
+                change_dict = {}
+                for j, feat in enumerate(features):
+                    if feat_vals[j] > prev_vals[j]:
+                        change_dict[feat] = 'increased'
+                    elif feat_vals[j] < prev_vals[j]:
+                        change_dict[feat] = 'decreased'
+                    else:
+                        change_dict[feat] = 'no change'
+                d['feature_attributions'] = change_dict
+                prev_vals = feat_vals
+            else:
+                d['feature_attributions'] = None
+
         return render_template('predict.html', 
                             companies=all_companies, 
                             symbol=symbol, 
@@ -405,7 +431,81 @@ def get_model_structure(symbol: str) -> jsonify:
         return jsonify({'error': str(e)}), 500
     finally:
         db_manager.close_connection()
-        
+
+# --------------------------
+# Model Evaluation Route
+# --------------------------
+
+@app.route('/evaluate_model/<symbol>', methods=['GET'])
+def evaluate_model(symbol: str):
+    """Evaluate the performance of a trained model for a given stock symbol.
+    Args:
+        symbol: Stock symbol to evaluate
+    Returns:
+        JSON response with evaluation metrics or error
+    """
+    logger.info(f"Evaluating model for {symbol}")
+    db_manager = DatabaseManager()
+    try:
+        # Retrieve model and scaler
+        model, scaler = db_manager.get_model_and_scaler(symbol)
+        if not model or not scaler:
+            return jsonify({'error': 'Model or scaler not found'}), 404
+
+        # Retrieve and preprocess data
+        stock_data = db_manager.get_stock_history(symbol)
+        if len(stock_data) < 61:
+            return jsonify({'error': 'Insufficient data for evaluation (minimum 61 days required)'}), 400
+        df = pd.DataFrame(stock_data)
+        df = preprocess_transaction_data(df, symbol)
+        df = df.sort_values('transaction_date')
+        # Use the same feature engineering as in training
+        from model.model import prepare_data
+        X, y, _ = prepare_data(df, seq_length=60)
+        if len(X) == 0:
+            return jsonify({'error': 'Not enough data after preprocessing for evaluation'}), 400
+
+        # Use last 20% as test set (same as in train_model)
+        train_size = int(len(X) * 0.8)
+        X_test, y_test = X[train_size:], y[train_size:]
+        if len(X_test) == 0:
+            return jsonify({'error': 'No test data available for evaluation'}), 400
+
+        # Predict
+        y_pred = model.predict(X_test)
+        # Inverse transform predictions and targets
+        # Only the first column (rate) is predicted
+        y_pred_full = np.zeros((len(y_pred), X_test.shape[2]))
+        y_pred_full[:, 0] = y_pred.flatten()
+        y_test_full = np.zeros((len(y_test), X_test.shape[2]))
+        y_test_full[:, 0] = y_test.flatten()
+        y_pred_inv = scaler.inverse_transform(y_pred_full)[:, 0]
+        y_test_inv = scaler.inverse_transform(y_test_full)[:, 0]
+
+        # Calculate metrics
+        mse = mean_squared_error(y_test_inv, y_pred_inv)
+        mae = mean_absolute_error(y_test_inv, y_pred_inv)
+        rmse = np.sqrt(mse)
+        r2 = r2_score(y_test_inv, y_pred_inv)
+        mape = mean_absolute_percentage_error(y_test_inv, y_pred_inv)
+
+        metrics = {
+            'symbol': symbol,
+            'test_samples': len(y_test_inv),
+            'mse': mse,
+            'mae': mae,
+            'rmse': rmse,
+            'r2_score': r2,
+            'mape': mape
+        }
+        return jsonify(metrics)
+    except Exception as e:
+        logger.error(f"Evaluation error for {symbol}: {str(e)}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+    finally:
+        db_manager.close_connection()
+        logger.debug("Database connection closed")
+
 @app.route('/save-as-file/<symbol>')
 def save_model_as_file(symbol: str) -> Response:
     """Save model as H5 file.

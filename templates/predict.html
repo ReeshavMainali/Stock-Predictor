@@ -127,7 +127,25 @@
                                 },
                                 tooltip: {
                                     mode: 'index',
-                                    intersect: false
+                                    intersect: false,
+                                    callbacks: {
+                                        label: function(context) {
+                                            const idx = context.dataIndex;
+                                            const d = data[idx];
+                                            let label = context.dataset.label + ': ' + (context.parsed.y !== null ? context.parsed.y : '');
+                                            if (d.is_prediction && d.feature_attributions) {
+                                                label += '\nFeature Change:';
+                                                for (const [feat, val] of Object.entries(d.feature_attributions)) {
+                                                    let symbol = '';
+                                                    if (val === 'increased') symbol = ' \u25B2'; // ▲
+                                                    else if (val === 'decreased') symbol = ' \u25BC'; // ▼
+                                                    else symbol = ' \u2013'; // –
+                                                    label += `\n  ${feat}:${symbol}`;
+                                                }
+                                            }
+                                            return label;
+                                        }
+                                    }
                                 }
                             },
                             scales: {

@@ -70,11 +70,8 @@ def _prepare_prediction_data(
     future_dates = [(last_date + timedelta(days=i+1)).strftime('%Y-%m-%d') 
                    for i in range(num_days)]
     
-    # Apply scaling factor to predictions
-    last_historical_price = historical_data[-1]['rate']
-    if predictions.size > 0:
-        scaling_factor = last_historical_price / predictions[0][0]
-        predictions = predictions * scaling_factor
+
+    # Do not scale predictions; show true predicted values
     
     # Create prediction records
     prediction_data = [{

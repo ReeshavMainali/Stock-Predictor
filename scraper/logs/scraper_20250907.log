@@ -1,0 +1,714 @@
+2025-09-07 10:12:30 | INFO | scraper | Successfully connected to MongoDB
+2025-09-07 10:12:30 | INFO | scraper | Number of processors: 22
+2025-09-07 10:12:30 | INFO | scraper | Created 23 chunks from 23 valid trading days
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/03/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/02/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/01/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/06/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/07/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/08/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/09/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/10/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/14/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/13/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/15/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/16/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/21/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/20/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/17/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/27/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/24/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/23/2025, starting at page 1
+2025-09-07 10:12:30 | INFO | scraper | Processing date: 07/28/2025, starting at page 1
+2025-09-07 10:12:31 | INFO | scraper | Processing date: 07/29/2025, starting at page 1
+2025-09-07 10:12:31 | INFO | scraper | Processing date: 07/22/2025, starting at page 1
+2025-09-07 10:12:31 | INFO | scraper | Processing date: 07/30/2025, starting at page 1
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/23/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/02/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/09/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/17/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/03/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/22/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/07/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/08/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/16/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/10/2025
+2025-09-07 10:12:31 | INFO | scraper | Fetched page 1 for 07/01/2025
+2025-09-07 10:12:34 | INFO | scraper | Updated date collection for 07/23/2025: Page 1, Failed pages: []
+2025-09-07 10:12:34 | INFO | scraper | Updated date collection for 07/09/2025: Page 1, Failed pages: []
+2025-09-07 10:12:34 | INFO | scraper | Updated date collection for 07/02/2025: Page 1, Failed pages: []
+2025-09-07 10:12:34 | INFO | scraper | Fetched page 1 for 07/23/2025
+2025-09-07 10:12:34 | INFO | scraper | Fetched page 1 for 07/09/2025
+2025-09-07 10:12:35 | INFO | scraper | Fetched page 1 for 07/02/2025
+2025-09-07 10:12:35 | INFO | scraper | Fetched page 3 for 07/23/2025
+2025-09-07 10:12:35 | INFO | scraper | Fetched page 4 for 07/02/2025
+2025-09-07 10:12:35 | INFO | scraper | Fetched page 5 for 07/23/2025
+2025-09-07 10:12:35 | INFO | scraper | Fetched page 5 for 07/09/2025
+2025-09-07 10:12:36 | INFO | scraper | Fetched page 2 for 07/02/2025
+2025-09-07 10:12:36 | INFO | scraper | Fetched page 2 for 07/23/2025
+2025-09-07 10:12:36 | INFO | scraper | Fetched page 3 for 07/09/2025
+2025-09-07 10:12:36 | INFO | scraper | Updated date collection for 07/03/2025: Page 1, Failed pages: []
+2025-09-07 10:12:36 | INFO | scraper | Updated date collection for 07/08/2025: Page 1, Failed pages: []
+2025-09-07 10:12:36 | INFO | scraper | Fetched page 5 for 07/02/2025
+2025-09-07 10:12:37 | INFO | scraper | Fetched page 4 for 07/23/2025
+2025-09-07 10:12:37 | INFO | scraper | Fetched page 2 for 07/09/2025
+2025-09-07 10:12:37 | INFO | scraper | Updated date collection for 07/07/2025: Page 1, Failed pages: []
+2025-09-07 10:12:37 | INFO | scraper | Fetched page 3 for 07/02/2025
+2025-09-07 10:12:37 | INFO | scraper | Fetched page 4 for 07/09/2025
+2025-09-07 10:12:38 | INFO | scraper | Fetched page 1 for 07/03/2025
+2025-09-07 10:12:38 | INFO | scraper | Fetched page 1 for 07/08/2025
+2025-09-07 10:12:38 | INFO | scraper | Updated date collection for 07/17/2025: Page 1, Failed pages: []
+2025-09-07 10:12:39 | INFO | scraper | Fetched page 1 for 07/07/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/06/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/30/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/15/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/29/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/28/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/13/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/27/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/24/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/21/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/14/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/20/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 3 for 07/03/2025
+2025-09-07 10:12:40 | INFO | scraper | Fetched page 1 for 07/17/2025
+2025-09-07 10:12:41 | INFO | scraper | Fetched page 2 for 07/08/2025
+2025-09-07 10:12:41 | INFO | scraper | Fetched page 5 for 07/03/2025
+2025-09-07 10:12:41 | INFO | scraper | Fetched page 5 for 07/08/2025
+2025-09-07 10:12:42 | INFO | scraper | Fetched page 3 for 07/07/2025
+2025-09-07 10:12:42 | INFO | scraper | Updated date collection for 07/16/2025: Page 1, Failed pages: []
+2025-09-07 10:12:42 | INFO | scraper | Fetched page 4 for 07/08/2025
+2025-09-07 10:12:42 | INFO | scraper | Fetched page 4 for 07/07/2025
+2025-09-07 10:12:42 | INFO | scraper | Fetched page 2 for 07/03/2025
+2025-09-07 10:12:42 | INFO | scraper | Updated date collection for 07/01/2025: Page 1, Failed pages: []
+2025-09-07 10:12:42 | INFO | scraper | Fetched page 3 for 07/08/2025
+2025-09-07 10:12:43 | INFO | scraper | Fetched page 2 for 07/07/2025
+2025-09-07 10:12:43 | INFO | scraper | Fetched page 1 for 07/16/2025
+2025-09-07 10:12:44 | INFO | scraper | Fetched page 1 for 07/01/2025
+2025-09-07 10:12:45 | INFO | scraper | Fetched page 5 for 07/07/2025
+2025-09-07 10:12:46 | INFO | scraper | Updated date collection for 07/22/2025: Page 1, Failed pages: []
+2025-09-07 10:12:48 | INFO | scraper | Fetched page 4 for 07/03/2025
+2025-09-07 10:12:48 | INFO | scraper | Fetched page 1 for 07/22/2025
+2025-09-07 10:12:49 | INFO | scraper | Fetched page 5 for 07/16/2025
+2025-09-07 10:12:50 | INFO | scraper | Fetched page 3 for 07/17/2025
+2025-09-07 10:12:50 | INFO | scraper | Fetched page 5 for 07/01/2025
+2025-09-07 10:12:50 | INFO | scraper | Fetched page 3 for 07/01/2025
+2025-09-07 10:12:51 | INFO | scraper | Fetched page 2 for 07/01/2025
+2025-09-07 10:12:51 | INFO | scraper | Fetched page 2 for 07/16/2025
+2025-09-07 10:12:52 | INFO | scraper | Fetched page 4 for 07/01/2025
+2025-09-07 10:12:52 | INFO | scraper | Updated date collection for 07/14/2025: Page 1, Failed pages: []
+2025-09-07 10:12:53 | INFO | scraper | Updated date collection for 07/20/2025: Page 1, Failed pages: []
+2025-09-07 10:12:53 | INFO | scraper | Updated date collection for 07/10/2025: Page 1, Failed pages: []
+2025-09-07 10:12:54 | INFO | scraper | Fetched page 1 for 07/14/2025
+2025-09-07 10:12:54 | INFO | scraper | Fetched page 5 for 07/17/2025
+2025-09-07 10:12:54 | INFO | scraper | Fetched page 3 for 07/22/2025
+2025-09-07 10:12:54 | INFO | scraper | Fetched page 2 for 07/17/2025
+2025-09-07 10:12:55 | INFO | scraper | Fetched page 1 for 07/20/2025
+2025-09-07 10:12:55 | INFO | scraper | Fetched page 5 for 07/22/2025
+2025-09-07 10:12:55 | INFO | scraper | Fetched page 1 for 07/10/2025
+2025-09-07 10:12:55 | INFO | scraper | Updated date collection for 07/30/2025: Page 1, Failed pages: []
+2025-09-07 10:12:56 | INFO | scraper | Fetched page 4 for 07/22/2025
+2025-09-07 10:12:56 | INFO | scraper | Fetched page 1 for 07/30/2025
+2025-09-07 10:12:57 | INFO | scraper | Fetched page 3 for 07/16/2025
+2025-09-07 10:12:59 | INFO | scraper | Fetched page 4 for 07/16/2025
+2025-09-07 10:12:59 | INFO | scraper | Fetched page 4 for 07/14/2025
+2025-09-07 10:12:59 | INFO | scraper | Updated date collection for 07/15/2025: Page 1, Failed pages: []
+2025-09-07 10:13:00 | INFO | scraper | Fetched page 4 for 07/17/2025
+2025-09-07 10:13:00 | INFO | scraper | Fetched page 4 for 07/10/2025
+2025-09-07 10:13:01 | INFO | scraper | Fetched page 3 for 07/20/2025
+2025-09-07 10:13:01 | INFO | scraper | Fetched page 1 for 07/15/2025
+2025-09-07 10:13:01 | INFO | scraper | Fetched page 2 for 07/22/2025
+2025-09-07 10:13:01 | ERROR | scraper | Request exception on page 1 for 07/27/2025: 
+2025-09-07 10:13:01 | ERROR | scraper | Request exception on page 1 for 07/06/2025: 
+2025-09-07 10:13:01 | ERROR | scraper | Request exception on page 1 for 07/24/2025: 
+2025-09-07 10:13:01 | ERROR | scraper | Request exception on page 1 for 07/28/2025: 
+2025-09-07 10:13:01 | ERROR | scraper | Request exception on page 1 for 07/21/2025: 
+2025-09-07 10:13:01 | ERROR | scraper | Request exception on page 1 for 07/13/2025: 
+2025-09-07 10:13:01 | ERROR | scraper | Request exception on page 1 for 07/29/2025: 
+2025-09-07 10:13:01 | INFO | scraper | Fetched page 5 for 07/20/2025
+2025-09-07 10:13:01 | INFO | scraper | Fetched page 3 for 07/10/2025
+2025-09-07 10:13:02 | INFO | scraper | Fetched page 5 for 07/30/2025
+2025-09-07 10:13:02 | INFO | scraper | Fetched page 2 for 07/14/2025
+2025-09-07 10:13:02 | INFO | scraper | Fetched page 4 for 07/20/2025
+2025-09-07 10:13:04 | INFO | scraper | Skipped 500 existing records
+2025-09-07 10:13:04 | INFO | scraper | Skipped 500 existing records
+2025-09-07 10:13:04 | INFO | scraper | Skipped 500 existing records
+2025-09-07 10:13:04 | INFO | scraper | Skipped 500 existing records
+2025-09-07 10:13:04 | INFO | scraper | Inserted 500 new records, skipped 0 existing records
+2025-09-07 10:13:04 | INFO | scraper | Inserted 500 new records, skipped 0 existing records
+2025-09-07 10:13:04 | ERROR | scraper | Request exception on page 2 for 07/09/2025: 
+2025-09-07 10:13:04 | ERROR | scraper | Request exception on page 3 for 07/09/2025: 
+2025-09-07 10:13:05 | ERROR | scraper | Request exception on page 3 for 07/02/2025: 
+2025-09-07 10:13:05 | INFO | scraper | Fetched page 2 for 07/20/2025
+2025-09-07 10:13:06 | INFO | scraper | Fetched page 2 for 07/10/2025
+2025-09-07 10:13:06 | INFO | scraper | Fetched page 3 for 07/15/2025
+2025-09-07 10:13:06 | INFO | scraper | Fetched page 2 for 07/09/2025
+2025-09-07 10:13:07 | ERROR | scraper | Request exception on page 2 for 07/08/2025: 
+2025-09-07 10:13:07 | INFO | scraper | Fetched page 3 for 07/09/2025
+2025-09-07 10:13:07 | ERROR | scraper | Request exception on page 1 for 07/03/2025: 
+2025-09-07 10:13:07 | ERROR | scraper | Request exception on page 4 for 07/03/2025: 
+2025-09-07 10:13:08 | ERROR | scraper | Request exception on page 3 for 07/07/2025: 
+2025-09-07 10:13:08 | ERROR | scraper | Request exception on page 4 for 07/07/2025: 
+2025-09-07 10:13:08 | INFO | scraper | Fetched page 5 for 07/10/2025
+2025-09-07 10:13:09 | INFO | scraper | Fetched page 1 for 07/21/2025
+2025-09-07 10:13:09 | INFO | scraper | Fetched page 1 for 07/28/2025
+2025-09-07 10:13:09 | ERROR | scraper | Request exception on page 4 for 07/17/2025: 
+2025-09-07 10:13:09 | ERROR | scraper | Request exception on page 2 for 07/17/2025: 
+2025-09-07 10:13:09 | ERROR | scraper | Request exception on page 5 for 07/17/2025: 
+2025-09-07 10:13:09 | INFO | scraper | Fetched page 4 for 07/30/2025
+2025-09-07 10:13:09 | INFO | scraper | Fetched page 2 for 07/08/2025
+2025-09-07 10:13:10 | INFO | scraper | Fetched page 4 for 07/15/2025
+2025-09-07 10:13:10 | INFO | scraper | Fetched page 1 for 07/03/2025
+2025-09-07 10:13:10 | INFO | scraper | Fetched page 5 for 07/14/2025
+2025-09-07 10:13:10 | INFO | scraper | Fetched page 2 for 07/30/2025
+2025-09-07 10:13:10 | INFO | scraper | Fetched page 5 for 07/15/2025
+2025-09-07 10:13:11 | INFO | scraper | Fetched page 3 for 07/30/2025
+2025-09-07 10:13:11 | INFO | scraper | Fetched page 3 for 07/14/2025
+2025-09-07 10:13:11 | INFO | scraper | Fetched page 1 for 07/24/2025
+2025-09-07 10:13:11 | INFO | scraper | Fetched page 1 for 07/06/2025
+2025-09-07 10:13:12 | INFO | scraper | Fetched page 4 for 07/17/2025
+2025-09-07 10:13:12 | ERROR | scraper | Request exception on page 4 for 07/16/2025: 
+2025-09-07 10:13:12 | ERROR | scraper | Request exception on page 2 for 07/16/2025: 
+2025-09-07 10:13:12 | INFO | scraper | Fetched page 1 for 07/29/2025
+2025-09-07 10:13:12 | INFO | scraper | Fetched page 1 for 07/27/2025
+2025-09-07 10:13:13 | INFO | scraper | Fetched page 1 for 07/13/2025
+2025-09-07 10:13:13 | INFO | scraper | Fetched page 4 for 07/03/2025
+2025-09-07 10:13:13 | ERROR | scraper | Request exception on page 2 for 07/01/2025: 
+2025-09-07 10:13:13 | ERROR | scraper | Request exception on page 5 for 07/01/2025: 
+2025-09-07 10:13:13 | ERROR | scraper | Request exception on page 3 for 07/01/2025: 
+2025-09-07 10:13:13 | ERROR | scraper | Request exception on page 4 for 07/01/2025: 
+2025-09-07 10:13:13 | INFO | scraper | Fetched page 4 for 07/07/2025
+2025-09-07 10:13:14 | INFO | scraper | Fetched page 2 for 07/17/2025
+2025-09-07 10:13:14 | INFO | scraper | Fetched page 2 for 07/15/2025
+2025-09-07 10:13:15 | INFO | scraper | Fetched page 2 for 07/16/2025
+2025-09-07 10:13:15 | INFO | scraper | Skipped 500 existing records
+2025-09-07 10:13:15 | INFO | scraper | Fetched page 3 for 07/02/2025
+2025-09-07 10:13:15 | INFO | scraper | Fetched page 2 for 07/01/2025
+2025-09-07 10:13:15 | INFO | scraper | Fetched page 4 for 07/16/2025
+2025-09-07 10:13:16 | INFO | scraper | Fetched page 3 for 07/07/2025
+2025-09-07 10:13:16 | ERROR | scraper | Request exception on page 2 for 07/22/2025: 
+2025-09-07 10:13:16 | ERROR | scraper | Request exception on page 5 for 07/22/2025: 
+2025-09-07 10:13:16 | ERROR | scraper | Request exception on page 3 for 07/22/2025: 
+2025-09-07 10:13:16 | ERROR | scraper | Request exception on page 4 for 07/22/2025: 
+2025-09-07 10:13:19 | INFO | scraper | Fetched page 2 for 07/22/2025
+2025-09-07 10:13:20 | INFO | scraper | Updated date collection for 07/28/2025: Page 1, Failed pages: []
+2025-09-07 10:13:21 | INFO | scraper | Fetched page 5 for 07/01/2025
+2025-09-07 10:13:21 | INFO | scraper | Fetched page 4 for 07/01/2025
+2025-09-07 10:13:22 | INFO | scraper | Fetched page 3 for 07/01/2025
+2025-09-07 10:13:22 | INFO | scraper | Fetched page 1 for 07/28/2025
+2025-09-07 10:13:23 | ERROR | scraper | Request exception on page 2 for 07/14/2025: 
+2025-09-07 10:13:23 | ERROR | scraper | Request exception on page 5 for 07/14/2025: 
+2025-09-07 10:13:23 | ERROR | scraper | Request exception on page 3 for 07/14/2025: 
+2025-09-07 10:13:23 | ERROR | scraper | Request exception on page 4 for 07/14/2025: 
+2025-09-07 10:13:23 | INFO | scraper | Updated date collection for 07/21/2025: Page 1, Failed pages: []
+2025-09-07 10:13:24 | INFO | scraper | Fetched page 4 for 07/22/2025
+2025-09-07 10:13:24 | ERROR | scraper | Request exception on page 2 for 07/20/2025: 
+2025-09-07 10:13:24 | ERROR | scraper | Request exception on page 5 for 07/20/2025: 
+2025-09-07 10:13:24 | ERROR | scraper | Request exception on page 4 for 07/20/2025: 
+2025-09-07 10:13:24 | ERROR | scraper | Request exception on page 2 for 07/10/2025: 
+2025-09-07 10:13:24 | ERROR | scraper | Request exception on page 1 for 07/10/2025: 
+2025-09-07 10:13:24 | ERROR | scraper | Request exception on page 5 for 07/10/2025: 
+2025-09-07 10:13:24 | ERROR | scraper | Request exception on page 3 for 07/10/2025: 
+2025-09-07 10:13:24 | INFO | scraper | Fetched page 5 for 07/22/2025
+2025-09-07 10:13:25 | INFO | scraper | Fetched page 1 for 07/21/2025
+2025-09-07 10:13:25 | INFO | scraper | Fetched page 2 for 07/14/2025
+2025-09-07 10:13:26 | ERROR | scraper | Request exception on page 2 for 07/30/2025: 
+2025-09-07 10:13:26 | ERROR | scraper | Request exception on page 1 for 07/30/2025: 
+2025-09-07 10:13:26 | ERROR | scraper | Request exception on page 5 for 07/30/2025: 
+2025-09-07 10:13:26 | INFO | scraper | Fetched page 2 for 07/20/2025
+2025-09-07 10:13:27 | INFO | scraper | Fetched page 2 for 07/10/2025
+2025-09-07 10:13:27 | INFO | scraper | Fetched page 5 for 07/17/2025
+2025-09-07 10:13:27 | INFO | scraper | Fetched page 3 for 07/28/2025
+2025-09-07 10:13:27 | INFO | scraper | Fetched page 5 for 07/28/2025
+2025-09-07 10:13:28 | INFO | scraper | Fetched page 2 for 07/28/2025
+2025-09-07 10:13:28 | INFO | scraper | Fetched page 5 for 07/20/2025
+2025-09-07 10:13:28 | INFO | scraper | Fetched page 2 for 07/30/2025
+2025-09-07 10:13:29 | INFO | scraper | Fetched page 4 for 07/28/2025
+2025-09-07 10:13:30 | ERROR | scraper | Request exception on page 2 for 07/15/2025: 
+2025-09-07 10:13:30 | ERROR | scraper | Request exception on page 3 for 07/15/2025: 
+2025-09-07 10:13:30 | ERROR | scraper | Request exception on page 4 for 07/15/2025: 
+2025-09-07 10:13:30 | INFO | scraper | Fetched page 4 for 07/21/2025
+2025-09-07 10:13:31 | INFO | scraper | Fetched page 2 for 07/21/2025
+2025-09-07 10:13:31 | INFO | scraper | Fetched page 3 for 07/21/2025
+2025-09-07 10:13:32 | INFO | scraper | Fetched page 5 for 07/21/2025
+2025-09-07 10:13:32 | INFO | scraper | Fetched page 4 for 07/14/2025
+2025-09-07 10:13:32 | INFO | scraper | Fetched page 5 for 07/10/2025
+2025-09-07 10:13:32 | INFO | scraper | Fetched page 2 for 07/15/2025
+2025-09-07 10:13:32 | INFO | scraper | Fetched page 1 for 07/30/2025
+2025-09-07 10:13:33 | INFO | scraper | Fetched page 1 for 07/10/2025
+2025-09-07 10:13:33 | INFO | scraper | Updated date collection for 07/13/2025: Page 1, Failed pages: []
+2025-09-07 10:13:33 | ERROR | scraper | Request exception on page 1 for 07/24/2025: 
+2025-09-07 10:13:33 | ERROR | scraper | Request exception on page 1 for 07/27/2025: 
+2025-09-07 10:13:33 | ERROR | scraper | Request exception on page 1 for 07/29/2025: 
+2025-09-07 10:13:33 | ERROR | scraper | Request exception on page 1 for 07/06/2025: 
+2025-09-07 10:13:33 | INFO | scraper | Fetched page 3 for 07/15/2025
+2025-09-07 10:13:34 | INFO | scraper | Fetched page 3 for 07/14/2025
+2025-09-07 10:13:34 | INFO | scraper | Fetched page 3 for 07/22/2025
+2025-09-07 10:13:34 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/09/2025
+2025-09-07 10:13:34 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/23/2025
+2025-09-07 10:13:34 | INFO | scraper | Fetched page 4 for 07/20/2025
+2025-09-07 10:13:34 | INFO | scraper | Fetched page 3 for 07/10/2025
+2025-09-07 10:13:34 | INFO | scraper | Fetched page 5 for 07/30/2025
+2025-09-07 10:13:34 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/02/2025
+2025-09-07 10:13:35 | INFO | scraper | Fetched page 5 for 07/14/2025
+2025-09-07 10:13:36 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/03/2025
+2025-09-07 10:13:36 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/08/2025
+2025-09-07 10:13:37 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/07/2025
+2025-09-07 10:13:38 | INFO | scraper | Fetched page 4 for 07/15/2025
+2025-09-07 10:13:38 | INFO | scraper | Fetched page 6 for 07/09/2025
+2025-09-07 10:13:38 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/17/2025
+2025-09-07 10:13:40 | INFO | scraper | Fetched page 3 for 07/13/2025
+2025-09-07 10:13:40 | INFO | scraper | Fetched page 6 for 07/03/2025
+2025-09-07 10:13:40 | INFO | scraper | Fetched page 6 for 07/08/2025
+2025-09-07 10:13:40 | INFO | scraper | Fetched page 5 for 07/13/2025
+2025-09-07 10:13:40 | INFO | scraper | Fetched page 6 for 07/07/2025
+2025-09-07 10:13:41 | INFO | scraper | Fetched page 2 for 07/13/2025
+2025-09-07 10:13:41 | INFO | scraper | Fetched page 4 for 07/13/2025
+2025-09-07 10:13:42 | INFO | scraper | Fetched page 1 for 07/27/2025
+2025-09-07 10:13:42 | INFO | scraper | Fetched page 1 for 07/24/2025
+2025-09-07 10:13:42 | INFO | scraper | Fetched page 6 for 07/17/2025
+2025-09-07 10:13:42 | INFO | scraper | Fetched page 1 for 07/13/2025
+2025-09-07 10:13:42 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/01/2025
+2025-09-07 10:13:42 | INFO | scraper | Fetched page 8 for 07/23/2025
+2025-09-07 10:13:43 | INFO | scraper | Fetched page 10 for 07/09/2025
+2025-09-07 10:13:43 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/16/2025
+2025-09-07 10:13:43 | INFO | scraper | Fetched page 9 for 07/02/2025
+2025-09-07 10:13:43 | INFO | scraper | Fetched page 8 for 07/09/2025
+2025-09-07 10:13:43 | INFO | scraper | Fetched page 8 for 07/02/2025
+2025-09-07 10:13:43 | INFO | scraper | Fetched page 7 for 07/23/2025
+2025-09-07 10:13:44 | INFO | scraper | Fetched page 6 for 07/02/2025
+2025-09-07 10:13:44 | INFO | scraper | Fetched page 7 for 07/02/2025
+2025-09-07 10:13:45 | INFO | scraper | Fetched page 10 for 07/02/2025
+2025-09-07 10:13:45 | INFO | scraper | Fetched page 10 for 07/23/2025
+2025-09-07 10:13:45 | INFO | scraper | Fetched page 8 for 07/03/2025
+2025-09-07 10:13:45 | INFO | scraper | Fetched page 8 for 07/08/2025
+2025-09-07 10:13:46 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/22/2025
+2025-09-07 10:13:46 | INFO | scraper | Fetched page 10 for 07/07/2025
+2025-09-07 10:13:46 | INFO | scraper | Fetched page 9 for 07/03/2025
+2025-09-07 10:13:46 | INFO | scraper | Fetched page 7 for 07/08/2025
+2025-09-07 10:13:46 | INFO | scraper | Fetched page 6 for 07/16/2025
+2025-09-07 10:13:47 | INFO | scraper | Fetched page 10 for 07/03/2025
+2025-09-07 10:13:47 | INFO | scraper | Fetched page 9 for 07/07/2025
+2025-09-07 10:13:47 | INFO | scraper | Fetched page 10 for 07/08/2025
+2025-09-07 10:13:47 | INFO | scraper | Fetched page 8 for 07/17/2025
+2025-09-07 10:13:47 | INFO | scraper | Fetched page 8 for 07/07/2025
+2025-09-07 10:13:47 | INFO | scraper | Fetched page 8 for 07/01/2025
+2025-09-07 10:13:47 | INFO | scraper | Fetched page 9 for 07/23/2025
+2025-09-07 10:13:48 | INFO | scraper | Fetched page 9 for 07/09/2025
+2025-09-07 10:13:48 | INFO | scraper | Fetched page 7 for 07/16/2025
+2025-09-07 10:13:48 | INFO | scraper | Fetched page 6 for 07/23/2025
+2025-09-07 10:13:48 | INFO | scraper | Fetched page 7 for 07/09/2025
+2025-09-07 10:13:49 | INFO | scraper | Fetched page 9 for 07/17/2025
+2025-09-07 10:13:49 | INFO | scraper | Fetched page 7 for 07/01/2025
+2025-09-07 10:13:50 | INFO | scraper | Fetched page 8 for 07/22/2025
+2025-09-07 10:13:50 | INFO | scraper | Fetched page 1 for 07/29/2025
+2025-09-07 10:13:51 | ERROR | scraper | Request exception on page 4 for 07/28/2025: 
+2025-09-07 10:13:51 | ERROR | scraper | Request exception on page 3 for 07/28/2025: 
+2025-09-07 10:13:51 | ERROR | scraper | Request exception on page 5 for 07/28/2025: 
+2025-09-07 10:13:51 | INFO | scraper | Fetched page 10 for 07/17/2025
+2025-09-07 10:13:51 | INFO | scraper | Fetched page 9 for 07/01/2025
+2025-09-07 10:13:51 | INFO | scraper | Fetched page 6 for 07/22/2025
+2025-09-07 10:13:52 | INFO | scraper | Fetched page 7 for 07/17/2025
+2025-09-07 10:13:52 | INFO | scraper | Fetched page 1 for 07/06/2025
+2025-09-07 10:13:52 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/14/2025
+2025-09-07 10:13:52 | INFO | scraper | Fetched page 7 for 07/22/2025
+2025-09-07 10:13:52 | INFO | scraper | Fetched page 9 for 07/08/2025
+2025-09-07 10:13:53 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/20/2025
+2025-09-07 10:13:53 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/10/2025
+2025-09-07 10:13:54 | INFO | scraper | Fetched page 7 for 07/07/2025
+2025-09-07 10:13:54 | ERROR | scraper | Request exception on page 4 for 07/21/2025: 
+2025-09-07 10:13:54 | ERROR | scraper | Request exception on page 5 for 07/21/2025: 
+2025-09-07 10:13:54 | ERROR | scraper | Request exception on page 3 for 07/21/2025: 
+2025-09-07 10:13:54 | ERROR | scraper | Request exception on page 2 for 07/21/2025: 
+2025-09-07 10:13:54 | INFO | scraper | Fetched page 10 for 07/01/2025
+2025-09-07 10:13:55 | INFO | scraper | Fetched page 3 for 07/28/2025
+2025-09-07 10:13:55 | INFO | scraper | Fetched page 6 for 07/01/2025
+2025-09-07 10:13:55 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/30/2025
+2025-09-07 10:13:56 | INFO | scraper | Fetched page 6 for 07/14/2025
+2025-09-07 10:13:56 | INFO | scraper | Fetched page 9 for 07/16/2025
+2025-09-07 10:13:57 | INFO | scraper | Fetched page 7 for 07/20/2025
+2025-09-07 10:13:58 | INFO | scraper | Fetched page 9 for 07/22/2025
+2025-09-07 10:13:58 | INFO | scraper | Fetched page 6 for 07/30/2025
+2025-09-07 10:13:59 | INFO | scraper | Fetched page 4 for 07/21/2025
+2025-09-07 10:13:59 | INFO | scraper | Fetched page 10 for 07/16/2025
+2025-09-07 10:13:59 | INFO | scraper | Fetched page 5 for 07/28/2025
+2025-09-07 10:13:59 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/15/2025
+2025-09-07 10:14:01 | INFO | scraper | Fetched page 7 for 07/03/2025
+2025-09-07 10:14:01 | INFO | scraper | Fetched page 8 for 07/14/2025
+2025-09-07 10:14:02 | INFO | scraper | Fetched page 2 for 07/21/2025
+2025-09-07 10:14:03 | INFO | scraper | Fetched page 6 for 07/15/2025
+2025-09-07 10:14:03 | INFO | scraper | Fetched page 5 for 07/21/2025
+2025-09-07 10:14:03 | INFO | scraper | Fetched page 7 for 07/15/2025
+2025-09-07 10:14:03 | INFO | scraper | Fetched page 8 for 07/20/2025
+2025-09-07 10:14:04 | ERROR | scraper | Request exception on page 1 for 07/13/2025: 
+2025-09-07 10:14:04 | ERROR | scraper | Request exception on page 4 for 07/13/2025: 
+2025-09-07 10:14:04 | ERROR | scraper | Request exception on page 3 for 07/13/2025: 
+2025-09-07 10:14:04 | ERROR | scraper | Request exception on page 2 for 07/13/2025: 
+2025-09-07 10:14:04 | INFO | scraper | Fetched page 8 for 07/30/2025
+2025-09-07 10:14:05 | INFO | scraper | Fetched page 9 for 07/30/2025
+2025-09-07 10:14:05 | INFO | scraper | Updated date collection for 07/24/2025: Page 1, Failed pages: []
+2025-09-07 10:14:05 | INFO | scraper | Fetched page 6 for 07/20/2025
+2025-09-07 10:14:05 | INFO | scraper | Fetched page 10 for 07/30/2025
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 1 for 07/06/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 10 for 07/23/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 1 for 07/29/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Max retries reached for page 1 on 07/06/2025.
+2025-09-07 10:14:06 | ERROR | scraper | Max retries reached for page 1 on 07/29/2025.
+2025-09-07 10:14:06 | ERROR | scraper | Could not fetch first page for 07/06/2025
+2025-09-07 10:14:06 | ERROR | scraper | Could not fetch first page for 07/29/2025
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 9 for 07/23/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 6 for 07/23/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 7 for 07/23/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 8 for 07/23/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 1 for 07/27/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 7 for 07/09/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Max retries reached for page 1 on 07/27/2025.
+2025-09-07 10:14:06 | ERROR | scraper | Could not fetch first page for 07/27/2025
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 10 for 07/09/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 9 for 07/09/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 8 for 07/09/2025: 
+2025-09-07 10:14:06 | ERROR | scraper | Request exception on page 6 for 07/09/2025: 
+2025-09-07 10:14:06 | INFO | scraper | Fetched page 3 for 07/21/2025
+2025-09-07 10:14:06 | INFO | scraper | Fetched page 1 for 07/13/2025
+2025-09-07 10:14:07 | INFO | scraper | Fetched page 10 for 07/14/2025
+2025-09-07 10:14:07 | INFO | scraper | Fetched page 10 for 07/22/2025
+2025-09-07 10:14:07 | INFO | scraper | Fetched page 4 for 07/28/2025
+2025-09-07 10:14:07 | INFO | scraper | Fetched page 8 for 07/16/2025
+2025-09-07 10:14:07 | INFO | scraper | Fetched page 1 for 07/24/2025
+2025-09-07 10:14:07 | ERROR | scraper | Request exception on page 8 for 07/02/2025: 
+2025-09-07 10:14:07 | ERROR | scraper | Request exception on page 9 for 07/02/2025: 
+2025-09-07 10:14:07 | ERROR | scraper | Request exception on page 10 for 07/02/2025: 
+2025-09-07 10:14:07 | ERROR | scraper | Request exception on page 6 for 07/02/2025: 
+2025-09-07 10:14:07 | ERROR | scraper | Request exception on page 7 for 07/02/2025: 
+2025-09-07 10:14:07 | INFO | scraper | Fetched page 7 for 07/14/2025
+2025-09-07 10:14:07 | INFO | scraper | Fetched page 10 for 07/20/2025
+2025-09-07 10:14:08 | INFO | scraper | Fetched page 7 for 07/30/2025
+2025-09-07 10:14:08 | INFO | scraper | Fetched page 9 for 07/20/2025
+2025-09-07 10:14:08 | INFO | scraper | Fetched page 8 for 07/15/2025
+2025-09-07 10:14:08 | INFO | scraper | Fetched page 8 for 07/10/2025
+2025-09-07 10:14:09 | INFO | scraper | Fetched page 10 for 07/15/2025
+2025-09-07 10:14:09 | INFO | scraper | Fetched page 10 for 07/10/2025
+2025-09-07 10:14:09 | ERROR | scraper | Request exception on page 10 for 07/03/2025: 
+2025-09-07 10:14:09 | ERROR | scraper | Request exception on page 10 for 07/08/2025: 
+2025-09-07 10:14:09 | ERROR | scraper | Request exception on page 8 for 07/03/2025: 
+2025-09-07 10:14:09 | ERROR | scraper | Request exception on page 6 for 07/08/2025: 
+2025-09-07 10:14:09 | ERROR | scraper | Request exception on page 9 for 07/08/2025: 
+2025-09-07 10:14:09 | ERROR | scraper | Request exception on page 7 for 07/08/2025: 
+2025-09-07 10:14:09 | ERROR | scraper | Request exception on page 8 for 07/08/2025: 
+2025-09-07 10:14:09 | ERROR | scraper | Request exception on page 7 for 07/03/2025: 
+2025-09-07 10:14:10 | INFO | scraper | Fetched page 6 for 07/10/2025
+2025-09-07 10:14:11 | ERROR | scraper | Request exception on page 8 for 07/07/2025: 
+2025-09-07 10:14:11 | ERROR | scraper | Request exception on page 7 for 07/07/2025: 
+2025-09-07 10:14:11 | ERROR | scraper | Request exception on page 6 for 07/07/2025: 
+2025-09-07 10:14:11 | ERROR | scraper | Request exception on page 7 for 07/17/2025: 
+2025-09-07 10:14:11 | ERROR | scraper | Request exception on page 10 for 07/17/2025: 
+2025-09-07 10:14:11 | ERROR | scraper | Request exception on page 8 for 07/17/2025: 
+2025-09-07 10:14:11 | ERROR | scraper | Request exception on page 9 for 07/17/2025: 
+2025-09-07 10:14:11 | ERROR | scraper | Request exception on page 6 for 07/17/2025: 
+2025-09-07 10:14:11 | INFO | scraper | Fetched page 3 for 07/24/2025
+2025-09-07 10:14:11 | INFO | scraper | Fetched page 9 for 07/15/2025
+2025-09-07 10:14:11 | INFO | scraper | Fetched page 2 for 07/13/2025
+2025-09-07 10:14:12 | INFO | scraper | Fetched page 9 for 07/10/2025
+2025-09-07 10:14:12 | INFO | scraper | Fetched page 4 for 07/24/2025
+2025-09-07 10:14:12 | INFO | scraper | Fetched page 7 for 07/10/2025
+2025-09-07 10:14:12 | INFO | scraper | Fetched page 2 for 07/24/2025
+2025-09-07 10:14:13 | INFO | scraper | Fetched page 5 for 07/24/2025
+2025-09-07 10:14:13 | INFO | scraper | Fetched page 8 for 07/07/2025
+2025-09-07 10:14:14 | INFO | scraper | Fetched page 10 for 07/03/2025
+2025-09-07 10:14:14 | INFO | scraper | Fetched page 9 for 07/14/2025
+2025-09-07 10:14:14 | INFO | scraper | Fetched page 6 for 07/23/2025
+2025-09-07 10:14:15 | INFO | scraper | Fetched page 8 for 07/23/2025
+2025-09-07 10:14:15 | ERROR | scraper | Request exception on page 7 for 07/01/2025: 
+2025-09-07 10:14:15 | ERROR | scraper | Request exception on page 7 for 07/16/2025: 
+2025-09-07 10:14:15 | ERROR | scraper | Request exception on page 6 for 07/01/2025: 
+2025-09-07 10:14:15 | ERROR | scraper | Request exception on page 6 for 07/16/2025: 
+2025-09-07 10:14:15 | ERROR | scraper | Request exception on page 8 for 07/01/2025: 
+2025-09-07 10:14:15 | ERROR | scraper | Request exception on page 10 for 07/01/2025: 
+2025-09-07 10:14:15 | ERROR | scraper | Request exception on page 9 for 07/01/2025: 
+2025-09-07 10:14:15 | INFO | scraper | Fetched page 8 for 07/09/2025
+2025-09-07 10:14:15 | INFO | scraper | Fetched page 7 for 07/23/2025
+2025-09-07 10:14:15 | INFO | scraper | Fetched page 7 for 07/09/2025
+2025-09-07 10:14:16 | ERROR | scraper | Request exception on page 8 for 07/16/2025: 
+2025-09-07 10:14:16 | ERROR | scraper | Request exception on page 9 for 07/16/2025: 
+2025-09-07 10:14:16 | ERROR | scraper | Request exception on page 10 for 07/16/2025: 
+2025-09-07 10:14:16 | INFO | scraper | Fetched page 8 for 07/03/2025
+2025-09-07 10:14:17 | INFO | scraper | Fetched page 10 for 07/09/2025
+2025-09-07 10:14:18 | ERROR | scraper | Request exception on page 6 for 07/22/2025: 
+2025-09-07 10:14:18 | ERROR | scraper | Request exception on page 10 for 07/22/2025: 
+2025-09-07 10:14:18 | ERROR | scraper | Request exception on page 9 for 07/22/2025: 
+2025-09-07 10:14:19 | INFO | scraper | Fetched page 9 for 07/23/2025
+2025-09-07 10:14:19 | INFO | scraper | Fetched page 8 for 07/17/2025
+2025-09-07 10:14:19 | INFO | scraper | Fetched page 9 for 07/09/2025
+2025-09-07 10:14:19 | INFO | scraper | Fetched page 10 for 07/23/2025
+2025-09-07 10:14:20 | INFO | scraper | Fetched page 3 for 07/13/2025
+2025-09-07 10:14:20 | INFO | scraper | Fetched page 7 for 07/07/2025
+2025-09-07 10:14:20 | INFO | scraper | Fetched page 8 for 07/08/2025
+2025-09-07 10:14:20 | INFO | scraper | Fetched page 10 for 07/17/2025
+2025-09-07 10:14:20 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/28/2025
+2025-09-07 10:14:21 | INFO | scraper | Fetched page 10 for 07/22/2025
+2025-09-07 10:14:21 | INFO | scraper | Fetched page 6 for 07/07/2025
+2025-09-07 10:14:22 | INFO | scraper | Fetched page 9 for 07/17/2025
+2025-09-07 10:14:23 | INFO | scraper | Fetched page 7 for 07/17/2025
+2025-09-07 10:14:23 | INFO | scraper | Fetched page 6 for 07/22/2025
+2025-09-07 10:14:23 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/21/2025
+2025-09-07 10:14:24 | INFO | scraper | Fetched page 6 for 07/17/2025
+2025-09-07 10:14:25 | INFO | scraper | Fetched page 10 for 07/02/2025
+2025-09-07 10:14:25 | INFO | scraper | Fetched page 7 for 07/03/2025
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 7 for 07/14/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 9 for 07/14/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 10 for 07/14/2025: 
+2025-09-07 10:14:26 | INFO | scraper | Fetched page 9 for 07/22/2025
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 6 for 07/10/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 8 for 07/10/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 9 for 07/20/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 7 for 07/10/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 10 for 07/10/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 9 for 07/10/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 6 for 07/20/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 10 for 07/20/2025: 
+2025-09-07 10:14:26 | ERROR | scraper | Request exception on page 8 for 07/20/2025: 
+2025-09-07 10:14:26 | INFO | scraper | Fetched page 7 for 07/08/2025
+2025-09-07 10:14:27 | INFO | scraper | Fetched page 6 for 07/08/2025
+2025-09-07 10:14:27 | INFO | scraper | Fetched page 4 for 07/13/2025
+2025-09-07 10:14:27 | INFO | scraper | Fetched page 10 for 07/08/2025
+2025-09-07 10:14:28 | INFO | scraper | Fetched page 6 for 07/09/2025
+2025-09-07 10:14:28 | INFO | scraper | Fetched page 9 for 07/08/2025
+2025-09-07 10:14:28 | ERROR | scraper | Request exception on page 7 for 07/30/2025: 
+2025-09-07 10:14:28 | ERROR | scraper | Request exception on page 6 for 07/30/2025: 
+2025-09-07 10:14:28 | ERROR | scraper | Request exception on page 9 for 07/30/2025: 
+2025-09-07 10:14:29 | INFO | scraper | Fetched page 9 for 07/02/2025
+2025-09-07 10:14:30 | INFO | scraper | Fetched page 9 for 07/20/2025
+2025-09-07 10:14:30 | INFO | scraper | Fetched page 9 for 07/14/2025
+2025-09-07 10:14:30 | INFO | scraper | Fetched page 7 for 07/14/2025
+2025-09-07 10:14:31 | INFO | scraper | Fetched page 6 for 07/02/2025
+2025-09-07 10:14:31 | INFO | scraper | Fetched page 10 for 07/28/2025
+2025-09-07 10:14:31 | INFO | scraper | Fetched page 7 for 07/28/2025
+2025-09-07 10:14:32 | INFO | scraper | Fetched page 10 for 07/01/2025
+2025-09-07 10:14:33 | ERROR | scraper | Request exception on page 10 for 07/15/2025: 
+2025-09-07 10:14:33 | ERROR | scraper | Request exception on page 8 for 07/15/2025: 
+2025-09-07 10:14:33 | ERROR | scraper | Request exception on page 9 for 07/15/2025: 
+2025-09-07 10:14:33 | ERROR | scraper | Request exception on page 7 for 07/15/2025: 
+2025-09-07 10:14:33 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/13/2025
+2025-09-07 10:14:33 | INFO | scraper | Fetched page 8 for 07/02/2025
+2025-09-07 10:14:33 | INFO | scraper | Fetched page 8 for 07/28/2025
+2025-09-07 10:14:33 | INFO | scraper | Fetched page 6 for 07/21/2025
+2025-09-07 10:14:34 | INFO | scraper | Fetched page 9 for 07/28/2025
+2025-09-07 10:14:34 | INFO | scraper | Fetched page 10 for 07/16/2025
+2025-09-07 10:14:35 | ERROR | scraper | Request exception on page 2 for 07/24/2025: 
+2025-09-07 10:14:35 | ERROR | scraper | Request exception on page 5 for 07/24/2025: 
+2025-09-07 10:14:35 | ERROR | scraper | Request exception on page 3 for 07/24/2025: 
+2025-09-07 10:14:35 | INFO | scraper | Fetched page 9 for 07/01/2025
+2025-09-07 10:14:35 | INFO | scraper | Fetched page 7 for 07/30/2025
+2025-09-07 10:14:36 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/09/2025
+2025-09-07 10:14:36 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/23/2025
+2025-09-07 10:14:36 | INFO | scraper | Fetched page 6 for 07/01/2025
+2025-09-07 10:14:36 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/02/2025
+2025-09-07 10:14:36 | INFO | scraper | Fetched page 7 for 07/16/2025
+2025-09-07 10:14:37 | INFO | scraper | Fetched page 8 for 07/16/2025
+2025-09-07 10:14:38 | INFO | scraper | Fetched page 9 for 07/10/2025
+2025-09-07 10:14:38 | INFO | scraper | Fetched page 9 for 07/16/2025
+2025-09-07 10:14:38 | INFO | scraper | Fetched page 10 for 07/15/2025
+2025-09-07 10:14:38 | INFO | scraper | Fetched page 9 for 07/30/2025
+2025-09-07 10:14:38 | INFO | scraper | Fetched page 9 for 07/21/2025
+2025-09-07 10:14:38 | INFO | scraper | Fetched page 6 for 07/20/2025
+2025-09-07 10:14:38 | INFO | scraper | Fetched page 6 for 07/13/2025
+2025-09-07 10:14:38 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/03/2025
+2025-09-07 10:14:38 | INFO | scraper | Fetched page 10 for 07/10/2025
+2025-09-07 10:14:38 | INFO | scraper | Fetched page 7 for 07/21/2025
+2025-09-07 10:14:38 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/08/2025
+2025-09-07 10:14:39 | INFO | scraper | Fetched page 7 for 07/01/2025
+2025-09-07 10:14:39 | INFO | scraper | Fetched page 10 for 07/21/2025
+2025-09-07 10:14:39 | INFO | scraper | Fetched page 5 for 07/24/2025
+2025-09-07 10:14:39 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/07/2025
+2025-09-07 10:14:39 | INFO | scraper | Fetched page 8 for 07/20/2025
+2025-09-07 10:14:40 | INFO | scraper | Fetched page 6 for 07/28/2025
+2025-09-07 10:14:40 | INFO | scraper | Fetched page 6 for 07/30/2025
+2025-09-07 10:14:40 | INFO | scraper | Fetched page 8 for 07/01/2025
+2025-09-07 10:14:41 | INFO | scraper | Fetched page 7 for 07/10/2025
+2025-09-07 10:14:41 | INFO | scraper | Fetched page 2 for 07/24/2025
+2025-09-07 10:14:41 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/17/2025
+2025-09-07 10:14:42 | INFO | scraper | Fetched page 10 for 07/20/2025
+2025-09-07 10:14:44 | INFO | scraper | Fetched page 8 for 07/15/2025
+2025-09-07 10:14:44 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/01/2025
+2025-09-07 10:14:44 | INFO | scraper | Fetched page 11 for 07/23/2025
+2025-09-07 10:14:45 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/16/2025
+2025-09-07 10:14:45 | INFO | scraper | Fetched page 14 for 07/23/2025
+2025-09-07 10:14:45 | INFO | scraper | Fetched page 11 for 07/07/2025
+2025-09-07 10:14:46 | INFO | scraper | Fetched page 13 for 07/23/2025
+2025-09-07 10:14:46 | INFO | scraper | Fetched page 12 for 07/07/2025
+2025-09-07 10:14:46 | INFO | scraper | Fetched page 15 for 07/09/2025
+2025-09-07 10:14:46 | INFO | scraper | Fetched page 14 for 07/02/2025
+2025-09-07 10:14:46 | INFO | scraper | Fetched page 10 for 07/14/2025
+2025-09-07 10:14:47 | INFO | scraper | Fetched page 12 for 07/23/2025
+2025-09-07 10:14:47 | INFO | scraper | Fetched page 11 for 07/09/2025
+2025-09-07 10:14:47 | INFO | scraper | Fetched page 14 for 07/09/2025
+2025-09-07 10:14:47 | INFO | scraper | Fetched page 11 for 07/02/2025
+2025-09-07 10:14:47 | INFO | scraper | Fetched page 13 for 07/09/2025
+2025-09-07 10:14:48 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/22/2025
+2025-09-07 10:14:48 | INFO | scraper | Fetched page 14 for 07/03/2025
+2025-09-07 10:14:48 | INFO | scraper | Fetched page 12 for 07/09/2025
+2025-09-07 10:14:48 | INFO | scraper | Fetched page 12 for 07/02/2025
+2025-09-07 10:14:49 | INFO | scraper | Fetched page 13 for 07/02/2025
+2025-09-07 10:14:49 | INFO | scraper | Fetched page 3 for 07/24/2025
+2025-09-07 10:14:49 | INFO | scraper | Fetched page 15 for 07/02/2025
+2025-09-07 10:14:50 | INFO | scraper | Fetched page 11 for 07/08/2025
+2025-09-07 10:14:50 | INFO | scraper | Fetched page 14 for 07/17/2025
+2025-09-07 10:14:50 | INFO | scraper | Fetched page 15 for 07/17/2025
+2025-09-07 10:14:50 | INFO | scraper | Fetched page 11 for 07/03/2025
+2025-09-07 10:14:51 | INFO | scraper | Fetched page 11 for 07/17/2025
+2025-09-07 10:14:51 | INFO | scraper | Fetched page 12 for 07/17/2025
+2025-09-07 10:14:51 | INFO | scraper | Fetched page 9 for 07/15/2025
+2025-09-07 10:14:51 | INFO | scraper | Fetched page 6 for 07/10/2025
+2025-09-07 10:14:52 | INFO | scraper | Fetched page 7 for 07/15/2025
+2025-09-07 10:14:52 | INFO | scraper | Fetched page 8 for 07/13/2025
+2025-09-07 10:14:53 | ERROR | scraper | Request exception on page 8 for 07/28/2025: 
+2025-09-07 10:14:53 | ERROR | scraper | Request exception on page 7 for 07/28/2025: 
+2025-09-07 10:14:53 | ERROR | scraper | Request exception on page 6 for 07/28/2025: 
+2025-09-07 10:14:53 | ERROR | scraper | Request exception on page 10 for 07/28/2025: 
+2025-09-07 10:14:54 | INFO | scraper | Fetched page 11 for 07/16/2025
+2025-09-07 10:14:54 | INFO | scraper | Fetched page 15 for 07/01/2025
+2025-09-07 10:14:54 | INFO | scraper | Fetched page 13 for 07/17/2025
+2025-09-07 10:14:54 | INFO | scraper | Fetched page 15 for 07/03/2025
+2025-09-07 10:14:54 | INFO | scraper | Fetched page 10 for 07/13/2025
+2025-09-07 10:14:54 | INFO | scraper | Fetched page 9 for 07/13/2025
+2025-09-07 10:14:54 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/14/2025
+2025-09-07 10:14:54 | INFO | scraper | Fetched page 14 for 07/01/2025
+2025-09-07 10:14:54 | INFO | scraper | Fetched page 15 for 07/16/2025
+2025-09-07 10:14:55 | INFO | scraper | Fetched page 7 for 07/13/2025
+2025-09-07 10:14:55 | INFO | scraper | Fetched page 12 for 07/01/2025
+2025-09-07 10:14:55 | INFO | scraper | Fetched page 14 for 07/16/2025
+2025-09-07 10:14:55 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/20/2025
+2025-09-07 10:14:55 | INFO | scraper | Fetched page 8 for 07/28/2025
+2025-09-07 10:14:55 | INFO | scraper | Fetched page 14 for 07/08/2025
+2025-09-07 10:14:55 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/10/2025
+2025-09-07 10:14:56 | ERROR | scraper | Request exception on page 6 for 07/21/2025: 
+2025-09-07 10:14:56 | ERROR | scraper | Request exception on page 8 for 07/21/2025: 
+2025-09-07 10:14:56 | ERROR | scraper | Request exception on page 9 for 07/21/2025: 
+2025-09-07 10:14:56 | ERROR | scraper | Request exception on page 10 for 07/21/2025: 
+2025-09-07 10:14:56 | ERROR | scraper | Request exception on page 7 for 07/21/2025: 
+2025-09-07 10:14:56 | INFO | scraper | Fetched page 14 for 07/07/2025
+2025-09-07 10:14:57 | INFO | scraper | Fetched page 15 for 07/22/2025
+2025-09-07 10:14:57 | INFO | scraper | Fetched page 13 for 07/08/2025
+2025-09-07 10:14:57 | INFO | scraper | Fetched page 15 for 07/08/2025
+2025-09-07 10:14:58 | INFO | scraper | Fetched page 12 for 07/22/2025
+2025-09-07 10:14:58 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/30/2025
+2025-09-07 10:14:58 | INFO | scraper | Fetched page 13 for 07/16/2025
+2025-09-07 10:14:58 | INFO | scraper | Fetched page 11 for 07/01/2025
+2025-09-07 10:14:59 | INFO | scraper | Fetched page 15 for 07/23/2025
+2025-09-07 10:14:59 | INFO | scraper | Fetched page 11 for 07/10/2025
+2025-09-07 10:14:59 | INFO | scraper | Fetched page 13 for 07/22/2025
+2025-09-07 10:15:00 | INFO | scraper | Fetched page 12 for 07/08/2025
+2025-09-07 10:15:00 | INFO | scraper | Fetched page 13 for 07/03/2025
+2025-09-07 10:15:00 | INFO | scraper | Fetched page 11 for 07/14/2025
+2025-09-07 10:15:01 | INFO | scraper | Fetched page 15 for 07/07/2025
+2025-09-07 10:15:01 | INFO | scraper | Fetched page 13 for 07/07/2025
+2025-09-07 10:15:01 | INFO | scraper | Fetched page 6 for 07/28/2025
+2025-09-07 10:15:01 | INFO | scraper | Fetched page 11 for 07/30/2025
+2025-09-07 10:15:01 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/15/2025
+2025-09-07 10:15:01 | INFO | scraper | Fetched page 7 for 07/28/2025
+2025-09-07 10:15:02 | INFO | scraper | Fetched page 12 for 07/30/2025
+2025-09-07 10:15:02 | INFO | scraper | Fetched page 10 for 07/28/2025
+2025-09-07 10:15:02 | INFO | scraper | Fetched page 12 for 07/03/2025
+2025-09-07 10:15:03 | INFO | scraper | Fetched page 12 for 07/16/2025
+2025-09-07 10:15:03 | INFO | scraper | Fetched page 13 for 07/14/2025
+2025-09-07 10:15:04 | INFO | scraper | Fetched page 8 for 07/21/2025
+2025-09-07 10:15:04 | INFO | scraper | Fetched page 15 for 07/14/2025
+2025-09-07 10:15:05 | ERROR | scraper | Timeout processing batch starting at page 1 for 07/24/2025
+2025-09-07 10:15:05 | INFO | scraper | Fetched page 14 for 07/20/2025
+2025-09-07 10:15:05 | ERROR | scraper | Request exception on page 7 for 07/13/2025: 
+2025-09-07 10:15:05 | ERROR | scraper | Request exception on page 6 for 07/13/2025: 
+2025-09-07 10:15:05 | INFO | scraper | Fetched page 7 for 07/21/2025
+2025-09-07 10:15:05 | INFO | scraper | Fetched page 12 for 07/10/2025
+2025-09-07 10:15:05 | INFO | scraper | Fetched page 13 for 07/01/2025
+2025-09-07 10:15:06 | ERROR | scraper | Request exception on page 8 for 07/13/2025: 
+2025-09-07 10:15:06 | ERROR | scraper | Request exception on page 10 for 07/13/2025: 
+2025-09-07 10:15:06 | ERROR | scraper | Request exception on page 9 for 07/13/2025: 
+2025-09-07 10:15:06 | INFO | scraper | Fetched page 6 for 07/21/2025
+2025-09-07 10:15:06 | INFO | scraper | Fetched page 12 for 07/14/2025
+2025-09-07 10:15:06 | INFO | scraper | Fetched page 14 for 07/10/2025
+2025-09-07 10:15:07 | INFO | scraper | Fetched page 11 for 07/15/2025
+2025-09-07 10:15:08 | ERROR | scraper | Request exception on page 13 for 07/23/2025: 
+2025-09-07 10:15:08 | ERROR | scraper | Request exception on page 15 for 07/23/2025: 
+2025-09-07 10:15:08 | ERROR | scraper | Request exception on page 15 for 07/09/2025: 
+2025-09-07 10:15:08 | ERROR | scraper | Request exception on page 13 for 07/09/2025: 
+2025-09-07 10:15:08 | ERROR | scraper | Request exception on page 14 for 07/23/2025: 
+2025-09-07 10:15:08 | ERROR | scraper | Request exception on page 12 for 07/09/2025: 
+2025-09-07 10:15:08 | ERROR | scraper | Request exception on page 12 for 07/23/2025: 
+2025-09-07 10:15:08 | INFO | scraper | Fetched page 6 for 07/24/2025
+2025-09-07 10:15:09 | INFO | scraper | Fetched page 9 for 07/21/2025
+2025-09-07 10:15:09 | ERROR | scraper | Request exception on page 15 for 07/02/2025: 
+2025-09-07 10:15:09 | ERROR | scraper | Request exception on page 13 for 07/02/2025: 
+2025-09-07 10:15:09 | ERROR | scraper | Request exception on page 11 for 07/02/2025: 
+2025-09-07 10:15:09 | ERROR | scraper | Request exception on page 14 for 07/02/2025: 
+2025-09-07 10:15:09 | ERROR | scraper | Request exception on page 12 for 07/02/2025: 
+2025-09-07 10:15:10 | INFO | scraper | Fetched page 15 for 07/20/2025
+2025-09-07 10:15:10 | INFO | scraper | Fetched page 10 for 07/21/2025
+2025-09-07 10:15:10 | INFO | scraper | Fetched page 14 for 07/22/2025
+2025-09-07 10:15:11 | ERROR | scraper | Request exception on page 15 for 07/08/2025: 
+2025-09-07 10:15:11 | ERROR | scraper | Request exception on page 13 for 07/08/2025: 
+2025-09-07 10:15:11 | ERROR | scraper | Request exception on page 14 for 07/08/2025: 
+2025-09-07 10:15:11 | ERROR | scraper | Request exception on page 11 for 07/03/2025: 
+2025-09-07 10:15:11 | ERROR | scraper | Request exception on page 11 for 07/08/2025: 
+2025-09-07 10:15:11 | ERROR | scraper | Request exception on page 12 for 07/03/2025: 
+2025-09-07 10:15:11 | ERROR | scraper | Request exception on page 12 for 07/08/2025: 
+2025-09-07 10:15:11 | ERROR | scraper | Request exception on page 13 for 07/03/2025: 
+2025-09-07 10:15:11 | ERROR | scraper | Request exception on page 15 for 07/03/2025: 
+2025-09-07 10:15:11 | INFO | scraper | Fetched page 13 for 07/09/2025
+2025-09-07 10:15:11 | INFO | scraper | Fetched page 15 for 07/15/2025
+2025-09-07 10:15:12 | INFO | scraper | Fetched page 13 for 07/20/2025
+2025-09-07 10:15:12 | ERROR | scraper | Request exception on page 15 for 07/07/2025: 
+2025-09-07 10:15:12 | ERROR | scraper | Request exception on page 13 for 07/07/2025: 
+2025-09-07 10:15:12 | ERROR | scraper | Request exception on page 11 for 07/07/2025: 
+2025-09-07 10:15:12 | ERROR | scraper | Request exception on page 14 for 07/07/2025: 
+2025-09-07 10:15:12 | INFO | scraper | Fetched page 14 for 07/15/2025
+2025-09-07 10:15:12 | INFO | scraper | Fetched page 11 for 07/20/2025
+2025-09-07 10:15:13 | INFO | scraper | Fetched page 6 for 07/13/2025
+2025-09-07 10:15:13 | INFO | scraper | Fetched page 12 for 07/15/2025
+2025-09-07 10:15:13 | INFO | scraper | Fetched page 9 for 07/13/2025
+2025-09-07 10:15:13 | INFO | scraper | Fetched page 11 for 07/03/2025
+2025-09-07 10:15:14 | INFO | scraper | Fetched page 13 for 07/10/2025
+2025-09-07 10:15:14 | INFO | scraper | Fetched page 10 for 07/13/2025
+2025-09-07 10:15:14 | ERROR | scraper | Request exception on page 12 for 07/17/2025: 
+2025-09-07 10:15:14 | ERROR | scraper | Request exception on page 11 for 07/17/2025: 
+2025-09-07 10:15:14 | ERROR | scraper | Request exception on page 13 for 07/17/2025: 
+2025-09-07 10:15:14 | ERROR | scraper | Request exception on page 14 for 07/17/2025: 
+2025-09-07 10:15:14 | ERROR | scraper | Request exception on page 15 for 07/17/2025: 
+2025-09-07 10:15:14 | INFO | scraper | Fetched page 11 for 07/22/2025
+2025-09-07 10:15:15 | INFO | scraper | Fetched page 13 for 07/23/2025
+2025-09-07 10:15:16 | INFO | scraper | Fetched page 12 for 07/20/2025
+2025-09-07 10:15:16 | INFO | scraper | Fetched page 15 for 07/10/2025
+2025-09-07 10:15:16 | INFO | scraper | Fetched page 14 for 07/23/2025
+2025-09-07 10:15:16 | INFO | scraper | Fetched page 12 for 07/09/2025
+2025-09-07 10:15:16 | INFO | scraper | Fetched page 14 for 07/30/2025
+2025-09-07 10:15:17 | INFO | scraper | Fetched page 15 for 07/07/2025
+2025-09-07 10:15:17 | ERROR | scraper | Request exception on page 14 for 07/01/2025: 
+2025-09-07 10:15:17 | ERROR | scraper | Request exception on page 11 for 07/16/2025: 
+2025-09-07 10:15:17 | ERROR | scraper | Request exception on page 11 for 07/01/2025: 
+2025-09-07 10:15:17 | ERROR | scraper | Request exception on page 12 for 07/01/2025: 
+2025-09-07 10:15:17 | ERROR | scraper | Request exception on page 14 for 07/16/2025: 
+2025-09-07 10:15:17 | ERROR | scraper | Request exception on page 13 for 07/01/2025: 
+2025-09-07 10:15:17 | ERROR | scraper | Request exception on page 12 for 07/16/2025: 
+2025-09-07 10:15:17 | ERROR | scraper | Request exception on page 13 for 07/16/2025: 
+2025-09-07 10:15:17 | INFO | scraper | Fetched page 15 for 07/23/2025
+2025-09-07 10:15:18 | ERROR | scraper | Request exception on page 15 for 07/16/2025: 
+2025-09-07 10:15:18 | INFO | scraper | Fetched page 13 for 07/15/2025
+2025-09-07 10:15:19 | INFO | scraper | Fetched page 13 for 07/08/2025
+2025-09-07 10:15:19 | INFO | scraper | Fetched page 13 for 07/03/2025
+2025-09-07 10:15:19 | INFO | scraper | Fetched page 11 for 07/02/2025
+2025-09-07 10:15:19 | INFO | scraper | Fetched page 14 for 07/01/2025
+2025-09-07 10:15:20 | INFO | scraper | Fetched page 15 for 07/09/2025
+2025-09-07 10:15:20 | ERROR | scraper | Request exception on page 14 for 07/22/2025: 
+2025-09-07 10:15:20 | ERROR | scraper | Request exception on page 13 for 07/22/2025: 
+2025-09-07 10:15:20 | ERROR | scraper | Request exception on page 12 for 07/22/2025: 
+2025-09-07 10:15:20 | ERROR | scraper | Request exception on page 11 for 07/22/2025: 
+2025-09-07 10:15:20 | ERROR | scraper | Request exception on page 15 for 07/22/2025: 
+2025-09-07 10:15:21 | INFO | scraper | Fetched page 8 for 07/13/2025
+2025-09-07 10:15:21 | INFO | scraper | Fetched page 15 for 07/02/2025
+2025-09-07 10:15:21 | INFO | scraper | Fetched page 13 for 07/30/2025
+2025-09-07 10:15:21 | INFO | scraper | Fetched page 15 for 07/30/2025
+2025-09-07 10:15:22 | INFO | scraper | Fetched page 10 for 07/24/2025
+2025-09-07 10:15:22 | INFO | scraper | Fetched page 8 for 07/24/2025
+2025-09-07 10:15:22 | INFO | scraper | Fetched page 11 for 07/08/2025
+2025-09-07 10:15:22 | INFO | scraper | Fetched page 7 for 07/24/2025
+2025-09-07 10:15:22 | ERROR | scraper | Timeout processing batch starting at page 6 for 07/28/2025
+2025-09-07 10:15:22 | INFO | scraper | Fetched page 12 for 07/02/2025
