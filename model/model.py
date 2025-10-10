@@ -247,20 +247,30 @@ def predict_future(model, scaler, last_sequence, num_days=30):
         seq_length = current_sequence.shape[0]  # Get sequence length from input
         n_features = current_sequence.shape[1]  # Get number of features from input
 
-        # --- Parameters for adding fluctuations (Adjust these!) ---
-        # Base volatility scaling - how much historical volatility influences noise
-        base_volatility_scale = 0.2  # Was 0.2
-        # Trend noise scaling - how much random trend influences noise
-        trend_noise_scale = 0.2  # Was 0.5
-        # Cyclical factor scaling
-        cyclical_scale = 0.3  # Was 0.3
-        # Momentum/Mean Reversion scaling
-        momentum_mr_scale = 0.3  # Was 0.2
-        # Shock probability and magnitude scaling
-        shock_probability = 0.1  # Was 0.05
-        shock_magnitude_scale = 1.0  # Was 0.5-1.5 range, now fixed scale
-        # Feature noise scaling - how much noise to add when simulating future features
-        feature_noise_scale = 0.02  # New parameter
+        # --- Dynamically set parameters for adding fluctuations based on historical data ---
+        hist_prices = last_sequence[:, 0]
+        hist_vol = np.std(hist_prices)
+        hist_mean = np.mean(hist_prices)
+        hist_min = np.min(hist_prices)
+        hist_max = np.max(hist_prices)
+        hist_range = hist_max - hist_min
+        hist_mean_change = np.mean(np.abs(np.diff(hist_prices)))
+        hist_rsi = np.mean(last_sequence[:, 3]) if last_sequence.shape[1] > 3 else 50
+
+        # Base volatility scaling: higher if volatility is high relative to mean
+        base_volatility_scale = min(0.5, max(0.05, hist_vol / (hist_mean + 1e-8)))
+        # Trend noise scaling: higher if mean change is high relative to range
+        trend_noise_scale = min(0.5, max(0.05, hist_mean_change / (hist_range + 1e-8)))
+        # Cyclical factor scaling: higher if RSI is near 50 (sideways market), lower if trending
+        cyclical_scale = 0.5 if 40 < hist_rsi < 60 else 0.2
+        # Momentum/Mean Reversion scaling: higher if volatility is high
+        momentum_mr_scale = min(0.5, max(0.1, hist_vol / (hist_mean + 1e-8)))
+        # Shock probability: higher if volatility is high
+        shock_probability = min(0.2, max(0.05, hist_vol / (hist_mean + 1e-8)))
+        # Shock magnitude: proportional to volatility
+        shock_magnitude_scale = min(2.0, max(0.5, hist_vol / (hist_mean_change + 1e-8)))
+        # Feature noise scaling: higher if volatility is high
+        feature_noise_scale = min(0.05, max(0.005, hist_vol / (hist_mean + 1e-8) * 0.1))
 
         # --- Calculate initial historical metrics ---
         # Ensure historical_volatility is not zero
@@ -276,30 +286,36 @@ def predict_future(model, scaler, last_sequence, num_days=30):
             if historical_mean_change < 1e-6:
                 historical_mean_change = 0.001  # Fallback minimum
 
-        trend_strength = 0.3  # Keep trend strength parameter
-        reversal_probability = 0.15  # Keep reversal probability
-        volatility_scaling = np.random.uniform(0.8, 1.2)  # Make volatility scaling fluctuate more
-        last_actual_scaled = current_sequence[-1, 0]  # Use scaled value for calculations
-        trend_direction = np.random.choice([-1, 1])
-        cycle_length = np.random.randint(5, 15)
-        cycle_phase = 0
+    # Dynamically calculate trend_strength and reversal_probability
+    # Trend strength: higher if price is trending (slope magnitude high relative to volatility)
+    x = np.arange(len(hist_prices))
+    slope = np.polyfit(x, hist_prices, 1)[0]
+    trend_strength = min(0.8, max(0.1, abs(slope) / (hist_vol + 1e-8)))
 
-        # Pre-generate noise components for all days
-        base_noise = np.random.normal(0, historical_volatility * volatility_scaling, num_days) * base_volatility_scale
-        trend_noise = historical_mean_change * np.random.uniform(-1.0, 1.0, num_days) * trend_noise_scale  # Increased range
-        trend_directions = np.random.choice([-1, 1], num_days)
-        shock_probabilities = np.random.random(num_days)
-        shock_magnitudes = historical_volatility * np.random.uniform(0.8, 1.5, num_days) * shock_magnitude_scale  # Increased range
-        feature_noise = np.random.normal(0, np.std(current_sequence[:, 1:], axis=0) * feature_noise_scale, size=(num_days, n_features - 1))
+    # Reversal probability: higher if volatility is high and trend is weak
+    reversal_probability = min(0.5, max(0.05, (hist_vol / (abs(slope) + 1e-8)) * (1 - trend_strength)))
+    volatility_scaling = np.random.uniform(0.8, 1.2)  # Make volatility scaling fluctuate more
+    last_actual_scaled = current_sequence[-1, 0]  # Use scaled value for calculations
+    trend_direction = np.random.choice([-1, 1])
+    cycle_length = np.random.randint(5, 15)
+    cycle_phase = 0
 
-        cycle_phase = 0
-        cycle_lengths = np.random.randint(5, 15, num_days)
-        volatility_scalings = np.random.uniform(0.8, 1.2, num_days)  # Fluctuate volatility scaling
-        reversal_probabilities = np.random.random(num_days)
-        trend_direction = np.random.choice([-1, 1])
+    # Pre-generate noise components for all days
+    base_noise = np.random.normal(0, historical_volatility * volatility_scaling, num_days) * base_volatility_scale
+    trend_noise = historical_mean_change * np.random.uniform(-1.0, 1.0, num_days) * trend_noise_scale  # Increased range
+    trend_directions = np.random.choice([-1, 1], num_days)
+    shock_probabilities = np.random.random(num_days)
+    shock_magnitudes = historical_volatility * np.random.uniform(0.8, 1.5, num_days) * shock_magnitude_scale  # Increased range
+    feature_noise = np.random.normal(0, np.std(current_sequence[:, 1:], axis=0) * feature_noise_scale, size=(num_days, n_features - 1))
 
-        predictions = []
-        for i in range(num_days):
+    cycle_phase = 0
+    cycle_lengths = np.random.randint(5, 15, num_days)
+    volatility_scalings = np.random.uniform(0.8, 1.2, num_days)  # Fluctuate volatility scaling
+    reversal_probabilities = np.random.random(num_days)
+    trend_direction = np.random.choice([-1, 1])
+
+    predictions = []
+    for i in range(num_days):
             # Predict the next step based on the current sequence
             # Reshape for the model: (batch_size, seq_length, n_features)
             # Ensure the input shape matches the model's expected input shape
@@ -363,18 +379,18 @@ def predict_future(model, scaler, last_sequence, num_days=30):
             if reversal_probabilities[i] < reversal_probability:
                 trend_direction *= -1  # Randomly reverse trend direction
 
-        # --- Inverse transform predictions ---
-        # Create a dummy array with the predicted prices and placeholder features
-        # The scaler expects an array with the same number of features it was trained on (n_features)
-        # We need to create an array of shape (num_days, n_features)
-        # Fill the first column with the predicted scaled prices
-        # Fill the other columns with dummy values (e.g., zeros or the mean of the scaled features)
-        # Using zeros is standard practice for inverse transforming a single feature prediction
-        dummy_features = np.zeros((num_days, n_features))
-        dummy_features[:, 0] = np.array(predictions)  # Place the scaled predictions in the first column
+    # --- Inverse transform predictions ---
+    # Create a dummy array with the predicted prices and placeholder features
+    # The scaler expects an array with the same number of features it was trained on (n_features)
+    # We need to create an array of shape (num_days, n_features)
+    # Fill the first column with the predicted scaled prices
+    # Fill the other columns with dummy values (e.g., zeros or the mean of the scaled features)
+    # Using zeros is standard practice for inverse transforming a single feature prediction
+    dummy_features = np.zeros((num_days, n_features))
+    dummy_features[:, 0] = np.array(predictions)  # Place the scaled predictions in the first column
 
-        # Inverse transform the dummy array
-        predictions_transformed = scaler.inverse_transform(dummy_features)
+    # Inverse transform the dummy array
+    predictions_transformed = scaler.inverse_transform(dummy_features)
 
-        # Return only the first column, which contains the inverse-transformed prices
-        return predictions_transformed[:, 0].reshape(-1, 1)
+    # Return only the first column, which contains the inverse-transformed prices
+    return predictions_transformed[:, 0].reshape(-1, 1)

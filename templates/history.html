@@ -2,27 +2,40 @@
 {% block content %}
 <!-- Search Section -->
 <div class="max-w-2xl mx-auto mt-8 mb-8 px-4">
-    <div class="flex gap-4 items-end">
-        <!-- Company Select -->
-        <div class="flex-1">
-            <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Company</label>
-            <select name="company" id="company" class="mt-1 block w-full pl-3 pr-10 py-3 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg dark:bg-gray-700 dark:text-white">
-                <option value="">Choose a company</option>
-                {% for company_item in companies %} {# Assumes 'companies' is passed from your backend view #}
-                <option value="{{ company_item.symbol }}" {% if symbol == company_item.symbol %}selected{% endif %}>
-                    {{ company_item.symbol|default(company_item.symbol) }} {# Display name, fallback to symbol #}
-                </option>
-                {% endfor %}
-            </select>
-        </div>
+    <!-- Use a GET form so selected symbol and dates are submitted as query params and persisted by the backend -->
+    <form method="get" action="{{ url_for('history') }}">
+        <div class="flex gap-4 items-end">
+            <!-- Company Select -->
+            <div class="flex-1">
+                <label for="symbol" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Company</label>
+                <select name="symbol" id="symbol" class="mt-1 block w-full pl-3 pr-10 py-3 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg dark:bg-gray-700 dark:text-white">
+                    <option value="">Choose a company</option>
+                    {% for company_item in companies %}
+                    <option value="{{ company_item.symbol }}" {% if symbol == company_item.symbol %}selected{% endif %}>
+                        {{ company_item.symbol|default(company_item.symbol) }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
 
-        <!-- View History Button -->
-        <button
-            onclick="viewCompanyHistory()"
-            class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700">
-            View History
-        </button>
-    </div>
+            <!-- Date filters -->
+            <div class="flex items-center gap-2">
+                <div>
+                    <label for="start_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
+                    <input type="date" id="start_date" name="start_date" value="{{ start_date if start_date is defined else '' }}" class="mt-1 block w-full pl-3 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white" />
+                </div>
+                <div>
+                    <label for="end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ end_date if end_date is defined else '' }}" class="mt-1 block w-full pl-3 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white" />
+                </div>
+            </div>
+
+            <!-- View History Button -->
+            <div class="flex items-center">
+                <button type="submit" class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700">View History</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <!-- Stock Information Section -->
@@ -207,26 +220,8 @@
         initializeChart(labels, prices);
     {% endif %}
     
-    function viewCompanyHistory() {
-        const companySelectEl = document.getElementById('company');
-        const stockSymbol = companySelectEl.value;
-
-        if (!stockSymbol) {
-            alert('Please select a company.');
-            companySelectEl.focus();
-            return;
-        }
-        // Navigate to the history page for the selected symbol
-        window.location.href = `/history/${stockSymbol}`;
-    }
+    // Navigation is handled by the form submission; no client-side navigation required.
     
-    // Initialize chart with data if available
-    // Note: The original file had 'stock_history', 'dates', 'prices' which might be from an older version.
-    // Assuming 'history_data' is the correct variable as used above for chart initialization.
-    {% if stock_history %}
-        const labels = {{ dates|tojson|safe }};
-        const prices = {{ prices|tojson|safe }};
-        initializeChart(labels, prices);
-    {% endif %}
+    // (old 'stock_history' initializer removed)
 </script>
 {% endblock %}

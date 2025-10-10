@@ -15,11 +15,11 @@ import pandas as pd
 from functions.db_data_manager import DatabaseManager
 from functions.logger import logger
 from model.model import train_model, predict_future, calculate_rsi, preprocess_transaction_data
-import shap
 import io
 import sys
 import os
 from typing import Optional
+from datetime import datetime
 from flask import Response, make_response
 from functions.helpers import _calculate_percentage_change , _prepare_prediction_data , _prepare_top_stocks_data
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, mean_absolute_percentage_error
@@ -96,18 +96,52 @@ def history(symbol: Optional[str] = None) -> str:
         logger.info(f"Fetching historical data for {symbol}")
         history_data = db_manager.get_stock_history(symbol)
         logger.info(f"Retrieved {len(history_data)} records for {symbol}")
-        
+
+        # Date filter parameters (optional)
+        start_date_str = request.args.get('start_date')
+        end_date_str = request.args.get('end_date')
+
+        # Validate and convert to date objects if provided (expecting YYYY-MM-DD strings)
+        start_date_obj = None
+        end_date_obj = None
+        try:
+            if start_date_str:
+                start_date_obj = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            if end_date_str:
+                end_date_obj = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+        except ValueError:
+            logger.warning('Invalid date format provided for start_date or end_date; expected YYYY-MM-DD')
+
+        # Filter history_data by transaction_date which is a YYYY-MM-DD string
+        if start_date_obj or end_date_obj:
+            filtered = []
+            for record in history_data:
+                try:
+                    rec_date = datetime.strptime(record.get('transaction_date', ''), '%Y-%m-%d').date()
+                except Exception:
+                    # Skip records with invalid date formats
+                    continue
+
+                if start_date_obj and rec_date < start_date_obj:
+                    continue
+                if end_date_obj and rec_date > end_date_obj:
+                    continue
+                filtered.append(record)
+            history_data = filtered
+
         # Calculate percentage changes
         for data in history_data:
             data['change'] = _calculate_percentage_change(
                 data['rate'], 
-                data['avg_price']
+                data.get('avg_price', data['rate'])
             )
-            
+
         return render_template('history.html', 
                             companies=all_companies, 
                             symbol=symbol, 
-                            history_data=history_data)
+                            history_data=history_data,
+                            start_date=start_date_str,
+                            end_date=end_date_str)
         
     except Exception as e:
         logger.error(f"Error fetching history for {symbol}: {str(e)}", exc_info=True)
