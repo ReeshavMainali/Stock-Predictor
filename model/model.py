@@ -229,7 +229,7 @@ def train_model(df, seq_length=60, epochs=100, batch_size=32):
 # --------------------
 def predict_future(model, scaler, last_sequence, num_days=30):
     """
-    Predicts future stock prices using the trained LSTM model.
+    Predicts future stock prices using the trained LSTM model with adaptive volatility.
 
     Args:
         model (tf.keras.models.Sequential): Trained LSTM model.
@@ -242,155 +242,145 @@ def predict_future(model, scaler, last_sequence, num_days=30):
     """
     device = setup_device()
     with tf.device(device):
-        predictions = []
         current_sequence = last_sequence.copy()
-        seq_length = current_sequence.shape[0]  # Get sequence length from input
-        n_features = current_sequence.shape[1]  # Get number of features from input
+        seq_length = current_sequence.shape[0]
+        n_features = current_sequence.shape[1]
 
-        # --- Dynamically set parameters for adding fluctuations based on historical data ---
-        hist_prices = last_sequence[:, 0]
-        hist_vol = np.std(hist_prices)
+        # --- Calculate historical volatility characteristics ---
+        hist_prices = last_sequence[:, 0]  # Historical prices (scaled)
+        hist_returns = np.diff(hist_prices)
+        
+        # Calculate key volatility metrics
+        historical_volatility = np.std(hist_returns) if len(hist_returns) > 0 else 0.01
+        daily_volatility = np.std(hist_prices)
+        mean_absolute_change = np.mean(np.abs(hist_returns)) if len(hist_returns) > 0 else 0.001
+        
+        # Coefficient of variation (volatility relative to price level)
         hist_mean = np.mean(hist_prices)
-        hist_min = np.min(hist_prices)
-        hist_max = np.max(hist_prices)
-        hist_range = hist_max - hist_min
-        hist_mean_change = np.mean(np.abs(np.diff(hist_prices)))
-        hist_rsi = np.mean(last_sequence[:, 3]) if last_sequence.shape[1] > 3 else 50
-
-        # Base volatility scaling: higher if volatility is high relative to mean
-        base_volatility_scale = min(0.5, max(0.05, hist_vol / (hist_mean + 1e-8)))
-        # Trend noise scaling: higher if mean change is high relative to range
-        trend_noise_scale = min(0.5, max(0.05, hist_mean_change / (hist_range + 1e-8)))
-        # Cyclical factor scaling: higher if RSI is near 50 (sideways market), lower if trending
-        cyclical_scale = 0.5 if 40 < hist_rsi < 60 else 0.2
-        # Momentum/Mean Reversion scaling: higher if volatility is high
-        momentum_mr_scale = min(0.5, max(0.1, hist_vol / (hist_mean + 1e-8)))
-        # Shock probability: higher if volatility is high
-        shock_probability = min(0.2, max(0.05, hist_vol / (hist_mean + 1e-8)))
-        # Shock magnitude: proportional to volatility
-        shock_magnitude_scale = min(2.0, max(0.5, hist_vol / (hist_mean_change + 1e-8)))
-        # Feature noise scaling: higher if volatility is high
-        feature_noise_scale = min(0.05, max(0.005, hist_vol / (hist_mean + 1e-8) * 0.1))
-
-        # --- Calculate initial historical metrics ---
-        # Ensure historical_volatility is not zero
-        historical_volatility = np.std(current_sequence[:, 0])
-        if historical_volatility < 1e-6:  # Add a small value if volatility is near zero
-            historical_volatility = np.mean(current_sequence[:, 0]) * 0.01  # Use a percentage of the price as base volatility
-            if historical_volatility < 1e-6:
-                historical_volatility = 0.01  # Fallback minimum
-
-        historical_mean_change = np.mean(np.abs(np.diff(current_sequence[:, 0])))
-        if historical_mean_change < 1e-6:  # Add a small value if mean change is near zero
-            historical_mean_change = historical_volatility * 0.1  # Use a percentage of volatility
-            if historical_mean_change < 1e-6:
-                historical_mean_change = 0.001  # Fallback minimum
-
-    # Dynamically calculate trend_strength and reversal_probability
-    # Trend strength: higher if price is trending (slope magnitude high relative to volatility)
-    x = np.arange(len(hist_prices))
-    slope = np.polyfit(x, hist_prices, 1)[0]
-    trend_strength = min(0.8, max(0.1, abs(slope) / (hist_vol + 1e-8)))
-
-    # Reversal probability: higher if volatility is high and trend is weak
-    reversal_probability = min(0.5, max(0.05, (hist_vol / (abs(slope) + 1e-8)) * (1 - trend_strength)))
-    volatility_scaling = np.random.uniform(0.8, 1.2)  # Make volatility scaling fluctuate more
-    last_actual_scaled = current_sequence[-1, 0]  # Use scaled value for calculations
-    trend_direction = np.random.choice([-1, 1])
-    cycle_length = np.random.randint(5, 15)
-    cycle_phase = 0
-
-    # Pre-generate noise components for all days
-    base_noise = np.random.normal(0, historical_volatility * volatility_scaling, num_days) * base_volatility_scale
-    trend_noise = historical_mean_change * np.random.uniform(-1.0, 1.0, num_days) * trend_noise_scale  # Increased range
-    trend_directions = np.random.choice([-1, 1], num_days)
-    shock_probabilities = np.random.random(num_days)
-    shock_magnitudes = historical_volatility * np.random.uniform(0.8, 1.5, num_days) * shock_magnitude_scale  # Increased range
-    feature_noise = np.random.normal(0, np.std(current_sequence[:, 1:], axis=0) * feature_noise_scale, size=(num_days, n_features - 1))
-
-    cycle_phase = 0
-    cycle_lengths = np.random.randint(5, 15, num_days)
-    volatility_scalings = np.random.uniform(0.8, 1.2, num_days)  # Fluctuate volatility scaling
-    reversal_probabilities = np.random.random(num_days)
-    trend_direction = np.random.choice([-1, 1])
-
-    predictions = []
-    for i in range(num_days):
-            # Predict the next step based on the current sequence
-            # Reshape for the model: (batch_size, seq_length, n_features)
-            # Ensure the input shape matches the model's expected input shape
+        cv = daily_volatility / (hist_mean + 1e-8)
+        
+        # Determine volatility regime based on coefficient of variation
+        if cv < 0.02:  # Very low volatility (like stable stocks)
+            volatility_regime = "low"
+            noise_scale = 0.3
+            shock_probability = 0.02
+            momentum_decay = 0.9
+        elif cv < 0.05:  # Moderate volatility
+            volatility_regime = "moderate"
+            noise_scale = 0.6
+            shock_probability = 0.05
+            momentum_decay = 0.8
+        else:  # High volatility
+            volatility_regime = "high"
+            noise_scale = 1.0
+            shock_probability = 0.1
+            momentum_decay = 0.7
+        
+        print(f"Detected volatility regime: {volatility_regime} (CV: {cv:.4f})")
+        
+        # Calculate trend characteristics
+        x = np.arange(len(hist_prices))
+        if len(hist_prices) > 1:
+            slope, intercept = np.polyfit(x, hist_prices, 1)
+            trend_strength = min(1.0, abs(slope) / (daily_volatility + 1e-8))
+        else:
+            slope = 0
+            trend_strength = 0.1
+        
+        # Adaptive noise parameters based on historical behavior
+        base_noise_std = historical_volatility * noise_scale
+        trend_persistence = max(0.1, min(0.9, trend_strength * 0.5))
+        
+        # Initialize prediction variables
+        predictions = []
+        momentum = 0.0
+        trend_direction = 1 if slope > 0 else -1
+        
+        for i in range(num_days):
+            # Get model prediction
             pred_scaled = model.predict(current_sequence.reshape(1, seq_length, n_features), verbose=0)[0, 0]
-
-            # --- Add Fluctuations ---
-            # Ensure noise is added in the scaled space
-            market_factor = base_noise[i] + trend_noise[i]
-
-            # Cyclical factor
-            cycle_phase += 1
-            cyclical_factor = np.sin(2 * np.pi * cycle_phase / cycle_lengths[i]) * historical_volatility * cyclical_scale
-
-            # Combine noise components
-            market_factor += cyclical_factor
-
-            # Apply trend direction
-            pred_with_noise_scaled = pred_scaled + market_factor * trend_directions[i]
-
-            # Add momentum and mean reversion based on the *scaled* values
-            if predictions:
-                # Use the last predicted scaled value for momentum/MR
-                last_pred_scaled = predictions[-1]
-                momentum = (last_pred_scaled - last_actual_scaled) * trend_strength * momentum_mr_scale
-                mean_reversion = (last_actual_scaled - last_pred_scaled) * (1 - trend_strength) * momentum_mr_scale
-                pred_with_noise_scaled += momentum + mean_reversion
+            
+            # --- Apply controlled noise based on volatility regime ---
+            
+            # 1. Base market noise (reduced and adaptive)
+            market_noise = np.random.normal(0, base_noise_std * 0.5)
+            
+            # 2. Trend continuation with decay
+            if i > 0:
+                recent_change = predictions[-1] - (predictions[-2] if len(predictions) > 1 else current_sequence[-1, 0])
+                momentum = momentum * momentum_decay + recent_change * (1 - momentum_decay)
             else:
-                # If it's the first prediction, base momentum/MR on the last historical change
-                last_historical_change_scaled = current_sequence[-1, 0] - current_sequence[-2, 0] if len(current_sequence) > 1 else 0
-                momentum = last_historical_change_scaled * trend_strength * momentum_mr_scale
-                mean_reversion = (last_actual_scaled - (last_actual_scaled + last_historical_change_scaled)) * (1 - trend_strength) * momentum_mr_scale  # MR towards last actual
-                pred_with_noise_scaled += momentum + mean_reversion
-
-            # Add random shock
-            if shock_probabilities[i] < shock_probability:
-                pred_with_noise_scaled += shock_magnitudes[i] * np.random.choice([-1, 1])  # Shock can be up or down
-
+                # Initialize momentum from last historical change
+                if len(hist_returns) > 0:
+                    momentum = hist_returns[-1] * trend_persistence
+                else:
+                    momentum = 0.0
+            
+            # 3. Mean reversion force (stronger for low volatility stocks)
+            if predictions:
+                deviation_from_start = predictions[-1] - current_sequence[-1, 0]
+                mean_reversion = -deviation_from_start * (0.05 if volatility_regime == "high" else 0.15)
+            else:
+                mean_reversion = 0.0
+            
+            # 4. Occasional shocks (rare and smaller for stable stocks)
+            shock = 0.0
+            if np.random.random() < shock_probability:
+                shock_magnitude = historical_volatility * np.random.uniform(0.5, 1.5)
+                if volatility_regime == "low":
+                    shock_magnitude *= 0.3  # Reduce shock size for stable stocks
+                shock = shock_magnitude * np.random.choice([-1, 1])
+            
+            # 5. Cyclical component (very subtle)
+            cycle_component = 0.0
+            if i > 5:  # Only add cycles after some predictions
+                cycle_length = 7 + np.random.randint(-2, 3)  # Weekly-ish cycles
+                cycle_component = np.sin(2 * np.pi * i / cycle_length) * historical_volatility * 0.1
+            
+            # --- Combine all factors with appropriate weights ---
+            total_change = (
+                market_noise * 0.4 +
+                momentum * 0.3 +
+                mean_reversion * 0.2 +
+                shock * 0.8 +
+                cycle_component * 0.1
+            )
+            
+            # Apply change to prediction
+            pred_with_noise = pred_scaled + total_change
+            
             # --- Update sequence for next prediction ---
             current_sequence = np.roll(current_sequence, -1, axis=0)
-
-            # Create a new row for the predicted day
+            
+            # Create new row
             new_row_scaled = np.zeros(n_features)
-            new_row_scaled[0] = pred_with_noise_scaled  # The predicted price is the first feature
-
-            # Simulate other features (SMA, RSI, Volatility) for the new day
+            new_row_scaled[0] = pred_with_noise
+            
+            # Update other features more conservatively
             if n_features > 1:
-                new_row_scaled[1:] = current_sequence[-2, 1:] + feature_noise[i]
-
-            # Add the new row to the sequence
+                feature_noise = np.random.normal(0, 0.01, n_features - 1)
+                new_row_scaled[1:] = current_sequence[-2, 1:] + feature_noise
+            
             current_sequence[-1] = new_row_scaled
+            predictions.append(pred_with_noise)
+            
+            # Periodically adjust trend direction based on momentum
+            if i > 0 and i % 10 == 0:
+                if abs(momentum) > historical_volatility:
+                    # Strong momentum, small chance of reversal
+                    if np.random.random() < 0.1:
+                        trend_direction *= -1
+                else:
+                    # Weak momentum, higher chance of reversal
+                    if np.random.random() < 0.3:
+                        trend_direction *= -1
 
-            # Store the predicted *scaled* price
-            predictions.append(pred_with_noise_scaled)
-
-            # Update volatility scaling and cycle parameters periodically
-            if i % 2 == 0:
-                volatility_scaling = volatility_scalings[i]  # Fluctuate volatility scaling
-            if i % cycle_lengths[i] == 0:
-                cycle_lengths[i] = np.random.randint(5, 15)
-                cycle_phase = 0
-            if reversal_probabilities[i] < reversal_probability:
-                trend_direction *= -1  # Randomly reverse trend direction
-
-    # --- Inverse transform predictions ---
-    # Create a dummy array with the predicted prices and placeholder features
-    # The scaler expects an array with the same number of features it was trained on (n_features)
-    # We need to create an array of shape (num_days, n_features)
-    # Fill the first column with the predicted scaled prices
-    # Fill the other columns with dummy values (e.g., zeros or the mean of the scaled features)
-    # Using zeros is standard practice for inverse transforming a single feature prediction
-    dummy_features = np.zeros((num_days, n_features))
-    dummy_features[:, 0] = np.array(predictions)  # Place the scaled predictions in the first column
-
-    # Inverse transform the dummy array
-    predictions_transformed = scaler.inverse_transform(dummy_features)
-
-    # Return only the first column, which contains the inverse-transformed prices
-    return predictions_transformed[:, 0].reshape(-1, 1)
+        # --- Inverse transform predictions ---
+        # Create dummy array for inverse transformation
+        dummy_features = np.zeros((num_days, n_features))
+        dummy_features[:, 0] = np.array(predictions)
+        
+        # Inverse transform to get actual prices
+        predictions_transformed = scaler.inverse_transform(dummy_features)
+        
+        return predictions_transformed[:, 0].reshape(-1, 1)
